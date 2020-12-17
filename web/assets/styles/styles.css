@@ -1,12 +1,30 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto);
-@import url(https://fonts.googleapis.com/css?family=Material+Icons);
+
+.bordered {
+  border: 22px solid transparent;
+  border-image: url("../images/border/default.png") 22 round;
+
+  background-image: url("../images/background.png");
+  background-origin: border-box;
+  background-clip: border-box;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 body {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 5vw;
+  background: black;
+}
+
+@font-face {
+  font-family: Chronicon_GMS4_EF;
+  src: url('../fonts/Chronicon_GMS4_EF.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 * {
-  font-family: Roboto, Helvetica, Arial, sans-serif;
+  image-rendering: pixelated;
+  font-family: Chronicon_GMS4_EF;
+  font-smooth: never;
+  -webkit-font-smoothing: none;
 }

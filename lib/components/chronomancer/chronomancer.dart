@@ -4,11 +4,11 @@ import 'package:angular/angular.dart';
 // Components info: https://angulardart.dev/components
 
 @Component(
-  selector: 'my-app',
-  styleUrls: ['app_component.css'],
-  templateUrl: 'app_component.html',
+  selector: 'chronomancer',
+  styleUrls: ['chronomancer.css'],
+  templateUrl: 'chronomancer.html',
   directives: [],
 )
-class AppComponent {
+class ChronomancerComponent {
   // Nothing here yet.
 }
