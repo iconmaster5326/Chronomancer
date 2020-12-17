@@ -1,4 +1,7 @@
 import 'package:angular/angular.dart';
+import 'package:chronomancer/components/char_sel/char_sel.dart';
+import 'package:chronomancer/version.dart';
+import 'package:http/http.dart';
 
 // AngularDart info: https://angulardart.dev
 // Components info: https://angulardart.dev/components
@@ -7,8 +10,14 @@ import 'package:angular/angular.dart';
   selector: 'chronomancer',
   styleUrls: ['chronomancer.css'],
   templateUrl: 'chronomancer.html',
-  directives: [],
+  directives: [NgFor, CharSelCompoment],
 )
 class ChronomancerComponent {
-  // Nothing here yet.
+  static List<Version> versions;
+  static Version version;
+
+  static void init() async {
+    versions = await Version.getVersions(Client());
+    version = versions.last;
+  }
 }

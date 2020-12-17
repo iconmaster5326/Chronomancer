@@ -1,0 +1,46 @@
+[
+    {
+        "uuid": "templar",
+        "name": "Templar",
+        "skillTrees": [
+            "Vengeance",
+            "Wrath",
+            "Conviction",
+            "Redemption",
+            "Mastery"
+        ]
+    },
+    {
+        "uuid": "berserker",
+        "name": "Berserker",
+        "skillTrees": [
+            "Guardian",
+            "Sky Lord",
+            "Dragonkin",
+            "Frostborn",
+            "Mastery"
+        ]
+    },
+    {
+        "uuid": "warden",
+        "name": "Warden",
+        "skillTrees": [
+            "Wind Ranger",
+            "Druid",
+            "Storm Caller",
+            "Winter Herald",
+            "Mastery"
+        ]
+    },
+    {
+        "uuid": "warlock",
+        "name": "Warlock",
+        "skillTrees": [
+            "Corruptor",
+            "Lich",
+            "Demonologist",
+            "Reaper",
+            "Mastery"
+        ]
+    }
+]
