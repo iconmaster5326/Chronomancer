@@ -1,6 +1,8 @@
 <div id="chronomancer" class="bordered">
     <h1>Select your class!</h1>
-    <div *ngFor="let charClass of version.classes">
-        <char-sel [charClass]="charClass"></char-sel>
+    <div id="chronomancer-chars">
+        <div *ngFor="let charClass of version.classes">
+            <char-sel [charClass]="charClass"></char-sel>
+        </div>
     </div>
 </div>

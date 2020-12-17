@@ -1,3 +1,10 @@
 #char_sel {
-    
+    display: block;
+    padding: 16px;
+    text-align: center;
+    transition: transform .25s;
+}
+
+#char_sel:hover {
+    transform: scale(2);
 }
