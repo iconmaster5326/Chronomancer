@@ -22,4 +22,6 @@ class ChronomancerComponent {
     versions = await Version.getVersions(Client());
     version = versions.last;
   }
+
+  String get borderName => character?.charClass?.id ?? 'default';
 }

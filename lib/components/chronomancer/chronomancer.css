@@ -6,3 +6,7 @@
     display: flex;
     justify-content: center;
 }
+
+.bordered-perclass {
+    border-image: url("../images/border/{{borderName}}.png") 22 round;
+}

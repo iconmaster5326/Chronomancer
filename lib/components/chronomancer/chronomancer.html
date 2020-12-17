@@ -9,6 +9,6 @@
     </div>
 
     <div *ngIf="character != null">
-        <h1>You chose to make a {{character.charClass.name}}!</h1>
+        <h1 class="bordered" [style.border-image]="'url(\'assets/images/border/' + borderName + '.png\') 22 round'">You chose to make a {{character.charClass.name}}!</h1>
     </div>
 </div>
