@@ -1,8 +1,14 @@
 <div id="chronomancer" class="bordered">
-    <h1>Select your class!</h1>
-    <div id="chronomancer-chars">
-        <div *ngFor="let charClass of version.classes">
-            <char-sel [charClass]="charClass"></char-sel>
+    <div *ngIf="character == null">
+        <h1>Select your class!</h1>
+        <div id="chronomancer-chars">
+            <div *ngFor="let charClass of version.classes">
+                <char-sel [charClass]="charClass"></char-sel>
+            </div>
         </div>
+    </div>
+
+    <div *ngIf="character != null">
+        <h1>You chose to make a {{character.charClass.name}}!</h1>
     </div>
 </div>
