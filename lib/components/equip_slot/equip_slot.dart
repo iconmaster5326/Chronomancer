@@ -2,6 +2,7 @@ import 'package:angular/angular.dart';
 import 'package:chronomancer/character.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/equip_dialog/equip_dialog.dart';
+import 'package:chronomancer/components/slot/slot.dart';
 import 'package:chronomancer/item.dart';
 import 'package:chronomancer/version.dart';
 
@@ -40,42 +41,10 @@ const int ITEM_ICON_OFFSET = (ITEM_ICON_SIZE - SLOT_BACK_SIZE) ~/ 2;
   templateUrl: 'equip_slot.html',
   directives: [],
 )
-class EquipSlotComponent {
-  @Input()
-  ItemType slot;
-  bool hovering = false;
-
+class EquipSlotComponent extends SlotComponent {
   Character get character => ChronomancerComponent.character;
-  Version get version => ChronomancerComponent.version;
-  ItemStack get item => character.equipment[slot];
-
-  RarityOverlay get rarityOverlay {
-    if (hovering) {
-      return RarityOverlay.SELECTED;
-    }
-    if (item == null) {
-      return RarityOverlay.NONE;
-    }
-    return RarityOverlay.values[item.rarity.index + 1];
-  }
-
-  SlotBack get slotBack {
-    if (item != null) {
-      return SlotBack.DEFAULT;
-    }
-    return SlotBack.values[slot.index + 1];
-  }
-
-  String get background {
-    // from front to back: rarity overlay, item icon, slot back
-    if (item == null) {
-      return 'url("assets/images/item_borders.png") -${rarityOverlay.index * RARITY_OVERLAY_SIZE}px 0px, url("assets/images/equipment_slots.png") -${slotBack.index * SLOT_BACK_SIZE}px 0px';
-    } else {
-      var itemX = item.id % ITEM_ICONS_PER_ROW;
-      var itemY = item.id ~/ ITEM_ICONS_PER_ROW;
-      return 'url("assets/images/item_borders.png") -${rarityOverlay.index * RARITY_OVERLAY_SIZE}px 0px, url("assets/images/items/${version.name}.png") -${itemX * ITEM_ICON_SIZE + ITEM_ICON_OFFSET}px -${itemY * ITEM_ICON_SIZE + ITEM_ICON_OFFSET}px, url("assets/images/equipment_slots.png") -${slotBack.index * SLOT_BACK_SIZE}px 0px';
-    }
-  }
+  @override
+  Item get item => character?.equipment[slot]?.item;
 
   void onSlotSelected() {
     EquipDialogComponent.INSTANCE.slot = slot;

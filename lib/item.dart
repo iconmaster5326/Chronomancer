@@ -19,7 +19,7 @@ enum ItemType {
 const Map<ItemType, String> ITEM_TYPE_TO_STRING = <ItemType, String>{
   ItemType.RING: 'Ring',
   ItemType.FEET: 'Boots',
-  ItemType.BODY: 'Body',
+  ItemType.BODY: 'Armor',
   ItemType.AMULET: 'Amulet',
   ItemType.ACCCESSORY: 'Accessory',
   ItemType.WEAPON: 'Weapon',

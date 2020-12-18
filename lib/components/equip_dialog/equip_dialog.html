@@ -7,7 +7,7 @@
         </div>
         <div class="modal-body" style="white-space: pre-line;">
             <div *ngFor="let item of items">
-                {{item.name}}
+                <item [item]="item" (click)="onItemSelected(item)"></item>
             </div>
         </div>
         <div class="modal-footer">
