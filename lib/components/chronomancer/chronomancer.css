@@ -17,6 +17,12 @@
     align-items: flex-end;
 }
 
+#items-rune-count-pane {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #items-pane {
     display: flex;
 }
@@ -26,13 +32,21 @@
 }
 
 #equip-slots {
-    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+}
+
+#equip-slots > * {
+    max-height: 24px;
 }
 
 .equip-slot {
+    display: inline-block;
     height: 24px;
     width: 24px;
-    background: url("assets/images/equipment_slots.png") 0px 0px;
+    background: url("assets/images/item_borders.png"), url("assets/images/equipment_slots.png");
 }
 
 #item-editor {

@@ -1,6 +1,8 @@
 import 'package:angular/angular.dart';
 import 'package:chronomancer/components/char_sel/char_sel.dart';
 import 'package:chronomancer/character.dart';
+import 'package:chronomancer/components/equip_slot/equip_slot.dart';
+import 'package:chronomancer/item.dart';
 import 'package:chronomancer/version.dart';
 import 'package:http/http.dart';
 
@@ -11,9 +13,18 @@ import 'package:http/http.dart';
   selector: 'chronomancer',
   styleUrls: ['chronomancer.css'],
   templateUrl: 'chronomancer.html',
-  directives: [NgFor, NgIf, CharSelCompoment],
+  directives: [NgFor, NgIf, CharSelCompoment, EquipSlotComponent],
 )
 class ChronomancerComponent {
+  static const ItemType ITEM_TYPE_HEAD = ItemType.HEAD;
+  static const ItemType ITEM_TYPE_ACCESSORY = ItemType.ACCCESSORY;
+  static const ItemType ITEM_TYPE_AMULET = ItemType.AMULET;
+  static const ItemType ITEM_TYPE_OFFHAND = ItemType.OFF_HAND;
+  static const ItemType ITEM_TYPE_BODY = ItemType.BODY;
+  static const ItemType ITEM_TYPE_WEAPON = ItemType.WEAPON;
+  static const ItemType ITEM_TYPE_FEET = ItemType.FEET;
+  static const ItemType ITEM_TYPE_RING = ItemType.RING;
+
   static List<Version> versions;
   static Version version;
   static Character character;

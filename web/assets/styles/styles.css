@@ -29,3 +29,5 @@ html, body {
   font-smooth: never;
   -webkit-font-smoothing: none;
 }
+
+img{border:0;}

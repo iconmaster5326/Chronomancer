@@ -34,7 +34,7 @@ for version in versions_json:
         "RGBA",
         size=(
             ITEM_ICON_SIZE * SHEET_WIDTH,
-            ITEM_ICON_SIZE * math.ceil(len(items_json) / SHEET_WIDTH),
+            ITEM_ICON_SIZE * math.ceil(len(items_json) / SHEET_WIDTH) * 2,
         ),
         color=None,
     )
