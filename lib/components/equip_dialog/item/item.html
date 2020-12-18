@@ -3,4 +3,14 @@
         <slot [item]="item"></slot>
         <div>{{item.name}}</div>
     </div>
+    <ul>
+        <li *ngFor="let enchant of item.baseEnchants">
+            {{enchant.desc}}
+        </li>
+    </ul>
+    <ul>
+        <li *ngFor="let enchant of item.fixedEnchants">
+            {{enchant.desc}}
+        </li>
+    </ul>
 </div>
