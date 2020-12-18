@@ -1,6 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:chronomancer/character.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
+import 'package:chronomancer/components/equip_dialog/equip_dialog.dart';
 import 'package:chronomancer/item.dart';
 import 'package:chronomancer/version.dart';
 
@@ -77,6 +78,7 @@ class EquipSlotComponent {
   }
 
   void onSlotSelected() {
-    
+    EquipDialogComponent.INSTANCE.slot = slot;
+    EquipDialogComponent.INSTANCE.show();
   }
 }

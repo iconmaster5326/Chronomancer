@@ -1,0 +1,19 @@
+<div class="modal fade" id="equip-dialog" tabindex="-1" role="dialog" #equipDialogElement (init)="init(equipDialogElement)">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bordered">
+        <div class="modal-header">
+            <div class="modal-title">Select Item</div>
+            <input type="text" class="text-input" placeholder="search...">
+        </div>
+        <div class="modal-body" style="white-space: pre-line;">
+            <div *ngFor="let item of items">
+                {{item.name}}
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary short-button" data-dismiss="modal">OK</button>
+            <button type="button" class="btn short-button" data-dismiss="modal">Cancel</button>
+        </div>
+        </div>
+    </div>
+</div>

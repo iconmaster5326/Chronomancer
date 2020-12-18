@@ -1,6 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:chronomancer/components/char_sel/char_sel.dart';
 import 'package:chronomancer/character.dart';
+import 'package:chronomancer/components/equip_dialog/equip_dialog.dart';
 import 'package:chronomancer/components/equip_slot/equip_slot.dart';
 import 'package:chronomancer/item.dart';
 import 'package:chronomancer/version.dart';
@@ -13,7 +14,13 @@ import 'package:http/http.dart';
   selector: 'chronomancer',
   styleUrls: ['chronomancer.css'],
   templateUrl: 'chronomancer.html',
-  directives: [NgFor, NgIf, CharSelCompoment, EquipSlotComponent],
+  directives: [
+    NgFor,
+    NgIf,
+    CharSelCompoment,
+    EquipSlotComponent,
+    EquipDialogComponent
+  ],
 )
 class ChronomancerComponent {
   static const ItemType ITEM_TYPE_HEAD = ItemType.HEAD;

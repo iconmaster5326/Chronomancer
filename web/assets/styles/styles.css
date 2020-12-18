@@ -10,6 +10,25 @@
   background-size: cover;
 }
 
+.short-button {
+  background-image: url("../images/short_button_up.png");
+  border: 0;
+  padding: 0px;
+  height: 16px;
+  width: 78px;
+  font-size: 12px;
+}
+
+.short-button:active {
+  background-image: url("../images/short_button_down.png");
+}
+
+.text-input {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 0;
+  margin: 4px;
+}
+
 html, body {
   height: 100%;
   background: black;
@@ -28,6 +47,5 @@ html, body {
   font-family: Chronicon_GMS4_EF;
   font-smooth: never;
   -webkit-font-smoothing: none;
+  color: white;
 }
-
-img{border:0;}
