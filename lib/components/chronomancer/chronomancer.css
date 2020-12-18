@@ -1,5 +1,8 @@
 #chronomancer {
     background-image: url("assets/images/model_background.png");
+    height: 50%;
+    display: flex;
+    flex-direction: column;
 }
 
 #chronomancer-chars {
@@ -7,6 +10,41 @@
     justify-content: center;
 }
 
-.bordered-perclass {
-    border-image: url("../images/border/{{borderName}}.png") 22 round;
+#chronomancer-top-pane {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+#items-pane {
+    display: flex;
+}
+
+#items-pane > * {
+    margin: 8px;
+}
+
+#equip-slots {
+    
+}
+
+.equip-slot {
+    height: 24px;
+    width: 24px;
+    background: url("assets/images/equipment_slots.png") 0px 0px;
+}
+
+#item-editor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#item-editor > * {
+    margin: 8px;
+}
+
+#character-model {
+    object-fit: cover;
 }

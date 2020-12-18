@@ -8,7 +8,34 @@
         </div>
     </div>
 
-    <div *ngIf="character != null">
-        <h1 class="bordered" [style.border-image]="'url(\'assets/images/border/' + borderName + '.png\') 22 round'">You chose to make a {{character.charClass.name}}!</h1>
+    <div *ngIf="character != null" id="chronomancer-top-pane">
+        <div id="items-pane" class="bordered" [style.border-image]="'url(\'assets/images/border/' + borderName + '.png\') 22 round'">
+            <span>
+                <div class="equip-slots">
+                    <img class="equip-slot"> <img class="equip-slot"> <br> <img class="equip-slot"> <img class="equip-slot"> <br>
+                    <img class="equip-slot"> <img class="equip-slot"> <br> <img class="equip-slot"> <img class="equip-slot"> <br>
+                </div>
+                <div class="greater-rune-count">
+                    0/3 <img src="assets/images/greater_rune.png">
+                </div>
+            </span>
+            <span id="item-editor">
+                <div>
+                    <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <br>
+                    <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <br>
+                </div>
+                <div>Rune: <img class="equip-slot"></div>
+            </span>
+        </div>
+        <img id="character-model" src="assets/images/model/{{character.charClass.id}}.png">
+        <div id="skills-pane" class="bordered" [style.border-image]="'url(\'assets/images/border/' + borderName + '.png\') 22 round'">
+            <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <br>
+            <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <br>
+            <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <br>
+            <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <br>
+            <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <br>
+            <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <br>
+            <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <img class="equip-slot"> <br>
+        </div>
     </div>
 </div>
