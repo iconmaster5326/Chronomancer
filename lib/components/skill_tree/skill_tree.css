@@ -1,0 +1,15 @@
+.skill-tree {
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-tree-row {
+  display: flex;
+}
+
+.skill-tree-cell {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  background: url("assets/images/equipment_slots.png");
+}

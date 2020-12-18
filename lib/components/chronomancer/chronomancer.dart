@@ -3,23 +3,21 @@ import 'package:chronomancer/components/char_sel/char_sel.dart';
 import 'package:chronomancer/character.dart';
 import 'package:chronomancer/components/equip_dialog/equip_dialog.dart';
 import 'package:chronomancer/components/equip_slot/equip_slot.dart';
+import 'package:chronomancer/components/skill_tree/skill_tree.dart';
 import 'package:chronomancer/item.dart';
 import 'package:chronomancer/version.dart';
 import 'package:http/http.dart';
-
-// AngularDart info: https://angulardart.dev
-// Components info: https://angulardart.dev/components
 
 @Component(
   selector: 'chronomancer',
   styleUrls: ['chronomancer.css'],
   templateUrl: 'chronomancer.html',
   directives: [
-    NgFor,
-    NgIf,
+    coreDirectives,
     CharSelCompoment,
     EquipSlotComponent,
-    EquipDialogComponent
+    EquipDialogComponent,
+    SkillTreeComponent,
   ],
 )
 class ChronomancerComponent {
