@@ -4,6 +4,7 @@ import 'package:chronomancer/character.dart';
 import 'package:chronomancer/components/equip_dialog/equip_dialog.dart';
 import 'package:chronomancer/components/equip_slot/equip_slot.dart';
 import 'package:chronomancer/components/skill_tree/skill_tree.dart';
+import 'package:chronomancer/components/skill_tree_tab/skill_tree_tab.dart';
 import 'package:chronomancer/item.dart';
 import 'package:chronomancer/version.dart';
 import 'package:http/http.dart';
@@ -18,6 +19,7 @@ import 'package:http/http.dart';
     EquipSlotComponent,
     EquipDialogComponent,
     SkillTreeComponent,
+    SkillTreeTabComponent,
   ],
 )
 class ChronomancerComponent {
@@ -33,6 +35,7 @@ class ChronomancerComponent {
   static List<Version> versions;
   static Version version;
   static Character character;
+  static int currentTree = 2;
 
   static void init() async {
     versions = await Version.getVersions(Client());

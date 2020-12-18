@@ -1,15 +1,17 @@
 import 'dart:convert';
-import 'package:chronomancer/enchant.dart';
 import 'package:http/http.dart';
 
 import 'class.dart';
+import 'enchant.dart';
 import 'item.dart';
+import 'skill.dart';
 
 class Version {
   String name;
   List<CharClass> classes;
   List<Item> items;
   List<Enchant> enchants;
+  List<Skill> skills;
 
   Version(this.name);
 
@@ -18,9 +20,13 @@ class Version {
       version.classes = await CharClass.getClassList(version, http);
       version.items = await Item.getItemList(version, http);
       version.enchants = await Enchant.getEnchantList(version, http);
+      version.skills = await Skill.getSkillList(version, http);
 
       for (var item in version.items) {
         item.finalize(version);
+      }
+      for (var skill in version.skills) {
+        skill.finalize(version);
       }
 
       return version;
