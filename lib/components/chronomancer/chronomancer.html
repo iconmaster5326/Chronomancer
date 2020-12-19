@@ -24,6 +24,7 @@
         </div>
         <img id="character-model" src="assets/images/model/{{character.charClass.id}}.png">
         <div id="skills-pane" class="bordered" [style.border-image]="'url(\'assets/images/border/' + borderName + '.png\') 22 round'">
+            <div class="skill-points-display">{{skillPointsDisplay}}</div>
             <span *ngFor="let treeName of character.charClass.skillTrees; let tree = index">
                 <skill-tree-tab [tree]="tree"></skill-tree-tab>
             </span>

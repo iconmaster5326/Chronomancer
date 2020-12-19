@@ -7,6 +7,7 @@ import 'package:chronomancer/components/skill_tree/skill_dialog/skill_dialog.dar
 import 'package:chronomancer/components/skill_tree/skill_tree.dart';
 import 'package:chronomancer/components/skill_tree_tab/skill_tree_tab.dart';
 import 'package:chronomancer/item.dart';
+import 'package:chronomancer/skill.dart';
 import 'package:chronomancer/version.dart';
 import 'package:http/http.dart';
 
@@ -44,4 +45,8 @@ class ChronomancerComponent {
   }
 
   String get borderName => character?.charClass?.id ?? 'default';
+  String get skillPointsDisplay =>
+      SkillTreeComponent.currentTree == Skill.TREE_MASTERY
+          ? 'Mastery Points: ${character.masteryPointsSpent}'
+          : 'Skill Points: ${character.pointsSpent} / ${character.level}';
 }

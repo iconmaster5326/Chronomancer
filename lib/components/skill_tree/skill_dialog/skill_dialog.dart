@@ -1,9 +1,13 @@
 import 'dart:html';
 
 import 'package:angular/angular.dart';
+import 'package:chronomancer/character.dart';
+import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/components/skill_tree/skill_dialog/skill/skill.dart';
+import 'package:chronomancer/components/skill_tree/skill_tree.dart';
 import 'package:chronomancer/skill.dart';
+import 'package:chronomancer/util.dart';
 
 @Component(
   selector: 'skill-dialog',
@@ -13,6 +17,7 @@ import 'package:chronomancer/skill.dart';
 )
 class SkillDialogComponent extends ModalComponent {
   static SkillDialogComponent INSTANCE;
+  Vector2 pos;
   List<Skill> skills;
 
   @override
@@ -21,5 +26,11 @@ class SkillDialogComponent extends ModalComponent {
     INSTANCE = this;
   }
 
-  void onSkillSelected(Skill skill) {}
+  void onSkillSelected(Skill skill) {
+    ChronomancerComponent.character.skills[SkillTreeComponent.currentTree]
+            [pos] =
+        SpentSkill(ChronomancerComponent.character,
+            SkillTreeComponent.currentTree, pos, skill);
+    hide();
+  }
 }

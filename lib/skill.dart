@@ -24,9 +24,30 @@ const Map<String, SkillType> STRING_TO_SKILL_TYPE = <String, SkillType>{
 };
 
 class Skill {
-  static const int TREE_MASTERY = 4;
+  static const TREE_MASTERY = 4;
+  static const X_TO_MIN_LEVEL = <int, int>{
+    2: 0,
+    3: 4,
+    4: 9,
+    5: 14,
+    6: 19,
+    7: 24,
+    8: 29,
+    9: 34,
+  };
+  static const MASTERY_X_TO_MIN_LEVEL = <int, int>{
+    2: 0,
+    3: 5,
+    4: 10,
+    5: 15,
+    6: 25,
+    7: 30,
+    8: 40,
+    9: 45,
+    10: 50,
+  };
 
-  int id, tree, maxRank;
+  int id, tree, maxRank, minLevel;
   String name, typeName, desc;
   CharClass charClass;
   SkillType type;
@@ -45,6 +66,7 @@ class Skill {
         type = STRING_TO_SKILL_TYPE[j['type'] ?? 'Perk'],
         desc = j['description'],
         tallySkill = (j['x'] == 0),
+        minLevel = j['minLevel'],
         _x = j['x'],
         _y = j['y'],
         maxRank = j['maxRank'],
@@ -99,6 +121,11 @@ class Skill {
         type = SkillType.PASSIVE;
         typeName = 'Passive Skill';
       }
+    }
+
+    // fix up minLevel
+    if (tree != TREE_MASTERY) {
+      minLevel = X_TO_MIN_LEVEL[_x] ?? 0;
     }
   }
 

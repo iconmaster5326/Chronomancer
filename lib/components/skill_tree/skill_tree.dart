@@ -62,4 +62,6 @@ class SkillTreeComponent extends CommonComponent {
       currentTree == Skill.TREE_MASTERY ? _masteryEdges : _nonMasteryEdges;
 
   Object trackByEquality(dynamic n, dynamic o) => n == o;
+
+  String get backgroundSize => '0%';
 }

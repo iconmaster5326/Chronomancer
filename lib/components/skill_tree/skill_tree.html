@@ -1,4 +1,4 @@
-<div class="skill-tree">
+<div class="skill-tree" [style.background-size]="backgroundSize">
     <div *ngFor="let node of nodes; trackBy: trackByEquality">
         <skill-tree-node [node]="node"></skill-tree-node>
     </div>

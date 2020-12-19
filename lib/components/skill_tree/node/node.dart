@@ -1,4 +1,5 @@
 import 'package:angular/angular.dart';
+import 'package:chronomancer/character.dart';
 import 'package:chronomancer/class.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
@@ -76,12 +77,16 @@ class NodeComponent extends CommonComponent {
     }
   }
 
-  int get rank => node.skills.first.tallySkill
-      ? null
-      : ChronomancerComponent
-          .character
-          .skills[SkillTreeComponent.currentTree][Vector2(node.x, node.y)]
-          ?.rank;
+  int get rank {
+    var r = node.skills.first.tallySkill
+        ? ChronomancerComponent.character
+            .pointsSpentIn(SkillTreeComponent.currentTree)
+        : ChronomancerComponent
+            .character
+            .skills[SkillTreeComponent.currentTree][Vector2(node.x, node.y)]
+            ?.rank;
+    return r == 0 ? null : r;
+  }
 
   SkillType get type => node.skills.first.type;
   CharClass get charClass => ChronomancerComponent.character.charClass;
@@ -102,26 +107,24 @@ class NodeComponent extends CommonComponent {
   }
 
   String get background {
-    if (node.skills.isEmpty) {
-      return '';
-    }
-
     var skillBorder = modes
         .map((mode) =>
             'url("assets/images/skill_slots.png") ${-(mode.index * SKILL_BORDER_SIZE)}px ${-(type.index * SKILL_BORDER_SIZE)}px')
         .join(', ');
-    if (filledWith == null) {
+
+    var skill = filledWith;
+    if (skill == null) {
       return skillBorder;
     }
 
-    if (node.skills.length == 1) {
-      var skillX = node.skills.first.id % SKILL_ICONS_PER_ROW;
-      var skillY = node.skills.first.id ~/ SKILL_ICONS_PER_ROW;
-      return skillBorder +
-          ', url("assets/images/skills/${ChronomancerComponent.version.name}.png") ${-skillX * SKILL_ICON_SIZE + 1}px ${-skillY * SKILL_ICON_SIZE}px';
+    if (!ChronomancerComponent.character.skillUnlocked(skill)) {
+      skillBorder += ', linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5))';
     }
 
-    return skillBorder;
+    var skillX = skill.id % SKILL_ICONS_PER_ROW;
+    var skillY = skill.id ~/ SKILL_ICONS_PER_ROW;
+    return skillBorder +
+        ', url("assets/images/skills/${ChronomancerComponent.version.name}.png") ${-skillX * SKILL_ICON_SIZE + 1}px ${-skillY * SKILL_ICON_SIZE}px';
   }
 
   String get levelBoxBackground => node.skills.first.tallySkill
@@ -132,7 +135,26 @@ class NodeComponent extends CommonComponent {
   String get posTop => '${node.y * (SKILL_ICON_SIZE + SKILL_ICON_PADDING)}px';
 
   void onClick() {
-    SkillDialogComponent.INSTANCE.skills = node.skills;
-    SkillDialogComponent.INSTANCE.show();
+    if (node.skills.first.tallySkill) {
+      return;
+    }
+
+    if (filledWith == null) {
+      SkillDialogComponent.INSTANCE.skills = node.skills;
+      SkillDialogComponent.INSTANCE.pos = Vector2(node.x, node.y);
+      SkillDialogComponent.INSTANCE.show();
+    } else {
+      var pos = Vector2(node.x, node.y);
+      var spentSkill = ChronomancerComponent
+          .character.skills[SkillTreeComponent.currentTree]
+          .putIfAbsent(
+              pos,
+              () => SpentSkill(ChronomancerComponent.character,
+                  SkillTreeComponent.currentTree, pos, node.skills.first));
+
+      if (spentSkill.canRankUp) {
+        spentSkill.rank++;
+      }
+    }
   }
 }
