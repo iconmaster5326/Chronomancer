@@ -3,6 +3,7 @@ import 'package:http/http.dart';
 
 import 'class.dart';
 import 'enchant.dart';
+import 'gem.dart';
 import 'item.dart';
 import 'skill.dart';
 
@@ -12,6 +13,7 @@ class Version {
   List<Item> items;
   List<Enchant> enchants;
   List<Skill> skills;
+  List<Gem> gems;
 
   Version(this.name);
 
@@ -21,12 +23,16 @@ class Version {
     version.items = await Item.getItemList(version, http);
     version.enchants = await Enchant.getEnchantList(version, http);
     version.skills = await Skill.getSkillList(version, http);
+    version.gems = await Gem.getGemList(version, http);
 
     for (var item in version.items) {
       item.finalize(version);
     }
     for (var skill in version.skills) {
       skill.finalize(version);
+    }
+    for (var gem in version.gems) {
+      gem.finalize(version);
     }
 
     return version;

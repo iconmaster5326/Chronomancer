@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 
 import 'enchant.dart';
+import 'gem.dart';
 import 'version.dart';
 import 'class.dart';
 import 'util.dart';
@@ -86,10 +87,78 @@ class Item {
   }
 }
 
+enum GemSource {
+  INNATE,
+  ENCHANT,
+  PRISMATIC,
+}
+
+class GemSocket {
+  GemSource source;
+  GemShape shape;
+  Gem gem;
+
+  GemSocket(this.source, this.shape, [this.gem]);
+}
+
 class ItemStack {
   Item item;
   ItemRarity rarity;
   List<EnchantStack> enchants = [];
+  List<GemSocket> gems = [];
+
+  static int WEYRICKS_FINERY_ID = 713;
+
+  static const INNATE_GEM_SOCKET_CONFIGURATIONS = {
+    ItemType.ACCCESSORY: [
+      [GemShape.STAR],
+      [GemShape.CUBE],
+      [GemShape.SPHERE],
+    ],
+    ItemType.AMULET: [
+      [GemShape.STAR],
+      [GemShape.CUBE, GemShape.CUBE],
+      [GemShape.CUBE, GemShape.SPHERE],
+      [GemShape.SPHERE, GemShape.SPHERE],
+    ],
+    ItemType.BODY: [
+      [GemShape.STAR, GemShape.STAR],
+      [GemShape.STAR, GemShape.CUBE, GemShape.CUBE],
+      [GemShape.STAR, GemShape.CUBE, GemShape.SPHERE],
+      [GemShape.STAR, GemShape.SPHERE, GemShape.SPHERE],
+      [GemShape.CUBE, GemShape.CUBE, GemShape.CUBE],
+      [GemShape.CUBE, GemShape.CUBE, GemShape.SPHERE],
+      [GemShape.CUBE, GemShape.SPHERE, GemShape.SPHERE],
+      [GemShape.SPHERE, GemShape.SPHERE, GemShape.SPHERE],
+    ],
+    ItemType.FEET: [
+      [GemShape.STAR],
+      [GemShape.CUBE],
+      [GemShape.SPHERE],
+    ],
+    ItemType.HEAD: [
+      [GemShape.STAR],
+      [GemShape.CUBE, GemShape.CUBE],
+      [GemShape.CUBE, GemShape.SPHERE],
+      [GemShape.SPHERE, GemShape.SPHERE],
+    ],
+    ItemType.OFF_HAND: [
+      [GemShape.STAR],
+      [GemShape.CUBE],
+      [GemShape.SPHERE],
+    ],
+    ItemType.RING: [
+      [GemShape.STAR],
+      [GemShape.CUBE],
+      [GemShape.SPHERE],
+    ],
+    ItemType.WEAPON: [
+      [GemShape.STAR],
+      [GemShape.CUBE, GemShape.CUBE],
+      [GemShape.CUBE, GemShape.SPHERE],
+      [GemShape.SPHERE, GemShape.SPHERE],
+    ],
+  };
 
   static const RARITY_BASED_ENCHANT_SLOTS = {
     ItemType.HEAD: {
@@ -324,6 +393,14 @@ class ItemStack {
     enchants.addAll(item.fixedEnchants.map((e) => EnchantStack(e, 0)));
     enchants.addAll(List<EnchantStack>.filled(
         RARITY_BASED_ENCHANT_SLOTS[item.type][rarity].length, null));
+
+    if (item.id == WEYRICKS_FINERY_ID) {
+      gems.addAll([
+        GemSocket(GemSource.ENCHANT, GemShape.SPHERE),
+        GemSocket(GemSource.ENCHANT, GemShape.CUBE),
+        GemSocket(GemSource.ENCHANT, GemShape.STAR)
+      ]);
+    }
   }
 
   bool mutableEnchant(int slot) =>
