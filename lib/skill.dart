@@ -32,6 +32,7 @@ class Skill {
   SkillType type;
   List<Skill> requires;
   List<Vector2> positions;
+  bool tallySkill;
 
   int _x, _y;
   String _rawClass, _rawTree;
@@ -43,6 +44,7 @@ class Skill {
         typeName = j['type'] ?? 'Perk',
         type = STRING_TO_SKILL_TYPE[j['type'] ?? 'Perk'],
         desc = j['description'],
+        tallySkill = (j['x'] == 0),
         _x = j['x'],
         _y = j['y'],
         maxRank = j['maxRank'],

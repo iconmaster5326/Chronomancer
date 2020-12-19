@@ -109,6 +109,10 @@ class NodeComponent extends CommonComponent {
     return skillBorder;
   }
 
+  String get levelBoxBackground => node.skills.first.tallySkill
+      ? ''
+      : 'url("assets/images/skill_level_box.png")';
+
   String get posLeft => '${node.x * (SKILL_ICON_SIZE + SKILL_ICON_PADDING)}px';
   String get posTop => '${node.y * (SKILL_ICON_SIZE + SKILL_ICON_PADDING)}px';
 }

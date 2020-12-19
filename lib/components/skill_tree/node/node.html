@@ -1,3 +1,4 @@
-<div class="skill-tree-node" [style.background]="background" [style.clip-path]="clipPath" [style.left]="posLeft" [style.top]="posTop" (mouseenter)="hovering = true" (mouseleave)="hovering = false">
-
+<div class="skill-tree-node" [style.left]="posLeft" [style.top]="posTop" (mouseenter)="hovering = true" (mouseleave)="hovering = false">
+    <div class="skill-tree-node-level" [style.background]="levelBoxBackground">{{node.skills.first.maxRank}}</div>
+    <div class="skill-tree-node-image" [style.background]="background" [style.clip-path]="clipPath"></div>
 </div>
