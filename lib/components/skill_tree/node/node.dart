@@ -2,6 +2,7 @@ import 'package:angular/angular.dart';
 import 'package:chronomancer/class.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
+import 'package:chronomancer/components/skill_tree/skill_dialog/skill_dialog.dart';
 import 'package:chronomancer/components/skill_tree/skill_tree.dart';
 import 'package:chronomancer/skill.dart';
 import 'package:chronomancer/util.dart';
@@ -129,4 +130,9 @@ class NodeComponent extends CommonComponent {
 
   String get posLeft => '${node.x * (SKILL_ICON_SIZE + SKILL_ICON_PADDING)}px';
   String get posTop => '${node.y * (SKILL_ICON_SIZE + SKILL_ICON_PADDING)}px';
+
+  void onClick() {
+    SkillDialogComponent.INSTANCE.skills = node.skills;
+    SkillDialogComponent.INSTANCE.show();
+  }
 }

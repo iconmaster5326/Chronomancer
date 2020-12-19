@@ -1,0 +1,5 @@
+.skill-card {
+    display: flex;
+    border: 1px solid white;
+    margin: 4px;
+}

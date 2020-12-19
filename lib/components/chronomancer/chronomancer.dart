@@ -3,6 +3,7 @@ import 'package:chronomancer/components/char_sel/char_sel.dart';
 import 'package:chronomancer/character.dart';
 import 'package:chronomancer/components/equip_dialog/equip_dialog.dart';
 import 'package:chronomancer/components/equip_slot/equip_slot.dart';
+import 'package:chronomancer/components/skill_tree/skill_dialog/skill_dialog.dart';
 import 'package:chronomancer/components/skill_tree/skill_tree.dart';
 import 'package:chronomancer/components/skill_tree_tab/skill_tree_tab.dart';
 import 'package:chronomancer/item.dart';
@@ -20,6 +21,7 @@ import 'package:http/http.dart';
     EquipDialogComponent,
     SkillTreeComponent,
     SkillTreeTabComponent,
+    SkillDialogComponent,
   ],
 )
 class ChronomancerComponent {
