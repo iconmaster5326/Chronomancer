@@ -18,7 +18,32 @@ class SpentSkill {
       unlocked &&
       rank != skill.maxRank &&
       character.pointsSpent < character.level;
-  bool get canRankDown => unlocked && rank != 0;
+  bool get canRankDown {
+    if (!unlocked || rank == 0) {
+      return false;
+    }
+
+    if (!character.skills[tree].values
+        .where((spentSkill) => spentSkill.pos.x > pos.x && spentSkill.rank != 0)
+        .every((spentSkill) =>
+            spentSkill.skill.minLevel <
+            Range(2, spentSkill.pos.x-1)
+                .map((i) => character.pointsSpentInTier(tree, i))
+                .sum)) {
+      return false;
+    }
+
+    if (rank == 1 &&
+        skill.recursivelyUnlocks
+            .map((skill) =>
+                skill.positions.map((pos) => character.skills[skill.tree][pos]))
+            .flatten
+            .any((spentSkill) => spentSkill != null && spentSkill.rank > 0)) {
+      return false;
+    }
+
+    return true;
+  }
 }
 
 class Character {
@@ -40,6 +65,10 @@ class Character {
 
   int pointsSpentIn(int tree) =>
       skills[tree].values.fold(0, (sum, spentSkill) => sum + spentSkill.rank);
+  int pointsSpentInTier(int tree, int tier) => skills[tree]
+      .values
+      .where((spentSkill) => spentSkill.pos.x == tier)
+      .fold(0, (sum, spentSkill) => sum + spentSkill.rank);
 
   bool skillUnlocked(Skill skill) =>
       pointsSpentIn(skill.tree) >= skill.minLevel &&

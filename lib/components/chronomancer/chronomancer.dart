@@ -38,6 +38,7 @@ class ChronomancerComponent {
   static List<Version> versions;
   static Version version;
   static Character character;
+  static bool respeccing = false;
 
   static void init() async {
     versions = await Version.getVersions(Client());

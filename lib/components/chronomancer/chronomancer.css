@@ -70,3 +70,13 @@
 .skill-points-display {
     font-size: 12px;
 }
+
+.skills-pane-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.respec-button {
+    font-size: 9px;
+}

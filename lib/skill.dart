@@ -47,6 +47,7 @@ class Skill {
     10: 50,
   };
 
+  Version version;
   int id, tree, maxRank, minLevel;
   String name, typeName, desc;
   CharClass charClass;
@@ -59,7 +60,7 @@ class Skill {
   String _rawClass, _rawTree;
   List<int> _rawRequires;
 
-  Skill.fromJSON(Map<String, dynamic> j)
+  Skill.fromJSON(this.version, Map<String, dynamic> j)
       : id = j['uuid'],
         name = j['name'],
         typeName = j['type'] ?? 'Perk',
@@ -132,7 +133,12 @@ class Skill {
   static Future<List<Skill>> getSkillList(Version version, Client http) async {
     final response = await http.get('assets/json/${version.name}/skills.json');
     return (json.decode(response.body) as List)
-        .map((j) => Skill.fromJSON(j))
+        .map((j) => Skill.fromJSON(version, j))
         .toList();
   }
+
+  Iterable<Skill> get unlocks =>
+      version.skills.where((s) => s.requires.contains(this));
+  Iterable<Skill> get recursivelyUnlocks => unlocks.followedBy(
+      unlocks.map((s) => s.recursivelyUnlocks).flatten);
 }
