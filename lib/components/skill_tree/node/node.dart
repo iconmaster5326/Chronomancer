@@ -2,7 +2,9 @@ import 'package:angular/angular.dart';
 import 'package:chronomancer/class.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
+import 'package:chronomancer/components/skill_tree/skill_tree.dart';
 import 'package:chronomancer/skill.dart';
+import 'package:chronomancer/util.dart';
 
 class SkillTreeNode {
   int x, y;
@@ -58,7 +60,12 @@ class NodeComponent extends CommonComponent {
 
   bool hovering = false;
 
-  Skill get filledWith => node.skills.length == 1 ? node.skills.first : null;
+  Skill get filledWith => node.skills.length == 1
+      ? node.skills.first
+      : ChronomancerComponent
+          .character
+          .skills[SkillTreeComponent.currentTree][Vector2(node.x, node.y)]
+          ?.skill;
   Iterable<NodeMode> get modes {
     var filledMode = filledWith == null ? NodeMode.EMPTY : NodeMode.FILLED;
     if (hovering) {
@@ -67,6 +74,13 @@ class NodeComponent extends CommonComponent {
       return [filledMode];
     }
   }
+
+  int get rank => node.skills.first.tallySkill
+      ? null
+      : ChronomancerComponent
+          .character
+          .skills[SkillTreeComponent.currentTree][Vector2(node.x, node.y)]
+          ?.rank;
 
   SkillType get type => node.skills.first.type;
   CharClass get charClass => ChronomancerComponent.character.charClass;
