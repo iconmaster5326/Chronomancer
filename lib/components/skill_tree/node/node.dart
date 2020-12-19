@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:angular/angular.dart';
 import 'package:chronomancer/character.dart';
 import 'package:chronomancer/class.dart';
@@ -140,6 +142,7 @@ class NodeComponent extends CommonComponent {
     }
 
     if (filledWith == null) {
+      SkillDialogComponent.INSTANCE.rank = 0;
       SkillDialogComponent.INSTANCE.skills = node.skills;
       SkillDialogComponent.INSTANCE.pos = Vector2(node.x, node.y);
       SkillDialogComponent.INSTANCE.show();
@@ -155,6 +158,21 @@ class NodeComponent extends CommonComponent {
       if (spentSkill.canRankUp) {
         spentSkill.rank++;
       }
+    }
+  }
+
+  void onRightClick(MouseEvent event) {
+    event.preventDefault();
+
+    if (node.skills.length > 1) {
+      SkillDialogComponent.INSTANCE.rank = ChronomancerComponent
+              .character
+              .skills[SkillTreeComponent.currentTree][Vector2(node.x, node.y)]
+              ?.rank ??
+          0;
+      SkillDialogComponent.INSTANCE.skills = node.skills;
+      SkillDialogComponent.INSTANCE.pos = Vector2(node.x, node.y);
+      SkillDialogComponent.INSTANCE.show();
     }
   }
 }

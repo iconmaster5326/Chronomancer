@@ -17,6 +17,7 @@ import 'package:chronomancer/util.dart';
 )
 class SkillDialogComponent extends ModalComponent {
   static SkillDialogComponent INSTANCE;
+  int rank;
   Vector2 pos;
   List<Skill> skills;
 
@@ -27,10 +28,11 @@ class SkillDialogComponent extends ModalComponent {
   }
 
   void onSkillSelected(Skill skill) {
+    var spentSkill = SpentSkill(ChronomancerComponent.character,
+        SkillTreeComponent.currentTree, pos, skill);
+    spentSkill.rank = rank;
     ChronomancerComponent.character.skills[SkillTreeComponent.currentTree]
-            [pos] =
-        SpentSkill(ChronomancerComponent.character,
-            SkillTreeComponent.currentTree, pos, skill);
+        [pos] = spentSkill;
     hide();
   }
 }

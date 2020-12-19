@@ -63,5 +63,7 @@ class SkillTreeComponent extends CommonComponent {
 
   Object trackByEquality(dynamic n, dynamic o) => n == o;
 
-  String get backgroundSize => '0%';
+  // String get backgroundSize =>
+  //     '${(1 - ChronomancerComponent.character.pointsSpentIn(currentTree) / ChronomancerComponent.character.charClass.maxPointsInTree(currentTree)) * 100}%';
+  String get backgroundSize => '0';
 }
