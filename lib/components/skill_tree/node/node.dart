@@ -141,6 +141,18 @@ class NodeComponent extends CommonComponent {
   String get posLeft => '${node.x * (SKILL_ICON_SIZE + SKILL_ICON_PADDING)}px';
   String get posTop => '${node.y * (SKILL_ICON_SIZE + SKILL_ICON_PADDING)}px';
 
+  List<Skill> get validSkills {
+    var thisSpentSkill = ChronomancerComponent.character
+        .skills[SkillTreeComponent.currentTree][Vector2(node.x, node.y)];
+    return SkillTreeComponent.currentTree == Skill.TREE_MASTERY
+        ? node.skills.where((skill) {
+            var spentSkill =
+                ChronomancerComponent.character.findSpentSkill(skill);
+            return spentSkill == null || spentSkill == thisSpentSkill;
+          }).toList()
+        : node.skills;
+  }
+
   void onClick() {
     if (node.skills.first.tallySkill) {
       return;
@@ -148,7 +160,7 @@ class NodeComponent extends CommonComponent {
 
     if (filledWith == null) {
       SkillDialogComponent.INSTANCE.rank = 0;
-      SkillDialogComponent.INSTANCE.skills = node.skills;
+      SkillDialogComponent.INSTANCE.skills = validSkills;
       SkillDialogComponent.INSTANCE.pos = Vector2(node.x, node.y);
       SkillDialogComponent.INSTANCE.show();
     } else {
@@ -181,7 +193,7 @@ class NodeComponent extends CommonComponent {
               .skills[SkillTreeComponent.currentTree][Vector2(node.x, node.y)]
               ?.rank ??
           0;
-      SkillDialogComponent.INSTANCE.skills = node.skills;
+      SkillDialogComponent.INSTANCE.skills = validSkills;
       SkillDialogComponent.INSTANCE.pos = Vector2(node.x, node.y);
       SkillDialogComponent.INSTANCE.show();
     }

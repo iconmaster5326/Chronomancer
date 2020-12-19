@@ -44,9 +44,10 @@ class SpentSkill {
           spentSkill == null ||
           spentSkill.rank == 0 ||
           spentSkill.skill.minLevel <
-          Range(2, spentSkill.pos.x - 1)
-              .map((x) => character.skills[tree][Vector2(x, pos.y)]?.rank ?? 0)
-              .sum)) {
+              Range(2, spentSkill.pos.x - 1)
+                  .map((x) =>
+                      character.skills[tree][Vector2(x, pos.y)]?.rank ?? 0)
+                  .sum)) {
         return false;
       }
 
@@ -115,11 +116,7 @@ class Character {
         return true;
       }
 
-      var spentSkill = skill.positions
-          .map((pos) => skills[skill.tree][pos])
-          .firstWhere(
-              (spentSkill) => spentSkill != null && spentSkill.skill == skill,
-              orElse: () => null);
+      var spentSkill = findSpentSkill(skill);
       if (spentSkill == null) {
         return false;
       }
@@ -154,5 +151,11 @@ class Character {
                 return spentSkill.rank > 0;
               }));
     }
+  }
+
+  SpentSkill findSpentSkill(Skill skill) {
+    return skill.positions.map((pos) => skills[skill.tree][pos]).firstWhere(
+        (spentSkill) => spentSkill != null && spentSkill.skill == skill,
+        orElse: () => null);
   }
 }

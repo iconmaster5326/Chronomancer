@@ -38,7 +38,7 @@ class Skill {
 
   Version version;
   int id, tree, maxRank, minLevel;
-  String name, typeName, desc;
+  String name, typeName, desc, elementName;
   CharClass charClass;
   SkillType type;
   List<Skill> requires;
@@ -57,9 +57,10 @@ class Skill {
         desc = j['description'],
         tallySkill = (j['x'] == 0),
         minLevel = j['minLevel'],
+        maxRank = j['maxRank'],
+        elementName = j['element'],
         _x = j['x'],
         _y = j['y'],
-        maxRank = j['maxRank'],
         _rawClass = j['class'],
         _rawTree = j['tree'],
         _rawRequires = List<int>.from(j['skillRequirement']);
@@ -83,6 +84,17 @@ class Skill {
     if (id == 0) {
       // the None skill is not on the tree
       positions = [];
+    } else if (tree == TREE_MASTERY &&
+        _x == 10 &&
+        _y == 0 &&
+        elementName == 'Ethereal') {
+      // Mastery generic rightmost skills can be in four positions
+      positions = [
+        Vector2(10, 0),
+        Vector2(10, 1),
+        Vector2(10, 5),
+        Vector2(10, 6)
+      ];
     } else if (tree == TREE_MASTERY && _y == 2 && _x.between(2, 9)) {
       // mastery tree center skills can be in three positions
       positions = [Vector2(_x, _y), Vector2(_x, _y + 1), Vector2(_x, _y + 2)];
@@ -128,6 +140,6 @@ class Skill {
 
   Iterable<Skill> get unlocks =>
       version.skills.where((s) => s.requires.contains(this));
-  Iterable<Skill> get recursivelyUnlocks => unlocks.followedBy(
-      unlocks.map((s) => s.recursivelyUnlocks).flatten);
+  Iterable<Skill> get recursivelyUnlocks =>
+      unlocks.followedBy(unlocks.map((s) => s.recursivelyUnlocks).flatten);
 }
