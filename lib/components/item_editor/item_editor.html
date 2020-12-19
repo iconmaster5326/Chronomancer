@@ -1,0 +1,12 @@
+<div *ngIf="editing != null" class="item-editor">
+    <div class="item-editor-header">
+        <span>Editing:</span>
+        <slot [item]="editing.item"></slot>
+        <span>{{editing?.name}}</span>
+    </div>
+    <div class="item-editor-enchants">
+        <div *ngFor="let enchant of editing.enchants; let enchantSlot = index">
+            <enchant-slot [item]="editing" [slot]="enchantSlot"></enchant-slot>
+        </div>
+    </div>
+</div>

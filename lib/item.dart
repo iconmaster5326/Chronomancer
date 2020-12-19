@@ -88,12 +88,253 @@ class Item {
 
 class ItemStack {
   Item item;
+  ItemRarity rarity;
+  List<EnchantStack> enchants = [];
 
-  ItemStack(this.item);
+  static const RARITY_BASED_ENCHANT_SLOTS = {
+    ItemType.HEAD: {
+      ItemRarity.ORDINARY: <List<EnchantType>>[],
+      ItemRarity.ENCHANTED: [
+        [EnchantType.MINOR, EnchantType.MAJOR]
+      ],
+      ItemRarity.RARE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+      ],
+      ItemRarity.UNIQUE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+      ],
+      ItemRarity.LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+      ],
+      ItemRarity.TRUE_LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+      ],
+    },
+    ItemType.ACCCESSORY: {
+      ItemRarity.ORDINARY: <List<EnchantType>>[],
+      ItemRarity.ENCHANTED: [
+        [EnchantType.MINOR, EnchantType.MAJOR]
+      ],
+      ItemRarity.RARE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+      ],
+      ItemRarity.UNIQUE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+      ],
+      ItemRarity.LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+      ],
+      ItemRarity.TRUE_LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+      ],
+    },
+    ItemType.OFF_HAND: {
+      ItemRarity.ORDINARY: <List<EnchantType>>[],
+      ItemRarity.ENCHANTED: [
+        [EnchantType.MINOR, EnchantType.MAJOR]
+      ],
+      ItemRarity.RARE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+      ],
+      ItemRarity.UNIQUE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+      ],
+      ItemRarity.LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+      ],
+      ItemRarity.TRUE_LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+      ],
+    },
+    ItemType.RING: {
+      ItemRarity.ORDINARY: <List<EnchantType>>[],
+      ItemRarity.ENCHANTED: [
+        [EnchantType.MINOR, EnchantType.MAJOR]
+      ],
+      ItemRarity.RARE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.EPIC],
+      ],
+      ItemRarity.UNIQUE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+        [EnchantType.EPIC],
+      ],
+      ItemRarity.LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+        [EnchantType.EPIC],
+      ],
+      ItemRarity.TRUE_LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+        [EnchantType.EPIC],
+      ],
+    },
+    ItemType.AMULET: {
+      ItemRarity.ORDINARY: <List<EnchantType>>[],
+      ItemRarity.ENCHANTED: [
+        [EnchantType.MINOR, EnchantType.MAJOR]
+      ],
+      ItemRarity.RARE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.EPIC],
+      ],
+      ItemRarity.UNIQUE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+        [EnchantType.EPIC],
+      ],
+      ItemRarity.LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+        [EnchantType.EPIC],
+      ],
+      ItemRarity.TRUE_LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+        [EnchantType.EPIC],
+      ],
+    },
+    ItemType.WEAPON: {
+      ItemRarity.ORDINARY: <List<EnchantType>>[],
+      ItemRarity.ENCHANTED: [
+        [EnchantType.MINOR, EnchantType.MAJOR]
+      ],
+      ItemRarity.RARE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR, EnchantType.EPIC],
+      ],
+      ItemRarity.UNIQUE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR, EnchantType.EPIC],
+      ],
+      ItemRarity.LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR, EnchantType.EPIC],
+      ],
+      ItemRarity.TRUE_LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR, EnchantType.EPIC],
+      ],
+    },
+    ItemType.BODY: {
+      ItemRarity.ORDINARY: <List<EnchantType>>[],
+      ItemRarity.ENCHANTED: [
+        [EnchantType.MINOR, EnchantType.MAJOR]
+      ],
+      ItemRarity.RARE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR, EnchantType.EPIC],
+      ],
+      ItemRarity.UNIQUE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR, EnchantType.EPIC],
+      ],
+      ItemRarity.LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR, EnchantType.EPIC],
+      ],
+      ItemRarity.TRUE_LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR, EnchantType.EPIC],
+      ],
+    },
+    ItemType.FEET: {
+      ItemRarity.ORDINARY: <List<EnchantType>>[],
+      ItemRarity.ENCHANTED: [
+        [EnchantType.MINOR, EnchantType.MAJOR]
+      ],
+      ItemRarity.RARE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR, EnchantType.EPIC],
+      ],
+      ItemRarity.UNIQUE: [
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR, EnchantType.EPIC],
+      ],
+      ItemRarity.LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR, EnchantType.EPIC],
+      ],
+      ItemRarity.TRUE_LEGENDARY: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR, EnchantType.EPIC],
+      ],
+    },
+  };
+
+  ItemStack(this.item, [this.rarity]) {
+    rarity = rarity ?? item.rarity;
+    enchants.addAll(item.baseEnchants.map((e) => EnchantStack(e, 0)));
+    enchants.addAll(item.fixedEnchants.map((e) => EnchantStack(e, 0)));
+    enchants.addAll(List<EnchantStack>.filled(
+        RARITY_BASED_ENCHANT_SLOTS[item.type][rarity].length, null));
+  }
+
+  bool mutableEnchant(int slot) =>
+      slot >= item.baseEnchants.length + item.fixedEnchants.length;
+  List<EnchantType> enchantTypesForSlot(int slot) => mutableEnchant(slot)
+      ? RARITY_BASED_ENCHANT_SLOTS[item.type][rarity]
+          [slot - item.baseEnchants.length - item.fixedEnchants.length]
+      : [enchants[slot].type];
 
   int get id => item.id;
   String get name => item.name;
   ItemType get slot => item.type;
-  ItemRarity get rarity => item.rarity;
   CharClass get requiresClass => item.requiresClass;
 }

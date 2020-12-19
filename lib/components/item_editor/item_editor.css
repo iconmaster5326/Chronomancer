@@ -1,0 +1,23 @@
+.item-editor {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    align-items: left;
+}
+
+.item-editor-header {
+    display: flex;
+    align-items: center;
+}
+
+.item-editor-header > * {
+    margin: 4px;
+}
+
+.item-editor-enchants {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    align-items: left;
+    overflow-y: scroll;
+}

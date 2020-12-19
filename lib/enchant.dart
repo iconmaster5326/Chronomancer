@@ -40,3 +40,15 @@ class Enchant {
         .toList();
   }
 }
+
+class EnchantStack {
+  Enchant enchant;
+  int value;
+
+  EnchantStack(this.enchant, this.value);
+
+  int get id => enchant.id;
+  String get name => enchant.name;
+  String get desc => enchant.desc;
+  EnchantType get type => enchant.type;
+}

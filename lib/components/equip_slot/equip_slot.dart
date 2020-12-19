@@ -1,7 +1,10 @@
+import 'dart:html';
+
 import 'package:angular/angular.dart';
 import 'package:chronomancer/character.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/equip_dialog/equip_dialog.dart';
+import 'package:chronomancer/components/item_editor/item_editor.dart';
 import 'package:chronomancer/components/slot/slot.dart';
 import 'package:chronomancer/item.dart';
 import 'package:chronomancer/version.dart';
@@ -46,7 +49,17 @@ class EquipSlotComponent extends SlotComponent {
   @override
   Item get item => character?.equipment[slot]?.item;
 
-  void onSlotSelected() {
+  void onClick() {
+    if (item == null) {
+      EquipDialogComponent.INSTANCE.slot = slot;
+      EquipDialogComponent.INSTANCE.show();
+    } else {
+      ItemEditorComponent.editing = character.equipment[slot];
+    }
+  }
+
+  void onRightClick(MouseEvent event) {
+    event.preventDefault();
     EquipDialogComponent.INSTANCE.slot = slot;
     EquipDialogComponent.INSTANCE.show();
   }

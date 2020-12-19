@@ -4,6 +4,7 @@ import 'package:angular/angular.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/components/equip_dialog/item/item.dart';
+import 'package:chronomancer/components/item_editor/item_editor.dart';
 import 'package:chronomancer/item.dart';
 
 @Component(
@@ -35,6 +36,8 @@ class EquipDialogComponent extends ModalComponent {
 
   void onItemSelected(Item item) {
     ChronomancerComponent.character.equipment[slot] = ItemStack(item);
+    ItemEditorComponent.editing =
+        ChronomancerComponent.character.equipment[slot];
     hide();
   }
 }
