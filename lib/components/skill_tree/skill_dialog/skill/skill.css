@@ -1,5 +1,25 @@
 .skill-card {
     display: flex;
+    flex-direction: column;
     border: 1px solid white;
     margin: 4px;
+}
+
+.skill-card-header {
+    display: flex;
+    align-items: center;
+}
+
+.skill-card-name {
+    display: inline;
+}
+
+.skill-card-icon {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+}
+
+.skill-card-desc {
+    font-size: 8px;
 }

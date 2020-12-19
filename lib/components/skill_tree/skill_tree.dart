@@ -17,6 +17,19 @@ class SkillTreeComponent extends CommonComponent {
   static const int ROWS = 7, COLS = 11;
   static int currentTree = 2;
 
+  static String skillTypeToClipPath(SkillType type) {
+    switch (type) {
+      case SkillType.PASSIVE:
+        return 'circle(45%)';
+      case SkillType.PERK:
+        return 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)';
+      case SkillType.AURA:
+        return 'polygon(75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%, 25% 0%)';
+      default:
+        return '';
+    }
+  }
+
   CharClass get charClass => ChronomancerComponent.character.charClass;
   List<int> get rowIndices => List<int>.generate(ROWS, (i) => i);
   List<int> get colIndices => List<int>.generate(COLS, (i) => i);

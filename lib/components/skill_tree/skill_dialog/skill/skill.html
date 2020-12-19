@@ -1,3 +1,7 @@
 <div class="skill-card">
-    {{skill.name}}
+    <div class="skill-card-header">
+        <div class="skill-card-icon" [style.background]="iconBackground" [style.clip-path]="iconClipPath"></div>
+        <div class="skill-card-name">{{skill.name}}</div>
+    </div>
+    <div class="skill-card-desc">{{skill.desc}}</div>
 </div>
