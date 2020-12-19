@@ -38,4 +38,6 @@ class SkillTreeComponent extends CommonComponent {
       .map((s1) =>
           s1.requires.map((s2) => SkillTreeEdge(s1.x, s1.y, s2.x, s2.y)))
       .fold<List<SkillTreeEdge>>([], (xs, x) => xs..addAll(x)).toList();
+
+      Object trackByEquality(dynamic n, dynamic o) => n == o;
 }

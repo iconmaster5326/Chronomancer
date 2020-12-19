@@ -1,8 +1,8 @@
 <div class="skill-tree">
-    <div *ngFor="let node of nodes">
+    <div *ngFor="let node of nodes; trackBy: trackByEquality">
         <skill-tree-node [node]="node"></skill-tree-node>
     </div>
-    <div *ngFor="let edge of edges">
+    <div *ngFor="let edge of edges; trackBy: trackByEquality">
         <skill-tree-edge [edge]="edge"></skill-tree-edge>
     </div>
 </div>
