@@ -1,9 +1,8 @@
 <div class="skill-tree">
-    <div *ngFor="let y of rowIndices">
-        <div class="skill-tree-row">
-            <div *ngFor="let x of colIndices">
-                <div class="skill-tree-cell">({{x}},{{y}})</div>
-            </div>
-        </div>
+    <div *ngFor="let node of nodes">
+        <skill-tree-node [node]="node"></skill-tree-node>
+    </div>
+    <div *ngFor="let edge of edges">
+        <skill-tree-edge [edge]="edge"></skill-tree-edge>
     </div>
 </div>

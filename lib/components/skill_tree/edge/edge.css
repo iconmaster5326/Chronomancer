@@ -1,0 +1,7 @@
+.skill-tree-edge {
+    position: absolute;
+    height: 4px;
+    background: url("assets/images/skill_edges.png");
+    z-index: 0;
+    transform-origin: left center;
+}

@@ -35,7 +35,6 @@ class ChronomancerComponent {
   static List<Version> versions;
   static Version version;
   static Character character;
-  static int currentTree = 2;
 
   static void init() async {
     versions = await Version.getVersions(Client());
