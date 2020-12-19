@@ -131,7 +131,7 @@ class NodeComponent extends CommonComponent {
     var skillX = id % SKILL_ICONS_PER_ROW;
     var skillY = id ~/ SKILL_ICONS_PER_ROW;
     return skillBorder +
-        ', url("assets/images/skills/${ChronomancerComponent.version.name}.png") ${-skillX * SKILL_ICON_SIZE + 1}px ${-skillY * SKILL_ICON_SIZE}px';
+        ', url("assets/images/skills/${ChronomancerComponent.version.name}.png") ${-skillX * SKILL_ICON_SIZE + 1}px ${-skillY * SKILL_ICON_SIZE + 1}px';
   }
 
   String get levelBoxBackground => node.skills.first.tallySkill
