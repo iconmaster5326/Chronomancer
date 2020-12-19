@@ -35,17 +35,6 @@ class Skill {
     8: 29,
     9: 34,
   };
-  static const MASTERY_X_TO_MIN_LEVEL = <int, int>{
-    2: 0,
-    3: 5,
-    4: 10,
-    5: 15,
-    6: 25,
-    7: 30,
-    8: 40,
-    9: 45,
-    10: 50,
-  };
 
   Version version;
   int id, tree, maxRank, minLevel;
