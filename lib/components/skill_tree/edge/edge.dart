@@ -7,7 +7,7 @@ import 'package:chronomancer/components/skill_tree/node/node.dart';
 class SkillTreeEdge {
   int x1, y1, x2, y2;
 
-  SkillTreeEdge(this.x1, this.x2, this.y1, this.y2);
+  SkillTreeEdge(this.x1, this.y1, this.x2, this.y2);
 
   @override
   bool operator ==(dynamic other) {

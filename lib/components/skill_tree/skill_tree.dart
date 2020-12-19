@@ -5,6 +5,7 @@ import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/components/skill_tree/edge/edge.dart';
 import 'package:chronomancer/components/skill_tree/node/node.dart';
 import 'package:chronomancer/skill.dart';
+import 'package:chronomancer/util.dart';
 
 @Component(
   selector: 'skill-tree',
@@ -21,23 +22,44 @@ class SkillTreeComponent extends CommonComponent {
   List<int> get colIndices => List<int>.generate(COLS, (i) => i);
   Iterable<Skill> get skills => ChronomancerComponent.version.skills
       .where((s) => s.charClass == charClass && s.tree == currentTree);
+
   List<SkillTreeNode> get nodes => skills
       .fold<Map<int, Map<int, SkillTreeNode>>>({}, (map, skill) {
-        map
-            .putIfAbsent(skill.x, () => {})
-            .putIfAbsent(skill.y, () => SkillTreeNode(skill.x, skill.y))
-            .skills
-            .add(skill);
+        for (var pos in skill.positions) {
+          map
+              .putIfAbsent(pos.x, () => {})
+              .putIfAbsent(pos.y, () => SkillTreeNode(pos.x, pos.y))
+              .skills
+              .add(skill);
+        }
         return map;
       })
       .values
       .map((m) => m.values)
-      .fold<List<SkillTreeNode>>([], (xs, x) => xs..addAll(x))
-      .toList();
-  List<SkillTreeEdge> get edges => skills
-      .map((s1) =>
-          s1.requires.map((s2) => SkillTreeEdge(s1.x, s1.y, s2.x, s2.y)))
-      .fold<List<SkillTreeEdge>>([], (xs, x) => xs..addAll(x)).toList();
+      .flatten;
 
-      Object trackByEquality(dynamic n, dynamic o) => n == o;
+  List<SkillTreeEdge> get _masteryEdges => List<List<SkillTreeEdge>>.generate(
+      COLS - 3,
+      (x) => List<SkillTreeEdge>.generate(
+          ROWS,
+          (y) => SkillTreeEdge(
+              x + 2,
+              y,
+              x + 3,
+              (x == 7 && y == 2)
+                  ? y + 1
+                  : (x == 7 && y == 4)
+                      ? y - 1
+                      : y))).flatten;
+  List<SkillTreeEdge> get _nonMasteryEdges => skills
+      .map((s1) => s1.positions.map((pos1) => s1.requires.map((s2) => s2
+          .positions
+          .map((pos2) => SkillTreeEdge(pos1.x, pos1.y, pos2.x, pos2.y)))))
+      .flatten
+      .flatten
+      .flatten;
+  List<SkillTreeEdge> get edges =>
+      currentTree == Skill.TREE_MASTERY ? _masteryEdges : _nonMasteryEdges;
+
+  Object trackByEquality(dynamic n, dynamic o) => n == o;
 }

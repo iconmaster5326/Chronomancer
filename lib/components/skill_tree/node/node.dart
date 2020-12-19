@@ -16,7 +16,9 @@ class SkillTreeNode {
       return false;
     }
 
-    if (!(x == other.x && y == other.y && skills.length == other.skills.length)) {
+    if (!(x == other.x &&
+        y == other.y &&
+        skills.length == other.skills.length)) {
       return false;
     }
 
@@ -56,16 +58,21 @@ class NodeComponent extends CommonComponent {
 
   bool hovering = false;
 
-  NodeMode get mode => hovering
-      ? NodeMode.SELECTED
-      : node.skills.length == 1
-          ? NodeMode.FILLED
-          : NodeMode.EMPTY;
+  Skill get filledWith => node.skills.length == 1 ? node.skills.first : null;
+  Iterable<NodeMode> get modes {
+    var filledMode = filledWith == null ? NodeMode.EMPTY : NodeMode.FILLED;
+    if (hovering) {
+      return [NodeMode.SELECTED, filledMode];
+    } else {
+      return [filledMode];
+    }
+  }
+
   SkillType get type => node.skills.first.type;
   CharClass get charClass => ChronomancerComponent.character.charClass;
 
   String get clipPath {
-    if (node.skills.isEmpty || mode == NodeMode.EMPTY) {
+    if (node.skills.isEmpty || filledWith == null) {
       return '';
     }
 
@@ -84,9 +91,11 @@ class NodeComponent extends CommonComponent {
       return '';
     }
 
-    var skillBorder =
-        'url("assets/images/skill_slots.png") ${-(mode.index * SKILL_BORDER_SIZE)}px ${-(type.index * SKILL_BORDER_SIZE)}px';
-    if (mode == NodeMode.EMPTY) {
+    var skillBorder = modes
+        .map((mode) =>
+            'url("assets/images/skill_slots.png") ${-(mode.index * SKILL_BORDER_SIZE)}px ${-(type.index * SKILL_BORDER_SIZE)}px')
+        .join(', ');
+    if (filledWith == null) {
       return skillBorder;
     }
 

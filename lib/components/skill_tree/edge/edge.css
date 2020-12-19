@@ -1,7 +1,8 @@
 .skill-tree-edge {
     position: absolute;
     height: 4px;
-    background: url("assets/images/skill_edges.png");
+    background: url("assets/images/skill_edge_unselected.png");
     z-index: 0;
     transform-origin: left center;
+    font-size: 8px;
 }
