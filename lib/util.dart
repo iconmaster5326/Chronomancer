@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:math' as math;
 
 extension InvertMap<K, V> on Map<K, V> {
   Map<V, K> get inverted {
@@ -16,8 +16,10 @@ extension Flatten<T> on Iterable<Iterable<T>> {
   List<T> get flatten => fold<List<T>>([], (xs, x) => xs..addAll(x));
 }
 
-extension IntSum on Iterable<int> {
+extension IntIterableOps on Iterable<int> {
   int get sum => fold(0, (sum, n) => sum + n);
+  int get min => fold(first, (a, b) => math.min(a, b));
+  int get max => fold(first, (a, b) => math.max(a, b));
 }
 
 class Pair<A, B> {
@@ -64,7 +66,7 @@ class _RangeIterator extends Iterator<int> {
   @override
   bool moveNext() {
     i += r.step;
-    return i.between(min(r.start, r.end), max(r.start, r.end));
+    return i.between(math.min(r.start, r.end), math.max(r.start, r.end));
   }
 }
 

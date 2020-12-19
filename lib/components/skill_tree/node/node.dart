@@ -57,7 +57,18 @@ class NodeComponent extends CommonComponent {
   static const int SKILL_BORDER_SIZE = 24,
       SKILL_ICON_SIZE = 22,
       SKILL_ICONS_PER_ROW = 32,
-      SKILL_ICON_PADDING = 8;
+      SKILL_ICON_PADDING = 8,
+      MASTERY_ID_OFFSET = 100000;
+
+  static int effectiveID(Skill skill) => skill.id < MASTERY_ID_OFFSET
+      ? skill.id
+      : skill.id -
+          MASTERY_ID_OFFSET +
+          skill.version.skills
+              .where((s) => s.tree != Skill.TREE_MASTERY)
+              .map((s) => s.id)
+              .max +
+          1;
 
   @Input()
   SkillTreeNode node;
@@ -116,8 +127,9 @@ class NodeComponent extends CommonComponent {
       skillBorder += ', linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5))';
     }
 
-    var skillX = skill.id % SKILL_ICONS_PER_ROW;
-    var skillY = skill.id ~/ SKILL_ICONS_PER_ROW;
+    var id = effectiveID(skill);
+    var skillX = id % SKILL_ICONS_PER_ROW;
+    var skillY = id ~/ SKILL_ICONS_PER_ROW;
     return skillBorder +
         ', url("assets/images/skills/${ChronomancerComponent.version.name}.png") ${-skillX * SKILL_ICON_SIZE + 1}px ${-skillY * SKILL_ICON_SIZE}px';
   }

@@ -16,20 +16,20 @@ class Version {
   Version(this.name);
 
   static Future<Version> fromName(Client http, String name) async {
-      var version = Version(name);
-      version.classes = await CharClass.getClassList(version, http);
-      version.items = await Item.getItemList(version, http);
-      version.enchants = await Enchant.getEnchantList(version, http);
-      version.skills = await Skill.getSkillList(version, http);
+    var version = Version(name);
+    version.classes = await CharClass.getClassList(version, http);
+    version.items = await Item.getItemList(version, http);
+    version.enchants = await Enchant.getEnchantList(version, http);
+    version.skills = await Skill.getSkillList(version, http);
 
-      for (var item in version.items) {
-        item.finalize(version);
-      }
-      for (var skill in version.skills) {
-        skill.finalize(version);
-      }
+    for (var item in version.items) {
+      item.finalize(version);
+    }
+    for (var skill in version.skills) {
+      skill.finalize(version);
+    }
 
-      return version;
+    return version;
   }
 
   static Future<List<Version>> getVersions(Client http) async {

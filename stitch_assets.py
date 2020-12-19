@@ -9,6 +9,7 @@ import json
 SHEET_WIDTH = 32
 ITEM_ICON_SIZE = 32
 SKILL_ICON_SIZE = 22
+MASTERY_UUID_OFFSET = 100000
 
 parser = argparse.ArgumentParser()
 parser.add_argument("cdb", type=str, help="the path to the root of ChronomancerDB")
@@ -30,11 +31,12 @@ for version in versions_json:
 
     # make item sheet
     items_json = json.load(open(os.path.join(version_json_path, "items.json")))
+    n_item_uuids = max(*[x["uuid"] for x in items_json]) + 1
     stitched_items = PIL.Image.new(
         "RGBA",
         size=(
             ITEM_ICON_SIZE * SHEET_WIDTH,
-            ITEM_ICON_SIZE * math.ceil(len(items_json) / SHEET_WIDTH) * 2,
+            ITEM_ICON_SIZE * math.ceil(n_item_uuids / SHEET_WIDTH),
         ),
         color=None,
     )
@@ -62,18 +64,28 @@ for version in versions_json:
 
     # make skills sheet
     skills_json = json.load(open(os.path.join(version_json_path, "skills.json")))
+    n_non_mastery_uuids = (
+        max(*[x["uuid"] for x in skills_json if x["uuid"] < MASTERY_UUID_OFFSET]) + 1
+    )
+    n_mastery_uuids = (
+        max(*[x["uuid"] for x in skills_json if x["uuid"] >= MASTERY_UUID_OFFSET])
+        - MASTERY_UUID_OFFSET
+        + 1
+    )
     stitched_skills = PIL.Image.new(
         "RGBA",
         size=(
             SKILL_ICON_SIZE * SHEET_WIDTH,
-            SKILL_ICON_SIZE * math.ceil(len(skills_json) / SHEET_WIDTH),
+            SKILL_ICON_SIZE
+            * math.ceil((n_non_mastery_uuids + n_mastery_uuids) / SHEET_WIDTH),
         ),
         color=None,
     )
 
     for skill in sorted(skills_json, key=lambda item: item["uuid"]):
-        x = skill["uuid"] % SHEET_WIDTH
-        y = skill["uuid"] // SHEET_WIDTH
+        effective_id = skill["uuid"] if skill["uuid"] < MASTERY_UUID_OFFSET else skill["uuid"] - MASTERY_UUID_OFFSET + n_non_mastery_uuids
+        x = effective_id % SHEET_WIDTH
+        y = effective_id // SHEET_WIDTH
         skill_image = None
 
         for path in skill_images_paths:
