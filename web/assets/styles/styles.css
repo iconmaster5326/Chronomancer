@@ -11,16 +11,72 @@
 }
 
 .short-button {
-  background-image: url("../images/short_button_up.png");
+  background: url("../images/short_button_up.png");
   border: 0;
   padding: 0px;
   height: 16px;
   width: 78px;
   font-size: 12px;
+  color: white;
+  text-align: center;
+  vertical-align: center;
+  border-radius: 0;
+}
+
+.short-button:hover {
+  color: orange;
 }
 
 .short-button:active {
-  background-image: url("../images/short_button_down.png");
+  background: url("../images/short_button_down.png") !important;
+}
+
+.long-button {
+  background: url("../images/long_button_up.png");
+  border: 0;
+  padding: 0px;
+  height: 16px;
+  width: 200px;
+  font-size: 12px;
+  color: white;
+  text-align: center;
+  vertical-align: center;
+  border-radius: 0;
+}
+
+.long-button:hover {
+  color: orange;
+}
+
+.long-button:active {
+  background: url("../images/long_button_down.png") !important;
+}
+
+.long-dropdown {
+  background: url("../images/long_dropdown_up.png");
+  border: 0;
+  padding: 0px;
+  height: 16px;
+  width: 200px;
+  font-size: 12px;
+  color: white;
+  text-align: center;
+  vertical-align: center;
+  border-radius: 0;
+}
+
+.long-dropdown:hover {
+  color: orange;
+}
+
+.long-dropdown:active {
+  background: url("../images/long_dropdown_down.png") !important;
+}
+
+.long-dropdown ~ .dropdown-menu {
+  padding: 0;
+  border: 0;
+  margin: 0;
 }
 
 .text-input {

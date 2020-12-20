@@ -1,14 +1,11 @@
-<div class="modal fade" id="skill-dialog" tabindex="-1" role="dialog" #skillDialogElement (init)="init(skillDialogElement)">
+<div class="modal fade" id="gem-dialog" tabindex="-1" role="dialog" #gemDialogElement (init)="init(gemDialogElement)">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content bordered">
         <div class="modal-header">
-            <div class="modal-title">Select Item</div>
-            <input type="text" class="text-input" placeholder="search...">
+            <div class="modal-title">Select Gem</div>
         </div>
         <div class="modal-body" style="white-space: pre-line;">
-            <div *ngFor="let skill of skills">
-                <skill [skill]="skill" (click)="onSkillSelected(skill)"></skill>
-            </div>
+            
         </div>
         <div class="modal-footer">
             <button type="button" class="btn short-button" data-dismiss="modal">Close</button>
