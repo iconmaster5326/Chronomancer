@@ -1,0 +1,20 @@
+.gem-card {
+    display: flex;
+    border: 1px solid white;
+    margin: 4px;
+}
+
+.gem-card:hover {
+    background: linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5));
+}
+
+.gem-card-icon {
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+}
+
+.gem-card-body {
+    display: flex;
+    flex-direction: column;
+}

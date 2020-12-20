@@ -5,7 +5,19 @@
             <div class="modal-title">Select Gem</div>
         </div>
         <div class="modal-body" style="white-space: pre-line;">
-            
+            <div class="dropdown">
+                <button class="btn long-dropdown" type="button" data-toggle="dropdown">
+                  Quality: {{qualityName}}
+                </button>
+                <div class="dropdown-menu">
+                  <button class="dropdown-item btn long-button" type="button" (click)="quality = QUALITY_ROUGH">Rough</button>
+                  <button class="dropdown-item btn long-button" type="button" (click)="quality = QUALITY_CUT">Cut</button>
+                  <button class="dropdown-item btn long-button" type="button" (click)="quality = QUALITY_POLISHED">Polished</button>
+                </div>
+            </div>
+            <div class="gem-dialog-options">
+                <gem *ngFor="let gem of gems" [gem]="gem" (click)="onGemSelected(gem)"></gem>
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn short-button" data-dismiss="modal">Close</button>
