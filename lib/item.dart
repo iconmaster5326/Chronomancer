@@ -85,6 +85,10 @@ class Item {
         .map((j) => Item.fromJSON(version, j))
         .toList();
   }
+
+  List<ItemRarity> get possibleRarities => rarity == ItemRarity.ORDINARY
+      ? [ItemRarity.ORDINARY, ItemRarity.ENCHANTED, ItemRarity.RARE]
+      : [rarity];
 }
 
 enum GemSource {
@@ -107,6 +111,7 @@ class ItemStack {
   ItemRarity rarity;
   List<EnchantStack> enchants = [];
   List<GemSocket> gems = [];
+  bool empowered = true;
 
   static int WEYRICKS_FINERY_ID = 713;
 

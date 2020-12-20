@@ -19,4 +19,6 @@ class ItemEditorComponent extends CommonComponent {
     SocketConfigDialogComponent.INSTANCE.item = editing;
     SocketConfigDialogComponent.INSTANCE.show();
   }
+
+  String rarityName(ItemRarity rarity) => ITEM_RARITY_TO_STRING[rarity];
 }
