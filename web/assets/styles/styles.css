@@ -79,6 +79,29 @@
   margin: 0;
 }
 
+.long-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: url("../images/long_slider.png");
+  width: 330px;
+  height: 16px;
+  outline: none;
+}
+
+.long-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: url("../images/slider_knob.png");
+}
+
+.long-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: url("../images/slider_knob.png");
+}
+
 .text-input {
   background-color: rgba(0, 0, 0, 0.5);
   border: 0;

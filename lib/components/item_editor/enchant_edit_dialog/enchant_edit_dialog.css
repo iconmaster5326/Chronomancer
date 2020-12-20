@@ -1,0 +1,31 @@
+#enchant-edit-dialog .modal-content > * {
+    padding: 0px;
+}
+
+.enchant-edit-dialog-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.enchant-card {
+    display: flex;
+    border: 1px solid white;
+    margin: 4px;
+}
+
+.enchant-card-icon {
+    display: inline-block;
+    height: 22px;
+    width: 22px;
+    background-image: url("assets/images/enchants.png");
+}
+
+.enchant-card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.enchant-card-desc {
+    font-size: 8px;
+}
