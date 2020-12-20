@@ -390,8 +390,10 @@ class ItemStack {
 
   ItemStack(this.item, [this.rarity]) {
     rarity = rarity ?? item.rarity;
-    enchants.addAll(item.baseEnchants.map((e) => EnchantStack(e, 0)));
-    enchants.addAll(item.fixedEnchants.map((e) => EnchantStack(e, 0)));
+    enchants.addAll(item.baseEnchants
+        .map((e) => EnchantStack(e, e.ranges[rarity].maxGreaterAugmented)));
+    enchants.addAll(item.fixedEnchants
+        .map((e) => EnchantStack(e, e.ranges[rarity].maxGreaterAugmented)));
     enchants.addAll(List<EnchantStack>.filled(
         RARITY_BASED_ENCHANT_SLOTS[item.type][rarity].length, null));
 

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:chronomancer/item.dart';
 import 'package:http/http.dart';
 
 import 'util.dart';
@@ -20,16 +21,30 @@ const Map<EnchantType, String> ENCHANT_TYPE_TO_STRING = <EnchantType, String>{
   EnchantType.LEGENDARY: 'Legendary',
 };
 
+class EnchantRange {
+  int min, max, maxAugmented, maxGreaterAugmented;
+
+  EnchantRange(this.min, this.max, this.maxAugmented, this.maxGreaterAugmented);
+}
+
 class Enchant {
   int id;
   String name, desc;
   EnchantType type;
-
-  Enchant(this.id, this.name, this.desc, this.type);
+  Map<ItemRarity, EnchantRange> ranges = {};
 
   Enchant.fromJSON(Map<String, dynamic> j)
-      : this(j['uuid'], j['name'], j['description'],
-            ENCHANT_TYPE_TO_STRING.inverted[j['type']]);
+      : id = j['uuid'],
+        name = j['name'],
+        desc = j['description'],
+        type = ENCHANT_TYPE_TO_STRING.inverted[j['type']] {
+    for (var entry in (j['ranges'] as Map).entries) {
+      var rarity = ITEM_RARITY_TO_STRING.inverted[entry.key];
+      var range = EnchantRange(entry.value['minimum'], entry.value['maximum'],
+          entry.value['cap'], entry.value['greaterCap']);
+      ranges[rarity] = range;
+    }
+  }
 
   static Future<List<Enchant>> getEnchantList(
       Version version, Client http) async {
