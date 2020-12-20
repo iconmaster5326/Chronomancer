@@ -1,0 +1,20 @@
+<div class="modal fade" id="socket-config-dialog" tabindex="-1" role="dialog" #socketConfigElement (init)="init(socketConfigElement)">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bordered">
+        <div class="modal-header">
+            <div class="modal-title">Select Gem Sockets</div>
+        </div>
+        <div class="modal-body sockets" style="white-space: pre-line;">
+            <div class="innate-sockets">
+                <socket-config *ngFor="let config of innateConfigs" [shapes]="config" [source]="SRC_INNATE" (click)="onSocketConfigSelected(SRC_INNATE, config)"></socket-config>
+            </div>
+            <div class="prismatic-sockets">
+                <socket-config *ngFor="let config of prismaticConfigs" [shapes]="config" [source]="SRC_PRISMATIC" (click)="onSocketConfigSelected(SRC_PRISMATIC, config)"></socket-config>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn short-button" data-dismiss="modal">Confirm</button>
+        </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+.socket-config-card-base {
+    display: flex;
+    align-items: center;
+}
+
+.socket-config-card {
+    display: flex;
+    border: 1px solid white;
+    margin: 4px;
+    min-height: 24px;
+    min-width: 64px;
+}
+
+.socket-config-card:hover {
+    background: linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5));
+}
+
+.socket-config-card-icon {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    margin: 2px;
+    background-image: url("assets/images/unfilled_sockets.png");
+}
+
+.socket-config-card-left-arrow {
+    display: inline-block;
+    width: 19px;
+    height: 14px;
+    background: url("assets/images/arrow.png");
+}
+
+.socket-config-card-right-arrow {
+    display: inline-block;
+    width: 19px;
+    height: 14px;
+    background: url("assets/images/arrow.png");
+    transform: scaleX(-1);
+}

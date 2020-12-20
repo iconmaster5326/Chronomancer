@@ -1,0 +1,18 @@
+#socket-config-dialog .modal-content > * {
+    padding: 0px;
+}
+
+.sockets {
+    display: flex;
+    justify-content: center;
+}
+
+.innate-sockets {
+    display: flex;
+    flex-direction: column;
+}
+
+.prismatic-sockets {
+    display: flex;
+    flex-direction: column;
+}

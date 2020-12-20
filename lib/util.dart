@@ -22,6 +22,27 @@ extension IntIterableOps on Iterable<int> {
   int get max => fold(first, (a, b) => math.max(a, b));
 }
 
+extension IterableOps<T> on Iterable<T> {
+  bool equals(Iterable<T> other) {
+    var it1 = iterator, it2 = other.iterator;
+    while (true) {
+      var end1 = it1.moveNext(), end2 = it2.moveNext();
+      
+      if (!end1 && !end2) {
+        return true;
+      }
+
+      if (!end1 || !end2) {
+        return false;
+      }
+
+      if (it1.current != it2.current) {
+        return false;
+      }
+    }
+  }
+}
+
 class Pair<A, B> {
   A first;
   B second;

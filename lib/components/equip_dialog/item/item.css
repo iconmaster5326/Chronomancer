@@ -3,3 +3,7 @@
     border: 1px solid white;
     margin: 4px;
 }
+
+.item-card:hover {
+    background: linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5));
+}

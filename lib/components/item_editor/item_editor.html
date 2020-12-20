@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="item-editor-footer">
-        <div class="item-editor-gem-button"></div>
+        <div class="item-editor-gem-button" (click)="onRerollGems()"></div>
         <div class="gem-sockets" *ngFor="let socket of editing.gems">
             <gem-socket [socket]="socket"></gem-socket>
         </div>
