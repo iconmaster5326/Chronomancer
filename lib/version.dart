@@ -14,6 +14,7 @@ class Version {
   List<Enchant> enchants;
   List<Skill> skills;
   List<Gem> gems;
+  Map<CharClass, Map<ItemType, Map<EnchantType, List<Enchant>>>> enchantPool;
 
   Version(this.name);
 
@@ -34,6 +35,8 @@ class Version {
     for (var gem in version.gems) {
       gem.finalize(version);
     }
+
+    version.enchantPool = await Enchant.getEnchantPool(version, http);
 
     return version;
   }

@@ -1,0 +1,25 @@
+.enchant-card {
+    display: flex;
+    border: 1px solid white;
+    margin: 4px;
+}
+
+.enchant-card:hover {
+    background: linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5));
+}
+
+.enchant-card-icon {
+    display: inline-block;
+    height: 22px;
+    width: 22px;
+    background-image: url("assets/images/enchants.png");
+}
+
+.enchant-card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.enchant-card-desc {
+    font-size: 8px;
+}

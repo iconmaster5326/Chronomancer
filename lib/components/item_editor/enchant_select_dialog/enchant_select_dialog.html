@@ -1,0 +1,15 @@
+<div class="modal fade" id="enchant-select-dialog" tabindex="-1" role="dialog" #enchantSelectElement (init)="init(enchantSelectElement)">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bordered">
+        <div class="modal-header">
+            <div class="modal-title">Select Gem</div>
+        </div>
+        <div class="modal-body" style="white-space: pre-line;">
+            <enchant *ngFor="let enchant of enchants" [enchant]="enchant" (click)="onSelect(enchant)"></enchant>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn short-button" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>

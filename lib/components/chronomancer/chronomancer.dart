@@ -3,6 +3,7 @@ import 'package:chronomancer/components/char_sel/char_sel.dart';
 import 'package:chronomancer/character.dart';
 import 'package:chronomancer/components/equip_dialog/equip_dialog.dart';
 import 'package:chronomancer/components/equip_slot/equip_slot.dart';
+import 'package:chronomancer/components/item_editor/enchant_select_dialog/enchant_select_dialog.dart';
 import 'package:chronomancer/components/item_editor/gem_dialog/gem_dialog.dart';
 import 'package:chronomancer/components/item_editor/item_editor.dart';
 import 'package:chronomancer/components/item_editor/socket_config_dialog/socket_config_dialog.dart';
@@ -29,6 +30,7 @@ import 'package:http/http.dart';
     ItemEditorComponent,
     SocketConfigDialogComponent,
     GemDialogComponent,
+    EnchantSelectDialogComponent,
   ],
 )
 class ChronomancerComponent {

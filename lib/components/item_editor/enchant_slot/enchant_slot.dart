@@ -1,5 +1,8 @@
+import 'dart:html';
+
 import 'package:angular/angular.dart';
 import 'package:chronomancer/components/component_utils.dart';
+import 'package:chronomancer/components/item_editor/enchant_select_dialog/enchant_select_dialog.dart';
 import 'package:chronomancer/enchant.dart';
 import 'package:chronomancer/item.dart';
 
@@ -16,7 +19,7 @@ class EnchantSlotComponent extends CommonComponent {
   ItemStack item;
   @Input()
   int slot;
-  
+
   bool hovering = false;
 
   EnchantStack get enchant => item.enchants[slot];
@@ -38,4 +41,22 @@ class EnchantSlotComponent extends CommonComponent {
       .join(' or ');
   String get name =>
       enchant == null ? '(random ${_choiceString} enchantment)' : enchant.name;
+
+  void onClick() {
+    if (item.mutableEnchant(slot) && item.enchants[slot] == null) {
+      EnchantSelectDialogComponent.INSTANCE.item = item;
+      EnchantSelectDialogComponent.INSTANCE.slot = slot;
+      EnchantSelectDialogComponent.INSTANCE.show();
+    }
+  }
+
+  void onRightClick(MouseEvent event) {
+    event.preventDefault();
+
+    if (item.mutableEnchant(slot)) {
+      EnchantSelectDialogComponent.INSTANCE.item = item;
+      EnchantSelectDialogComponent.INSTANCE.slot = slot;
+      EnchantSelectDialogComponent.INSTANCE.show();
+    }
+  }
 }

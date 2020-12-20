@@ -6,12 +6,19 @@ import 'version.dart';
 class CharClass {
   Version version;
   String id, name;
-  List<String> skillTrees;
+  List<String> skillTrees, weaponNames, offhandNames;
 
-  CharClass(this.version, this.id, this.name, this.skillTrees);
+  CharClass(this.version, this.id, this.name, this.skillTrees, this.weaponNames,
+      this.offhandNames);
 
   CharClass.fromJSON(Version version, Map<String, dynamic> j)
-      : this(version, j['uuid'], j['name'], List<String>.from(j['skillTrees']));
+      : this(
+            version,
+            j['uuid'],
+            j['name'],
+            List<String>.from(j['skillTrees']),
+            List<String>.from(j['weaponNames']),
+            List<String>.from(j['offhandNames']));
 
   static Future<List<CharClass>> getClassList(
       Version version, Client http) async {
