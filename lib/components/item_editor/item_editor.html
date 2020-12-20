@@ -9,4 +9,10 @@
             <enchant-slot [item]="editing" [slot]="enchantSlot"></enchant-slot>
         </div>
     </div>
+    <div class="item-editor-footer">
+        <div class="item-editor-gem-button"></div>
+        <div class="gem-sockets" *ngFor="let socket of editing.gems">
+            <gem-socket [socket]="socket"></gem-socket>
+        </div>
+    </div>
 </div>

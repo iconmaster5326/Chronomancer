@@ -1,0 +1,51 @@
+.gem-socket {
+    display: inline-block;
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.gem-socket-back {
+    display: inline-block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-image: url("assets/images/unfilled_sockets.png");
+    left: 4px;
+    top: 4px;
+    z-index: 1;
+}
+
+.gem-socket-gem {
+    display: inline-block;
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    left: 0px;
+    top: 0px;
+    z-index: 2;
+}
+
+.gem-socket-prongs {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-image: url("assets/images/filled_sockets.png");
+    left: 4px;
+    top: 4px;
+    z-index: 3;
+}
+
+.gem-socket-selection {
+    display: inline-block;
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    left: 0px;
+    top: 0px;
+    z-index: 4;
+}
+
+.gem-socket-selection:hover {
+    background: url("assets/images/skill_slots.png") -48px 0px;
+}

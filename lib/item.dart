@@ -94,11 +94,12 @@ enum GemSource {
 }
 
 class GemSocket {
+  ItemStack item;
   GemSource source;
   GemShape shape;
   Gem gem;
 
-  GemSocket(this.source, this.shape, [this.gem]);
+  GemSocket(this.item, this.source, this.shape, [this.gem]);
 }
 
 class ItemStack {
@@ -396,9 +397,9 @@ class ItemStack {
 
     if (item.id == WEYRICKS_FINERY_ID) {
       gems.addAll([
-        GemSocket(GemSource.ENCHANT, GemShape.SPHERE),
-        GemSocket(GemSource.ENCHANT, GemShape.CUBE),
-        GemSocket(GemSource.ENCHANT, GemShape.STAR)
+        GemSocket(this, GemSource.ENCHANT, GemShape.SPHERE),
+        GemSocket(this, GemSource.ENCHANT, GemShape.CUBE),
+        GemSocket(this, GemSource.ENCHANT, GemShape.STAR)
       ]);
     }
   }

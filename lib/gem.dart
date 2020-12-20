@@ -20,6 +20,7 @@ enum GemQuality {
 
 class Gem {
   Version version;
+  int id;
   String name;
   GemShape shape;
   GemQuality quality;
@@ -39,7 +40,8 @@ class Gem {
   };
 
   Gem.fromJSON(this.version, Map<String, dynamic> j)
-      : name = j['name'],
+      : id = j['uuid'],
+        name = j['name'],
         shape = _TYPE_TO_SHAPE[j['type']],
         quality = _RARITY_TO_QUALITY[j['rarity']],
         _rawEnchants = List<int>.from(j['fixedEnchants']);

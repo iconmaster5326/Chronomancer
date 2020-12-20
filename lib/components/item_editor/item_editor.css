@@ -5,7 +5,7 @@
     align-items: left;
 }
 
-.item-editor-header {
+.item-editor-header, .item-editor-footer {
     display: flex;
     align-items: center;
 }
@@ -20,4 +20,22 @@
     height: 100px;
     align-items: left;
     overflow-y: scroll;
+}
+
+.item-editor-gem-button {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    background: url("assets/images/reroll_sockets.png");
+}
+
+.item-editor-gem-button:hover {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    background: url("assets/images/skill_slots.png") -48px 0px, url("assets/images/reroll_sockets.png");
+}
+
+.gem-sockets {
+    height: 24px;
 }
