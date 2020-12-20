@@ -1,5 +1,8 @@
 <div class="enchant-card">
-    <div class="enchant-card-icon" [style.background-position]="iconPackgroundPos"></div>
+    <div class="enchant-card-body">
+        <div class="enchant-card-icon" [style.background-position]="iconPackgroundPos"></div>
+        <div class="enchant-card-rune" [style.visibility]="runeVisibility" [style.background-position]="runeBackgroundPos"></div>
+    </div>
     <div class="enchant-card-body">
         <div class="enchant-card-name">{{enchant.name}}</div>
         <div class="enchant-card-desc">{{enchant.desc}}</div>

@@ -29,6 +29,9 @@ class Version {
     for (var item in version.items) {
       item.finalize(version);
     }
+    for (var enchant in version.enchants) {
+      enchant.finalize(version);
+    }
     for (var skill in version.skills) {
       skill.finalize(version);
     }

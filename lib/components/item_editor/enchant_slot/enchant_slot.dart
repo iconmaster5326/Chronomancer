@@ -40,8 +40,11 @@ class EnchantSlotComponent extends CommonComponent {
       .enchantTypesForSlot(slot)
       .map((type) => ENCHANT_TYPE_TO_STRING[type])
       .join(' or ');
-  String get name =>
-      enchant == null ? '(random ${_choiceString} enchantment)' : enchant.name;
+  String get name => enchant == null
+      ? (item.runeEnchant(slot)
+          ? '(rune enchantment)'
+          : '(random ${_choiceString} enchantment)')
+      : enchant.name;
 
   void onClick() {
     if (item.enchants[slot] != null) {

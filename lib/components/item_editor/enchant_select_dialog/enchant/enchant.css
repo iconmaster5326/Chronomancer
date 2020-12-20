@@ -23,3 +23,10 @@
 .enchant-card-desc {
     font-size: 8px;
 }
+
+.enchant-card-rune {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    background-image: url("assets/images/runes.png");
+}

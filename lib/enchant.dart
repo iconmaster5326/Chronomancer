@@ -28,11 +28,22 @@ class EnchantRange {
   EnchantRange(this.min, this.max, this.maxAugmented, this.maxGreaterAugmented);
 }
 
+class Rune {
+  List<ItemType> usableOn;
+  bool greater;
+  CharClass classRequires;
+
+  Rune(this.usableOn, this.greater, this.classRequires);
+}
+
 class Enchant {
   int id;
   String name, desc;
   EnchantType type;
   Map<ItemRarity, EnchantRange> ranges = {};
+  Rune rune;
+
+  List<int> _rawItems;
 
   Enchant.fromJSON(Map<String, dynamic> j)
       : id = j['uuid'],
@@ -47,6 +58,26 @@ class Enchant {
         ranges[rarity] = range;
       }
     }
+
+    if (type == EnchantType.LEGENDARY) {
+      _rawItems = List<int>.from(j['items']);
+    }
+  }
+
+  void finalize(Version version) {
+    if (type == EnchantType.LEGENDARY) {
+      if (_rawItems.isEmpty) {
+        // dropped rune TODO: information missing from json
+        rune = Rune([], false, null);
+      } else {
+        // rune from equipment
+        var item = version.items.firstWhere((i) => i.id == _rawItems.first);
+        rune = Rune([item.type], item.rarity == ItemRarity.TRUE_LEGENDARY,
+            item.requiresClass);
+      }
+
+      _rawItems = null;
+    }
   }
 
   static Future<List<Enchant>> getEnchantList(
@@ -58,8 +89,8 @@ class Enchant {
         .toList();
   }
 
-  static Future<Map<CharClass, Map<ItemType, Map<EnchantType, List<Enchant>>>>> getEnchantPool(
-      Version version, Client http) async {
+  static Future<Map<CharClass, Map<ItemType, Map<EnchantType, List<Enchant>>>>>
+      getEnchantPool(Version version, Client http) async {
     var j = Map.from(json.decode(
         (await http.get('assets/json/${version.name}/enchantsPool.json'))
             .body));

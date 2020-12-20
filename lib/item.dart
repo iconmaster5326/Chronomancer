@@ -394,6 +394,7 @@ class ItemStack {
         .map((e) => EnchantStack(e, e.ranges[rarity].maxGreaterAugmented)));
     enchants.addAll(item.fixedEnchants
         .map((e) => EnchantStack(e, e.ranges[rarity].maxGreaterAugmented)));
+    enchants.add(null); // rune slot
     enchants.addAll(List<EnchantStack>.filled(
         RARITY_BASED_ENCHANT_SLOTS[item.type][rarity].length, null));
 
@@ -408,10 +409,15 @@ class ItemStack {
 
   bool mutableEnchant(int slot) =>
       slot >= item.baseEnchants.length + item.fixedEnchants.length;
-  List<EnchantType> enchantTypesForSlot(int slot) => mutableEnchant(slot)
-      ? RARITY_BASED_ENCHANT_SLOTS[item.type][rarity]
-          [slot - item.baseEnchants.length - item.fixedEnchants.length]
-      : [enchants[slot].type];
+  int get runeEnchantSlot =>
+      item.baseEnchants.length + item.fixedEnchants.length;
+  bool runeEnchant(int slot) => slot == runeEnchantSlot;
+  List<EnchantType> enchantTypesForSlot(int slot) => runeEnchant(slot)
+      ? [EnchantType.LEGENDARY]
+      : mutableEnchant(slot)
+          ? RARITY_BASED_ENCHANT_SLOTS[item.type][rarity]
+              [slot - item.baseEnchants.length - item.fixedEnchants.length - 1]
+          : [enchants[slot].type];
 
   int get id => item.id;
   String get name => item.name;

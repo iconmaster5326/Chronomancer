@@ -98,6 +98,11 @@ class Character {
       List<int>.generate(skills.length - 1, (i) => pointsSpentIn(i))
           .fold(0, (sum, n) => sum + n);
   int get masteryPointsSpent => pointsSpentIn(Skill.TREE_MASTERY);
+  int get greaterRunes => equipment.values
+      .where((item) =>
+          item.enchants[item.runeEnchantSlot] != null &&
+          item.enchants[item.runeEnchantSlot].enchant.rune.greater)
+      .length;
 
   int pointsSpentIn(int tree) =>
       skills[tree].values.fold(0, (sum, spentSkill) => sum + spentSkill.rank);
