@@ -43,13 +43,16 @@ class SlotComponent extends CommonComponent {
   @Input()
   ItemType slot;
   @Input()
-  Item item;
+  ItemData item;
+  @Input()
+  bool hoverable = true;
+  
   bool hovering = false;
 
   Version get version => ChronomancerComponent.version;
 
   RarityOverlay get rarityOverlay {
-    if (hovering) {
+    if (hoverable && hovering) {
       return RarityOverlay.SELECTED;
     }
     if (item == null) {

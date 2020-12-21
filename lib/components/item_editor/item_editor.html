@@ -1,7 +1,7 @@
 <div *ngIf="editing != null" class="item-editor">
     <div class="item-editor-header">
         <span>Editing:</span>
-        <slot [item]="editing.item"></slot>
+        <slot [item]="editing" [hoverable]="false"></slot>
         <span>{{editing?.name}}</span>
     </div>
     <div class="item-editor-enchants">

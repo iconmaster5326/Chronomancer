@@ -47,10 +47,19 @@ const Map<ItemRarity, String> ITEM_RARITY_TO_STRING = <ItemRarity, String>{
   ItemRarity.TRUE_LEGENDARY: 'True Legendary',
 };
 
-class Item {
+abstract class ItemData {
+  int get id;
+  ItemType get type;
+  ItemRarity get rarity;
+}
+
+class Item implements ItemData {
+  @override
   int id;
   String name;
+  @override
   ItemType type;
+  @override
   ItemRarity rarity;
   CharClass requiresClass;
   List<Enchant> baseEnchants, fixedEnchants;
@@ -106,8 +115,9 @@ class GemSocket {
   GemSocket(this.item, this.source, this.shape, [this.gem]);
 }
 
-class ItemStack {
+class ItemStack implements ItemData {
   Item item;
+  @override
   ItemRarity rarity;
   List<EnchantStack> enchants = [];
   List<GemSocket> gems = [];
@@ -426,6 +436,10 @@ class ItemStack {
 
   int get id => item.id;
   String get name => item.name;
-  ItemType get slot => item.type;
+  @override
+  ItemType get type => item.type;
   CharClass get requiresClass => item.requiresClass;
+
+  @Deprecated('use type instead.')
+  ItemType get slot => item.type;
 }

@@ -7,7 +7,6 @@ import 'package:chronomancer/components/equip_dialog/equip_dialog.dart';
 import 'package:chronomancer/components/item_editor/item_editor.dart';
 import 'package:chronomancer/components/slot/slot.dart';
 import 'package:chronomancer/item.dart';
-import 'package:chronomancer/version.dart';
 
 enum RarityOverlay {
   NONE,
@@ -47,7 +46,7 @@ const int ITEM_ICON_OFFSET = (ITEM_ICON_SIZE - SLOT_BACK_SIZE) ~/ 2;
 class EquipSlotComponent extends SlotComponent {
   Character get character => ChronomancerComponent.character;
   @override
-  Item get item => character?.equipment[slot]?.item;
+  ItemData get item => character?.equipment[slot];
 
   void onClick() {
     if (item == null) {
