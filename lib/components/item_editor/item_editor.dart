@@ -25,6 +25,7 @@ class ItemEditorComponent extends CommonComponent {
   void setRarity(ItemRarity rarity) {
     editing.rarity = rarity;
     editing.regenerateMutableEnchants();
+    editing.clampEnchantValues();
   }
 
   void toggleEmpowered() {
