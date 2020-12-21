@@ -405,13 +405,12 @@ class ItemStack implements ItemData {
 
   ItemStack(this.item, [this.rarity]) {
     rarity = rarity ?? item.rarity;
-    enchants.addAll(item.baseEnchants
-        .map((e) => EnchantStack(e, e.ranges[rarity].maxGreaterAugmented)));
-    enchants.addAll(item.fixedEnchants
-        .map((e) => EnchantStack(e, e.ranges[rarity].maxGreaterAugmented)));
+    enchants.addAll(item.baseEnchants.map(
+        (e) => EnchantStack(e, e.ranges[effectiveRarity].maxGreaterAugmented)));
+    enchants.addAll(item.fixedEnchants.map(
+        (e) => EnchantStack(e, e.ranges[effectiveRarity].maxGreaterAugmented)));
     enchants.add(null); // rune slot
-    enchants.addAll(List<EnchantStack>.filled(
-        RARITY_BASED_ENCHANT_SLOTS[item.type][rarity].length, null));
+    regenerateMutableEnchants();
 
     if (item.id == WEYRICKS_FINERY_ID) {
       gems.addAll([
@@ -433,6 +432,26 @@ class ItemStack implements ItemData {
           ? RARITY_BASED_ENCHANT_SLOTS[item.type][rarity]
               [slot - item.baseEnchants.length - item.fixedEnchants.length - 1]
           : [enchants[slot].type];
+  bool get empowerable =>
+      rarity == ItemRarity.UNIQUE || rarity == ItemRarity.LEGENDARY;
+  ItemRarity get effectiveRarity =>
+      empowered ? ItemRarity.TRUE_LEGENDARY : rarity;
+
+  void regenerateMutableEnchants() {
+    enchants = enchants.sublist(0, runeEnchantSlot + 1);
+    enchants.addAll(List<EnchantStack>.filled(
+        RARITY_BASED_ENCHANT_SLOTS[item.type][rarity].length, null));
+  }
+
+  void clampEnchantValues() {
+    for (var enchant in enchants) {
+      if (enchant != null) {
+        var range = enchant.enchant.ranges[effectiveRarity];
+        enchant.value =
+            enchant.value.clamp(range.min, range.maxGreaterAugmented);
+      }
+    }
+  }
 
   int get id => item.id;
   String get name => item.name;

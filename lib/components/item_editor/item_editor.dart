@@ -21,4 +21,14 @@ class ItemEditorComponent extends CommonComponent {
   }
 
   String rarityName(ItemRarity rarity) => ITEM_RARITY_TO_STRING[rarity];
+
+  void setRarity(ItemRarity rarity) {
+    editing.rarity = rarity;
+    editing.regenerateMutableEnchants();
+  }
+
+  void toggleEmpowered() {
+    editing.empowered = !editing.empowered;
+    editing.clampEnchantValues();
+  }
 }

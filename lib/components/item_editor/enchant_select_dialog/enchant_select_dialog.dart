@@ -42,8 +42,8 @@ class EnchantSelectDialogComponent extends ModalComponent {
               .flatten;
 
   void onSelect(Enchant enchant) {
-    item.enchants[slot] =
-        EnchantStack(enchant, enchant.ranges[item.rarity].maxGreaterAugmented);
+    item.enchants[slot] = EnchantStack(
+        enchant, enchant.ranges[item.effectiveRarity].maxGreaterAugmented);
     hide();
   }
 }
