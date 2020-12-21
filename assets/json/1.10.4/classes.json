@@ -10,6 +10,11 @@
             "Conviction",
             "Redemption",
             "Mastery"
+        ],
+        "masteryCol2Floats": [
+            100221,
+            100028,
+            100027
         ]
     },
     {
@@ -23,6 +28,10 @@
             "Dragonkin",
             "Frostborn",
             "Mastery"
+        ],
+        "masteryCol2Floats": [
+            100220,
+            100221
         ]
     },
     {
@@ -36,6 +45,10 @@
             "Storm Caller",
             "Winter Herald",
             "Mastery"
+        ],
+        "masteryCol2Floats": [
+            100028,
+            100027
         ]
     },
     {
@@ -49,6 +62,10 @@
             "Demonologist",
             "Reaper",
             "Mastery"
+        ],
+        "masteryCol2Floats": [
+            100028,
+            100027
         ]
     }
 ]
