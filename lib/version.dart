@@ -15,6 +15,7 @@ class Version {
   List<Skill> skills;
   List<Gem> gems;
   Map<CharClass, Map<ItemType, Map<EnchantType, List<Enchant>>>> enchantPool;
+  List rawDroppedRuneData;
 
   Version(this.name);
 
@@ -22,6 +23,8 @@ class Version {
     var version = Version(name);
     version.classes = await CharClass.getClassList(version, http);
     version.items = await Item.getItemList(version, http);
+    version.rawDroppedRuneData =
+        await Enchant.getRawDroppedRuneData(version, http);
     version.enchants = await Enchant.getEnchantList(version, http);
     version.skills = await Skill.getSkillList(version, http);
     version.gems = await Gem.getGemList(version, http);
@@ -41,6 +44,7 @@ class Version {
 
     version.enchantPool = await Enchant.getEnchantPool(version, http);
 
+    version.rawDroppedRuneData = null;
     return version;
   }
 

@@ -67,8 +67,20 @@ class Enchant {
   void finalize(Version version) {
     if (type == EnchantType.LEGENDARY) {
       if (_rawItems.isEmpty) {
-        // dropped rune TODO: information missing from json
-        rune = Rune([], false, null);
+        // dropped rune
+        Map data = version.rawDroppedRuneData
+            .firstWhere((m) => m['uuid'] == id, orElse: () => null);
+        if (data != null) {
+          rune = Rune(
+              List<String>.from(data['categories'])
+                  .map((c) => ITEM_TYPE_TO_STRING.inverted[c])
+                  .toList(),
+              false,
+              version.classWithName(data['class']));
+        } else {
+          print(
+              'warning: could not find dropped rune data for skill with id $id in version ${version.name}');
+        }
       } else {
         // rune from equipment
         var item = version.items.firstWhere((i) => i.id == _rawItems.first);
@@ -87,6 +99,13 @@ class Enchant {
     return (json.decode(response.body) as List)
         .map((j) => Enchant.fromJSON(j))
         .toList();
+  }
+
+  static Future<List> getRawDroppedRuneData(
+      Version version, Client http) async {
+    final response =
+        await http.get('assets/json/${version.name}/droppedRunes.json');
+    return json.decode(response.body);
   }
 
   static Future<Map<CharClass, Map<ItemType, Map<EnchantType, List<Enchant>>>>>

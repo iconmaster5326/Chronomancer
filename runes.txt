@@ -1,0 +1,97 @@
+Assertion	Accessory, Amulet, Ring
+Bloodscent	Weapon, Offhand
+Bouncing Throws	Accessory, Amulet, Ring
+Brutal Attacks	Weapon, Offhand
+Burning Lightning	Accessory, Amulet, Ring
+Chained Focus	Weapon, Offhand
+Chilled Blood	Accessory, Amulet, Ring
+Companion Mobility	Armor, Boots, Helmet
+Critical Thorns	Armor, Boots, Helmet
+Greatness	Anything
+Infected Wounds	Accessory, Amulet, Ring
+Lethal Mobility	Accessory, Amulet, Ring
+Polished Gems	Armor, Boots, Helmet
+Potency	Weapon, Offhand
+Relentless Assault	Weapon, Offhand
+Retaliating Companions	Accessory, Amulet, Ring
+Simplicity	Weapon, Offhand
+Splitting Throws	Accessory, Amulet, Ring
+The Bombardier	Weapon, Offhand
+The Sentry	Armor, Boots, Helmet
+#Templar
+Barbed Revenge	Weapon, Offhand
+Blazing Hammers	Accessory, Amulet, Ring
+Grand Reprisal	Armor, Boots, Helmet
+Hallowed Grace	Accessory, Amulet, Ring
+Holy Chains	Accessory, Amulet, Ring
+Holy Expulsion	Accessory, Amulet, Ring
+Light's Aura	Armor, Boots, Helmet
+Phantom Shield	Accessory, Amulet, Ring
+Provocation	Accessory, Amulet, Ring
+Rapid Pyre	Weapon, Offhand
+Rolling Thunder	Weapon, Offhand
+Scorching Blaze	Weapon, Offhand
+Slicing	Weapon, Offhand
+Static Repulse	Armor, Boots, Helmet
+Storming Hammers	Weapon, Offhand
+The Fierce Avenger	Accessory, Amulet, Ring
+Thundering Avatars	Armor, Boots, Helmet
+#Berserker
+Ancestral Rage	Armor, Boots, Helmet
+Boulderfist	Weapon, Offhand
+Dragonthorn	Weapon, Offhand
+Embershield	Armor, Boots, Helmet
+Hard Knocks	Weapon, Offhand
+Hydrarage	Accessory, Amulet, Ring
+Infinite Rolls	Armor, Boots, Helmet
+Mega Charged	Weapon, Offhand
+Pulverize	Weapon, Offhand
+Rage Peak	Weapon, Offhand
+Rage Smash	Weapon, Offhand
+Ravenous Winds	Accessory, Amulet, Ring
+Released Heritage	Accessory, Amulet, Ring
+Shattering Impact	Armor, Boots, Helmet
+Soulstorm	Accessory, Amulet, Ring
+Targeted Destruction	Armor, Boots, Helmet
+The Blue Bolt	Weapon, Offhand
+The Dragon Flame	Weapon, Offhand
+Warp Echo	Armor, Boots, Helmet
+Winter Rage	Weapon, Offhand
+#Warden
+Advanced Toxicology	Weapon, Offhand
+Barraging Acrobatics	Weapon, Offhand
+Boomspore	Weapon, Offhand
+Bramble Burst	Accessory, Amulet, Ring
+Great Storms	Weapon, Offhand
+Greater Hail	Accessory, Amulet, Ring
+Mega Wisp	Accessory, Amulet, Ring
+Multishot	Weapon, Offhand
+Norla's Gale	Weapon, Offhand
+Poison Trees	Accessory, Amulet, Ring
+Sparking Static	Accessory, Amulet, Ring
+Split Thunder	Accessory, Amulet, Ring
+Swelling Pods	Weapon, Offhand
+The Living Forest	Armor, Boots, Helmet
+Thorn Veil	Armor, Boots, Helmet
+Trap Throw	Weapon, Offhand
+Winter's Chill	Accessory, Amulet, Ring
+Wisp Blast	Weapon, Offhand
+Wolfcaster	Weapon, Offhand
+#Warlock
+Blood Explosion	Accessory, Amulet, Ring
+Curse of Thorns	Accessory, Amulet, Ring
+Cursed Blood	Weapon, Offhand
+Demonic Fury	Weapon, Offhand
+Exoskeleton	Armor, Boots, Helmet
+Foul Demon	Accessory, Amulet, Ring
+Frozen Graves	Armor, Boots, Helmet
+Infinite Ruin	Weapon, Offhand
+Instant Combustion	Accessory, Amulet, Ring
+Putrefying Poisons	Weapon, Offhand
+Rapid Plague	Accessory, Amulet, Ring
+Reaping	Weapon, Offhand
+Shattered Spirits	Accessory, Amulet, Ring
+The Devouring Star	Accessory, Amulet, Ring
+The Reckoning Hand	Weapon, Offhand
+Total Armageddon	Weapon, Offhand
+Warped Banes	Armor, Boots, Helmet
