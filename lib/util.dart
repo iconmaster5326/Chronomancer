@@ -41,6 +41,14 @@ extension IterableOps<T> on Iterable<T> {
       }
     }
   }
+
+  Iterable<R> indexValueMap<R>(R Function(int,T) fn) sync* {
+    var i = 0;
+    for (var element in this) {
+      yield fn(i, element);
+      i++;
+    }
+  } 
 }
 
 class Pair<A, B> {

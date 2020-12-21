@@ -1,0 +1,15 @@
+<div (init)="onInit()" class="chronicon-tooltip" [style.display]="item == null ? 'none': 'block'" [style.left]="left" [style.top]="top">
+    <div *ngIf="item != null" class="item-tooltip-body">
+        <div class="item-tooltip-header">
+            <div class="item-tooltip-icon" [style.background]="iconBackground"></div>
+            <div class="item-tooltip-name-desc">
+                <div class="item-tooltip-name" [style.color]="RAIRTY_TO_COLOR[item.rarity]">{{item.name}}</div>
+                <div class="item-tooltip-type">{{itemType}}</div>
+            </div>
+        </div>
+        <div class="item-tooltip-level">Level: 100</div>
+        <div *ngIf="item.requiresClass != null" class="item-tooltip-class">{{item.requiresClass.name}} Item</div>
+        <div *ngFor="let enchant of item.fixedEnchantData; let slot = index" class="item-tooltip-fixed-enchant"><div class="bullet-icon"></div> {{enchant.desc}}</div>
+        <div *ngFor="let types of item.floatingEnchantData; let slot = index" class="item-tooltip-floating-enchant"><div class="bullet-icon"></div> (random {{floatingEnchantDesc(types)}} enchantment)</div>
+    </div>
+</div>

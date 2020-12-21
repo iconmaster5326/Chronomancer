@@ -1,6 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
+import 'package:chronomancer/components/tooltips/item/item_tooltip.dart';
 import 'package:chronomancer/item.dart';
 import 'package:chronomancer/version.dart';
 
@@ -50,6 +51,16 @@ class SlotComponent extends CommonComponent {
   bool hovering = false;
 
   Version get version => ChronomancerComponent.version;
+
+  void onHoverBegin() {
+    hovering = true;
+    ItemTooltipComponent.INSTANCE.item = item;
+  }
+
+  void onHoverEnd() {
+    hovering = false;
+    ItemTooltipComponent.INSTANCE.item = null;
+  }
 
   RarityOverlay get rarityOverlay {
     if (hoverable && hovering) {

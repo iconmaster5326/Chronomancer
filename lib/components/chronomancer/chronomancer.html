@@ -3,18 +3,18 @@
     <div class="chronomancer-top-bar-right">
         <div class="dropdown chronomancer-top-bar-version">
             <button class="btn long-dropdown" type="button" data-toggle="dropdown">
-              Version: {{version.name}}
+            Version: {{version.name}}
             </button>
             <div class="dropdown-menu">
-              <button *ngFor="let v of versions" class="dropdown-item btn long-button" type="button" (click)="setVersion(v)">{{v.name}}</button>
+            <button *ngFor="let v of versions" class="dropdown-item btn long-button" type="button" (click)="setVersion(v)">{{v.name}}</button>
             </div>
         </div>
         <div class="dropdown chronomancer-top-bar-options">
             <button class="btn long-dropdown" type="button" data-toggle="dropdown">
-              Options...
+            Options...
             </button>
             <div class="dropdown-menu">
-              <button class="dropdown-item btn long-button" type="button" (click)="character = null">Reset Character</button>
+            <button class="dropdown-item btn long-button" type="button" (click)="character = null">Reset Character</button>
             </div>
         </div>
     </div>
@@ -65,3 +65,5 @@
 <gem-dialog></gem-dialog>
 <enchant-select-dialog></enchant-select-dialog>
 <enchant-edit-dialog></enchant-edit-dialog>
+
+<item-tooltip></item-tooltip>

@@ -1,0 +1,32 @@
+.item-tooltip-body {
+    display: flex;
+    flex-direction: column;
+    font-size: 10px;
+    margin: 4px;
+}
+
+.item-tooltip-header {
+    display: flex;
+}
+
+.item-tooltip-icon {
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+}
+
+.item-tooltip-name-desc {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-tooltip-type {
+    color: #d2823c;
+}
+
+.bullet-icon {
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    background: url("assets/images/modifier_bullets.png");
+}

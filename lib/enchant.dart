@@ -36,14 +36,24 @@ class Rune {
   Rune(this.usableOn, this.greater, this.classRequires);
 }
 
-class Enchant {
+abstract class EnchantData {
+  String get desc;
+  EnchantStackSource get source;
+}
+
+class Enchant implements EnchantData {
   static const int GREATNESS_ID = 1296;
 
   int id;
-  String name, desc;
+  String name;
+  @override
+  String desc;
   EnchantType type;
   Map<ItemRarity, EnchantRange> ranges = {};
   Rune rune;
+
+  @override
+  EnchantStackSource get source => EnchantStackSource.FLOATING;
 
   List<int> _rawItems;
 
@@ -142,14 +152,24 @@ class Enchant {
   }
 }
 
-class EnchantStack {
+enum EnchantStackSource {
+  BASE,
+  FIXED,
+  RUNE,
+  FLOATING,
+}
+
+class EnchantStack implements EnchantData {
+  @override
+  EnchantStackSource source;
   Enchant enchant;
   int value;
 
-  EnchantStack(this.enchant, this.value);
+  EnchantStack(this.source, this.enchant, this.value);
 
   int get id => enchant.id;
   String get name => enchant.name;
+  @override
   String get desc => enchant.desc;
   EnchantType get type => enchant.type;
 }

@@ -49,18 +49,28 @@ const Map<ItemRarity, String> ITEM_RARITY_TO_STRING = <ItemRarity, String>{
 
 abstract class ItemData {
   int get id;
+  String get name;
   ItemType get type;
   ItemRarity get rarity;
+  Iterable<EnchantData> get fixedEnchantData;
+  Iterable<List<EnchantType>> get floatingEnchantData;
+  CharClass get requiresClass;
+  String get typeName;
+  bool get empowerable;
+  bool get empowered;
+  bool get augmented;
 }
 
 class Item implements ItemData {
   @override
   int id;
-  String name;
+  @override
+  String name, typeName;
   @override
   ItemType type;
   @override
   ItemRarity rarity;
+  @override
   CharClass requiresClass;
   List<Enchant> baseEnchants, fixedEnchants;
   List<int> _rawBaseEnchants, _rawFixedEnchants;
@@ -73,6 +83,7 @@ class Item implements ItemData {
         type = ITEM_TYPE_TO_STRING.inverted[j['category']],
         rarity = ITEM_RARITY_TO_STRING.inverted[j['rarity']],
         requiresClass = version.classWithName(j['classRestriction']),
+        typeName = j['type'],
         _rawBaseEnchants = List<int>.from(j['baseEnchants']),
         _rawFixedEnchants = List<int>.from(j['fixedEnchants']);
 
@@ -98,6 +109,20 @@ class Item implements ItemData {
   List<ItemRarity> get possibleRarities => rarity == ItemRarity.ORDINARY
       ? [ItemRarity.ORDINARY, ItemRarity.ENCHANTED, ItemRarity.RARE]
       : [rarity];
+
+  @override
+  Iterable<EnchantData> get fixedEnchantData =>
+      baseEnchants.followedBy(fixedEnchants);
+  @override
+  Iterable<List<EnchantType>> get floatingEnchantData =>
+      ItemStack.RARITY_BASED_ENCHANT_SLOTS[type][rarity];
+  @override
+  bool get empowerable =>
+      rarity == ItemRarity.UNIQUE || rarity == ItemRarity.LEGENDARY;
+  @override
+  bool get empowered => false;
+  @override
+  bool get augmented => false;
 }
 
 enum GemSource {
@@ -121,6 +146,7 @@ class ItemStack implements ItemData {
   ItemRarity rarity;
   List<EnchantStack> enchants = [];
   List<GemSocket> gems = [];
+  @override
   bool empowered = true;
 
   static int WEYRICKS_FINERY_ID = 713;
@@ -405,10 +431,14 @@ class ItemStack implements ItemData {
 
   ItemStack(this.item, [this.rarity]) {
     rarity = rarity ?? item.rarity;
-    enchants.addAll(item.baseEnchants.map(
-        (e) => EnchantStack(e, e.ranges[effectiveRarity].maxGreaterAugmented)));
-    enchants.addAll(item.fixedEnchants.map(
-        (e) => EnchantStack(e, e.ranges[effectiveRarity].maxGreaterAugmented)));
+    enchants.addAll(item.baseEnchants.map((e) => EnchantStack(
+        EnchantStackSource.BASE,
+        e,
+        e.ranges[effectiveRarity].maxGreaterAugmented)));
+    enchants.addAll(item.fixedEnchants.map((e) => EnchantStack(
+        EnchantStackSource.FIXED,
+        e,
+        e.ranges[effectiveRarity].maxGreaterAugmented)));
     enchants.add(null); // rune slot
     regenerateMutableEnchants();
 
@@ -432,6 +462,7 @@ class ItemStack implements ItemData {
           ? RARITY_BASED_ENCHANT_SLOTS[item.type][rarity]
               [slot - item.baseEnchants.length - item.fixedEnchants.length - 1]
           : [enchants[slot].type];
+  @override
   bool get empowerable =>
       rarity == ItemRarity.UNIQUE || rarity == ItemRarity.LEGENDARY;
   ItemRarity get effectiveRarity =>
@@ -453,11 +484,40 @@ class ItemStack implements ItemData {
     }
   }
 
+  EnchantStackSource sourceOf(int slot) {
+    if (slot < item.baseEnchants.length) {
+      return EnchantStackSource.BASE;
+    } else if (slot < item.baseEnchants.length + item.fixedEnchants.length) {
+      return EnchantStackSource.FIXED;
+    } else if (slot == runeEnchantSlot) {
+      return EnchantStackSource.RUNE;
+    } else {
+      return EnchantStackSource.FLOATING;
+    }
+  }
+
+  @override
   int get id => item.id;
+  @override
   String get name => item.name;
   @override
   ItemType get type => item.type;
+  @override
   CharClass get requiresClass => item.requiresClass;
+  @override
+  Iterable<EnchantData> get fixedEnchantData =>
+      enchants.where((e) => e != null);
+  @override
+  Iterable<List<EnchantType>> get floatingEnchantData => Range(
+          0, enchants.length - 1)
+      .where((slot) =>
+          mutableEnchant(slot) && !runeEnchant(slot) && enchants[slot] == null)
+      .map((slot) => enchantTypesForSlot(slot));
+  @override
+  String get typeName => item.typeName;
+  @override
+  bool get augmented =>
+      enchants.any((e) => e != null && e.value > e.enchant.ranges[rarity].max);
 
   @Deprecated('use type instead.')
   ItemType get slot => item.type;

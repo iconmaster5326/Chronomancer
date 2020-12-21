@@ -158,6 +158,14 @@
   background: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.5)), url("../images/checkbox_selected.png");
 }
 
+.chronicon-tooltip {
+  position: absolute;
+  z-index: 10000;
+  border: 1px solid white;
+  border-radius: 6px;
+  background: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75));
+}
+
 html, body {
   height: 100%;
   background: black;

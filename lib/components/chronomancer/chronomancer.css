@@ -106,3 +106,7 @@
 .respec-button {
     font-size: 9px;
 }
+
+#tooltip {
+    position: absolute;
+}
