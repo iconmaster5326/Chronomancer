@@ -1,3 +1,25 @@
+<div id="chronomancer-top-bar">
+    <img src="assets/images/logo.png" class="chronomancer-logo">
+    <div class="chronomancer-top-bar-right">
+        <div class="dropdown chronomancer-top-bar-version">
+            <button class="btn long-dropdown" type="button" data-toggle="dropdown">
+              Version: {{version.name}}
+            </button>
+            <div class="dropdown-menu">
+              <button *ngFor="let v of versions" class="dropdown-item btn long-button" type="button" (click)="setVersion(v)">{{v.name}}</button>
+            </div>
+        </div>
+        <div class="dropdown chronomancer-top-bar-options">
+            <button class="btn long-dropdown" type="button" data-toggle="dropdown">
+              Options...
+            </button>
+            <div class="dropdown-menu">
+              <button class="dropdown-item btn long-button" type="button" (click)="character = null">Reset Character</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="chronomancer" class="bordered">
     <div *ngIf="character == null">
         <h1>Select your class!</h1>

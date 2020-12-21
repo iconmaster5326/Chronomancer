@@ -20,6 +20,7 @@ const Map<String, SkillType> STRING_TO_SKILL_TYPE = <String, SkillType>{
   'Aura Skill': SkillType.AURA,
   'Heritage Skill': SkillType.AURA,
   'Companion Skill': SkillType.AURA,
+  'Ritual Skill': SkillType.AURA,
   'Perk': SkillType.PERK,
 };
 

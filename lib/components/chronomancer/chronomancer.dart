@@ -60,4 +60,11 @@ class ChronomancerComponent {
       SkillTreeComponent.currentTree == Skill.TREE_MASTERY
           ? 'Mastery Points: ${character.masteryPointsSpent}'
           : 'Skill Points: ${character.pointsSpent} / ${character.level}';
+
+  void setVersion(Version v) {
+    if (v != version) {
+      version = v;
+      character = null;
+    }
+  }
 }

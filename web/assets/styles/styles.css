@@ -6,8 +6,6 @@
   background-image: url("../images/background.png");
   background-origin: border-box;
   background-clip: border-box;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .short-button {
