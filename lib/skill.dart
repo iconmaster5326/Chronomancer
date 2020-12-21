@@ -98,6 +98,8 @@ class Skill {
     } else if (tree == TREE_MASTERY && _y == 2 && _x.between(2, 9)) {
       // mastery tree center skills can be in three positions
       positions = [Vector2(_x, _y), Vector2(_x, _y + 1), Vector2(_x, _y + 2)];
+    } else if (tree == TREE_MASTERY && _x == 2 && _y == 0 && charClass.masteryCol2FloatIDs.contains(id)) {
+      positions = [Vector2(2, 0), Vector2(2, 1), Vector2(2, 5), Vector2(2, 6)];
     } else {
       positions = [Vector2(_x, _y)];
     }
