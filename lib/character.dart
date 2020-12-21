@@ -1,5 +1,6 @@
 import 'package:chronomancer/class.dart';
 
+import 'enchant.dart';
 import 'item.dart';
 import 'skill.dart';
 import 'util.dart';
@@ -103,6 +104,12 @@ class Character {
           item.enchants[item.runeEnchantSlot] != null &&
           item.enchants[item.runeEnchantSlot].enchant.rune.greater)
       .length;
+  int get maxGreaterRunes => equipment.values.any((item) =>
+          item != null &&
+          item.enchants
+              .any((e) => e != null && e.enchant.id == Enchant.GREATNESS_ID))
+      ? 4
+      : 3;
 
   int pointsSpentIn(int tree) =>
       skills[tree].values.fold(0, (sum, spentSkill) => sum + spentSkill.rank);

@@ -37,6 +37,8 @@ class Rune {
 }
 
 class Enchant {
+  static const int GREATNESS_ID = 1296;
+
   int id;
   String name, desc;
   EnchantType type;
