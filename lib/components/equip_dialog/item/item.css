@@ -2,8 +2,20 @@
     display: flex;
     border: 1px solid white;
     margin: 4px;
+    justify-content: space-between;
+}
+
+.item-card-header {
+    width: 30%;
 }
 
 .item-card:hover {
     background: linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5));
+}
+
+.item-card-enchant-list {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    font-size: 10px;
 }

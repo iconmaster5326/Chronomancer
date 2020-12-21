@@ -61,6 +61,15 @@ abstract class ItemData {
   bool get augmented;
 }
 
+class _BaseEnchant extends EnchantStack {
+  _BaseEnchant(Enchant enchant) : super(EnchantStackSource.BASE, enchant, null);
+}
+
+class _FixedEnchant extends EnchantStack {
+  _FixedEnchant(Enchant enchant)
+      : super(EnchantStackSource.FIXED, enchant, null);
+}
+
 class Item implements ItemData {
   @override
   int id;
@@ -111,8 +120,9 @@ class Item implements ItemData {
       : [rarity];
 
   @override
-  Iterable<EnchantData> get fixedEnchantData =>
-      baseEnchants.followedBy(fixedEnchants);
+  Iterable<EnchantData> get fixedEnchantData => baseEnchants
+      .map<EnchantData>((e) => _BaseEnchant(e))
+      .followedBy(fixedEnchants.map<EnchantData>((e) => _FixedEnchant(e)));
   @override
   Iterable<List<EnchantType>> get floatingEnchantData =>
       ItemStack.RARITY_BASED_ENCHANT_SLOTS[type][rarity];

@@ -24,7 +24,7 @@ class EquipDialogComponent extends ModalComponent {
   }
 
   Iterable<Item> get items {
-    if (slot == null) {
+    if (slot == null || !open) {
       return <Item>[];
     } else {
       return ChronomancerComponent.version.items.where((item) =>

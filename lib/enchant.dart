@@ -39,6 +39,9 @@ class Rune {
 abstract class EnchantData {
   String get desc;
   EnchantStackSource get source;
+  int get value;
+  Map<ItemRarity, EnchantRange> get ranges;
+  EnchantType get type => null;
 }
 
 class Enchant implements EnchantData {
@@ -48,12 +51,16 @@ class Enchant implements EnchantData {
   String name;
   @override
   String desc;
+  @override
   EnchantType type;
+  @override
   Map<ItemRarity, EnchantRange> ranges = {};
   Rune rune;
 
   @override
   EnchantStackSource get source => EnchantStackSource.FLOATING;
+  @override
+  int get value => null;
 
   List<int> _rawItems;
 
@@ -163,6 +170,7 @@ class EnchantStack implements EnchantData {
   @override
   EnchantStackSource source;
   Enchant enchant;
+  @override
   int value;
 
   EnchantStack(this.source, this.enchant, this.value);
@@ -171,5 +179,8 @@ class EnchantStack implements EnchantData {
   String get name => enchant.name;
   @override
   String get desc => enchant.desc;
+  @override
   EnchantType get type => enchant.type;
+  @override
+  Map<ItemRarity, EnchantRange> get ranges => enchant.ranges;
 }

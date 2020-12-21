@@ -9,7 +9,7 @@
         </div>
         <div class="item-tooltip-level">Level: 100</div>
         <div *ngIf="item.requiresClass != null" class="item-tooltip-class">{{item.requiresClass.name}} Item</div>
-        <div *ngFor="let enchant of item.fixedEnchantData; let slot = index" class="item-tooltip-fixed-enchant"><div class="bullet-icon"></div> {{enchant.desc}}</div>
-        <div *ngFor="let types of item.floatingEnchantData; let slot = index" class="item-tooltip-floating-enchant"><div class="bullet-icon"></div> (random {{floatingEnchantDesc(types)}} enchantment)</div>
+        <enchant-text *ngFor="let enchant of item.fixedEnchantData" class="item-tooltip-fixed-enchant" [enchant]="enchant" [item]="item"></enchant-text>
+        <div *ngFor="let types of item.floatingEnchantData" class="item-tooltip-floating-enchant"><div class="bullet-icon"></div> (random {{floatingEnchantDesc(types)}} enchantment)</div>
     </div>
 </div>

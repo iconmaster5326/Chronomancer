@@ -5,15 +5,15 @@ import 'package:angular/angular.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/components/slot/slot.dart';
+import 'package:chronomancer/components/tooltips/enchant/text/enchant_text.dart';
 import 'package:chronomancer/enchant.dart';
 import 'package:chronomancer/item.dart';
-import 'package:chronomancer/util.dart';
 
 @Component(
   selector: 'item-tooltip',
   styleUrls: ['item_tooltip.css'],
   templateUrl: 'item_tooltip.html',
-  directives: [coreDirectives, InitDirective],
+  directives: [coreDirectives, InitDirective, EnchantTextComponent],
 )
 class ItemTooltipComponent extends CommonComponent {
   static ItemTooltipComponent INSTANCE;

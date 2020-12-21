@@ -1,16 +1,10 @@
 <div class="item-card">
-    <div>
+    <div class="item-card-header">
         <slot [item]="item" [hoverable]="false"></slot>
         <div>{{item.name}}</div>
     </div>
-    <ul>
-        <li *ngFor="let enchant of item.baseEnchants">
-            {{enchant.desc}}
-        </li>
-    </ul>
-    <ul>
-        <li *ngFor="let enchant of item.fixedEnchants">
-            {{enchant.desc}}
-        </li>
-    </ul>
+    <div class="item-card-enchant-list">
+        <enchant-text *ngFor="let enchant of item.fixedEnchantData" [enchant]="enchant" [item]="item"></enchant-text>
+        <div *ngFor="let types of item.floatingEnchantData"><div class="bullet-icon"></div> (random {{floatingEnchantDesc(types)}} enchantment)</div>
+    </div>
 </div>

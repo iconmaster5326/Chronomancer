@@ -77,3 +77,9 @@ class ModalComponent extends CommonComponent {
     ]);
   }
 }
+
+class ColoredText {
+  String color, text;
+
+  ColoredText(this.color, this.text);
+}

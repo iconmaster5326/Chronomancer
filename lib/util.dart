@@ -27,7 +27,7 @@ extension IterableOps<T> on Iterable<T> {
     var it1 = iterator, it2 = other.iterator;
     while (true) {
       var end1 = it1.moveNext(), end2 = it2.moveNext();
-      
+
       if (!end1 && !end2) {
         return true;
       }
@@ -42,13 +42,25 @@ extension IterableOps<T> on Iterable<T> {
     }
   }
 
-  Iterable<R> indexValueMap<R>(R Function(int,T) fn) sync* {
+  Iterable<R> indexValueMap<R>(R Function(int, T) fn) sync* {
     var i = 0;
     for (var element in this) {
       yield fn(i, element);
       i++;
     }
-  } 
+  }
+
+  Iterable<T> intersperse(T t) sync* {
+    var first = true;
+    for (var element in this) {
+      if (first) {
+        first = false;
+      } else {
+        yield t;
+      }
+      yield element;
+    }
+  }
 }
 
 class Pair<A, B> {

@@ -25,7 +25,7 @@ class EnchantSelectDialogComponent extends ModalComponent {
     INSTANCE = this;
   }
 
-  Iterable<Enchant> get enchants => item == null
+  Iterable<Enchant> get enchants => (item == null || !open)
       ? []
       : item.runeEnchant(slot)
           ? ChronomancerComponent.version.enchants.where((e) =>
