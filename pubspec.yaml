@@ -1,7 +1,7 @@
 name: chronomancer
-description: A web app that uses AngularDart Components
-# version: 1.0.0
-# homepage: https://www.example.com
+description: A build planner for the video game Chronicon
+version: 1.0.0
+homepage: https://github.com/iconmaster5326/Chronomancer
 
 environment:
   sdk: '>=2.10.0 <3.0.0'
