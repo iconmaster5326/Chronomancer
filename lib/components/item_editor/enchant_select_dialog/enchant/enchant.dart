@@ -3,6 +3,8 @@ import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/components/equip_slot/equip_slot.dart';
 import 'package:chronomancer/components/item_editor/enchant_slot/enchant_slot.dart';
+import 'package:chronomancer/components/tooltips/enchant/enchant_tooltip.dart';
+import 'package:chronomancer/components/tooltips/enchant/text/enchant_text.dart';
 import 'package:chronomancer/enchant.dart';
 import 'package:chronomancer/item.dart';
 
@@ -10,11 +12,13 @@ import 'package:chronomancer/item.dart';
   selector: 'enchant',
   styleUrls: ['enchant.css'],
   templateUrl: 'enchant.html',
-  directives: [coreDirectives],
+  directives: [coreDirectives, EnchantTextComponent],
 )
 class EnchantComponent extends CommonComponent {
   static const int RUNE_ICON_SIZE = 24;
 
+  @Input()
+  ItemStack item;
   @Input()
   Enchant enchant;
 
@@ -40,4 +44,14 @@ class EnchantComponent extends CommonComponent {
   String get runeBackgroundPos => enchant.rune == null
       ? ''
       : '${-_runeX * RUNE_ICON_SIZE}px ${-_runeY * RUNE_ICON_SIZE}px';
+
+  void onHoverIconBegin() {
+    EnchantTooltipComponent.INSTANCE.item = item;
+    EnchantTooltipComponent.INSTANCE.enchant = enchant;
+  }
+
+  void onHoverIconEnd() {
+    EnchantTooltipComponent.INSTANCE.item = null;
+    EnchantTooltipComponent.INSTANCE.enchant = null;
+  }
 }

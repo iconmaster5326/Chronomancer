@@ -1,0 +1,9 @@
+<div (init)="onInit()" class="chronicon-tooltip" [style.display]="enchant == null ? 'none': 'block'" [style.left]="left" [style.top]="top">
+    <div *ngIf="enchant != null" class="enchant-tooltip-body">
+        <div class="enchant-tooltip-name">{{enchant.name}}</div>
+        <enchant-text class="enchant-tooltip-desc" [enchant]="enchant" [item]="item" [bulleted]="false"></enchant-text>
+        <div class="enchant-tooltip-range">Roll range: ({{range.min}}-{{range.max}})</div>
+        <div class="enchant-tooltip-range">Augment cap: {{range.maxAugmented}}</div>
+        <div class="enchant-tooltip-range">Greater Augment cap: {{range.maxGreaterAugmented}}</div>
+    </div>
+</div>

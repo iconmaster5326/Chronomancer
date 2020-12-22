@@ -1,4 +1,4 @@
 <div class="enchant-slot" (mouseenter)="hovering = true" (mouseleave)="hovering = false" (click)="onClick()" (contextmenu)="onRightClick($event)">
-    <div class="enchant-slot-icon" [style.background]="iconBackground"></div>
+    <div class="enchant-slot-icon" [style.background]="iconBackground" (mouseenter)="onHoverIconBegin()" (mouseleave)="onHoverIconEnd()"></div>
     <div class="enchant-slot-name">{{name}}</div>
 </div>

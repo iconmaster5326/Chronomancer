@@ -7,10 +7,10 @@
         <div class="modal-body" style="white-space: pre-line;">
             <div *ngIf="enchant != null" class="enchant-edit-dialog-body">
                 <div class="enchant-card">
-                    <div class="enchant-card-icon" [style.background-position]="iconPackgroundPos"></div>
+                    <div class="enchant-card-icon" [style.background-position]="iconPackgroundPos" (mouseenter)="onHoverIconBegin()" (mouseleave)="onHoverIconEnd()"></div>
                     <div class="enchant-card-body">
                         <div class="enchant-card-name">{{enchant.name}}</div>
-                        <div class="enchant-card-desc">{{enchant.desc}}</div>
+                        <enchant-text class="enchant-card-desc" [item]="item" [enchant]="enchant" [bulleted]="false"></enchant-text>
                     </div>
                 </div>
                 <input type="range" [min]="range.min" [max]="range.maxGreaterAugmented" [value]="enchant.value" (input)="enchant.value = $event.target.valueAsNumber" class="long-slider">

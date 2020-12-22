@@ -1,0 +1,10 @@
+.enchant-tooltip-body {
+    display: flex;
+    flex-direction: column;
+    font-size: 10px;
+    margin: 4px;
+}
+
+.enchant-tooltip-name {
+    color: #d2823c;
+}

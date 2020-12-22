@@ -37,6 +37,7 @@ class Rune {
 }
 
 abstract class EnchantData {
+  String get name;
   String get desc;
   EnchantStackSource get source;
   int get value;
@@ -48,6 +49,7 @@ class Enchant implements EnchantData {
   static const int GREATNESS_ID = 1296;
 
   int id;
+  @override
   String name;
   @override
   String desc;
@@ -176,6 +178,7 @@ class EnchantStack implements EnchantData {
   EnchantStack(this.source, this.enchant, this.value);
 
   int get id => enchant.id;
+  @override
   String get name => enchant.name;
   @override
   String get desc => enchant.desc;

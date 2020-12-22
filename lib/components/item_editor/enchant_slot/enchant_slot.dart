@@ -4,6 +4,8 @@ import 'package:angular/angular.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/components/item_editor/enchant_edit_dialog/enchant_edit_dialog.dart';
 import 'package:chronomancer/components/item_editor/enchant_select_dialog/enchant_select_dialog.dart';
+import 'package:chronomancer/components/item_editor/item_editor.dart';
+import 'package:chronomancer/components/tooltips/enchant/enchant_tooltip.dart';
 import 'package:chronomancer/enchant.dart';
 import 'package:chronomancer/item.dart';
 
@@ -70,5 +72,15 @@ class EnchantSlotComponent extends CommonComponent {
       EnchantSelectDialogComponent.INSTANCE.slot = slot;
       EnchantSelectDialogComponent.INSTANCE.show();
     }
+  }
+
+  void onHoverIconBegin() {
+    EnchantTooltipComponent.INSTANCE.item = item;
+    EnchantTooltipComponent.INSTANCE.enchant = enchant;
+  }
+
+  void onHoverIconEnd() {
+    EnchantTooltipComponent.INSTANCE.item = null;
+    EnchantTooltipComponent.INSTANCE.enchant = null;
   }
 }
