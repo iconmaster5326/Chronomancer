@@ -24,6 +24,28 @@ const Map<String, SkillType> STRING_TO_SKILL_TYPE = <String, SkillType>{
   'Perk': SkillType.PERK,
 };
 
+enum SkillElement {
+  ETHEREAL,
+  PHYSICAL,
+  FIRE,
+  LIGHTNING,
+  FROST,
+  POISON,
+  HOLY,
+  SHADOW,
+}
+
+const ELEMENT_TO_STRING = {
+  SkillElement.ETHEREAL: 'Ethereal',
+  SkillElement.PHYSICAL: 'Physical',
+  SkillElement.FIRE: 'Fire',
+  SkillElement.LIGHTNING: 'Lightning',
+  SkillElement.FROST: 'Frost',
+  SkillElement.POISON: 'Poison',
+  SkillElement.HOLY: 'Holy',
+  SkillElement.SHADOW: 'Shadow',
+};
+
 class Skill {
   static const TREE_MASTERY = 4;
   static const X_TO_MIN_LEVEL = <int, int>{
@@ -39,12 +61,13 @@ class Skill {
 
   Version version;
   int id, tree, maxRank, minLevel;
-  String name, typeName, desc, elementName;
+  String name, typeName, desc;
   CharClass charClass;
   SkillType type;
   List<Skill> requires;
   List<Vector2> positions;
   bool tallySkill;
+  SkillElement element;
 
   int _x, _y;
   String _rawClass, _rawTree;
@@ -59,7 +82,7 @@ class Skill {
         tallySkill = (j['x'] == 0),
         minLevel = j['minLevel'],
         maxRank = j['maxRank'],
-        elementName = j['element'],
+        element = ELEMENT_TO_STRING.inverted[j['element']],
         _x = j['x'],
         _y = j['y'],
         _rawClass = j['class'],
@@ -88,7 +111,7 @@ class Skill {
     } else if (tree == TREE_MASTERY &&
         _x == 10 &&
         _y == 0 &&
-        elementName == 'Ethereal') {
+        element == SkillElement.ETHEREAL) {
       // Mastery generic rightmost skills can be in four positions
       positions = [
         Vector2(10, 0),
@@ -99,7 +122,10 @@ class Skill {
     } else if (tree == TREE_MASTERY && _y == 2 && _x.between(2, 9)) {
       // mastery tree center skills can be in three positions
       positions = [Vector2(_x, _y), Vector2(_x, _y + 1), Vector2(_x, _y + 2)];
-    } else if (tree == TREE_MASTERY && _x == 2 && _y == 0 && charClass.masteryCol2FloatIDs.contains(id)) {
+    } else if (tree == TREE_MASTERY &&
+        _x == 2 &&
+        _y == 0 &&
+        charClass.masteryCol2FloatIDs.contains(id)) {
       // Some mastery leftmost skills can be in four positions
       positions = [Vector2(2, 0), Vector2(2, 1), Vector2(2, 5), Vector2(2, 6)];
     } else {
@@ -146,4 +172,5 @@ class Skill {
       version.skills.where((s) => s.requires.contains(this));
   Iterable<Skill> get recursivelyUnlocks =>
       unlocks.followedBy(unlocks.map((s) => s.recursivelyUnlocks).flatten);
+  String get elementName => ELEMENT_TO_STRING[element];
 }

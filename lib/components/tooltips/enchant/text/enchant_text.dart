@@ -3,6 +3,7 @@ import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/enchant.dart';
 import 'package:chronomancer/item.dart';
+import 'package:chronomancer/skill.dart';
 import 'package:chronomancer/util.dart';
 
 class EnchantTextParser extends Parser<ColoredText> {
@@ -30,7 +31,7 @@ class EnchantTextParser extends Parser<ColoredText> {
                 EnchantTextComponent.COLOR_BLUE,
                 enchant.value == null && _range != null
                     ? '(${_range.min},${_range.max}) [${_range.maxAugmented}] [[${_range.maxGreaterAugmented}]]%'
-                    : enchant.value.toString())),
+                    : enchant.value.toString() + '%')),
         MapEntry(
             'AMOUNT',
             (match) => ColoredText(
@@ -38,13 +39,12 @@ class EnchantTextParser extends Parser<ColoredText> {
                 enchant.value == null && _range != null
                     ? '(${_range.min},${_range.max}) [${_range.maxAugmented}] [[${_range.maxGreaterAugmented}]]'
                     : enchant.value.toString())),
-        MapEntry(
-            RegExp(r'<SKILL_(\d+)>'),
-            (match) => ColoredText(
-                EnchantTextComponent.COLOR_WHITE,
-                ChronomancerComponent.version.skills
-                    .firstWhere((s) => s.id == int.parse(match.group(1)))
-                    .name)),
+        MapEntry(RegExp(r'<SKILL_(\d+)>'), (match) {
+          var skill = ChronomancerComponent.version.skills
+              .firstWhere((s) => s.id == int.parse(match.group(1)));
+          return ColoredText(
+              EnchantTextComponent.ELEMENT_TO_COLOR[skill.element], skill.name);
+        }),
       ];
 }
 
@@ -64,6 +64,16 @@ class EnchantTextComponent extends CommonComponent {
     EnchantStackSource.FIXED: COLOR_ORANGE,
     EnchantStackSource.RUNE: COLOR_RED,
     EnchantStackSource.FLOATING: COLOR_WHITE,
+  };
+  static const ELEMENT_TO_COLOR = {
+    SkillElement.ETHEREAL: 'white',
+    SkillElement.PHYSICAL: '#a7bcb6',
+    SkillElement.FIRE: '#ff4600',
+    SkillElement.LIGHTNING: '#00ffe6',
+    SkillElement.FROST: '#00beff',
+    SkillElement.POISON: '#acb532',
+    SkillElement.HOLY: '#ffd700',
+    SkillElement.SHADOW: '#b400fa',
   };
 
   @Input()
