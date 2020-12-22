@@ -116,9 +116,16 @@ class Item implements ItemData {
         .toList();
   }
 
-  List<ItemRarity> get possibleRarities => rarity == ItemRarity.ORDINARY
-      ? [ItemRarity.ORDINARY, ItemRarity.ENCHANTED, ItemRarity.RARE]
-      : [rarity];
+  List<ItemRarity> get possibleRarities {
+    switch (rarity) {
+      case ItemRarity.ORDINARY:
+        return [ItemRarity.ORDINARY, ItemRarity.ENCHANTED, ItemRarity.RARE];
+      case ItemRarity.ENCHANTED:
+        return [ItemRarity.ENCHANTED, ItemRarity.RARE];
+      default:
+        return [rarity];
+    }
+  }
 
   @override
   Iterable<EnchantData> get fixedEnchantData => baseEnchants
