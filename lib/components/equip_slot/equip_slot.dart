@@ -59,7 +59,13 @@ class EquipSlotComponent extends SlotComponent {
 
   void onRightClick(MouseEvent event) {
     event.preventDefault();
-    EquipDialogComponent.INSTANCE.slot = slot;
-    EquipDialogComponent.INSTANCE.show();
+
+    if (event.shiftKey) {
+      character.equipment.remove(slot);
+      ItemEditorComponent.editing = null;
+    } else {
+      EquipDialogComponent.INSTANCE.slot = slot;
+      EquipDialogComponent.INSTANCE.show();
+    }
   }
 }

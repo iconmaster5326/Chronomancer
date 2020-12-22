@@ -170,7 +170,9 @@ class NodeComponent extends CommonComponent {
         : node.skills;
   }
 
-  void onClick() {
+  void onClick(MouseEvent event) {
+    event.preventDefault();
+
     if (node.skills.first.tallySkill) {
       return;
     }
@@ -189,13 +191,27 @@ class NodeComponent extends CommonComponent {
               () => SpentSkill(ChronomancerComponent.character,
                   SkillTreeComponent.currentTree, pos, node.skills.first));
 
-      if (ChronomancerComponent.respeccing) {
-        if (spentSkill.canRankDown) {
-          spentSkill.rank--;
+      if (event.shiftKey) {
+        if (ChronomancerComponent.respeccing) {
+          while (spentSkill.canRankDown) {
+            spentSkill.rank--;
+          }
+        } else {
+          if (spentSkill.skill.maxRank == null) return;
+
+          while (spentSkill.canRankUp) {
+            spentSkill.rank++;
+          }
         }
       } else {
-        if (spentSkill.canRankUp) {
-          spentSkill.rank++;
+        if (ChronomancerComponent.respeccing) {
+          if (spentSkill.canRankDown) {
+            spentSkill.rank--;
+          }
+        } else {
+          if (spentSkill.canRankUp) {
+            spentSkill.rank++;
+          }
         }
       }
     }
@@ -203,6 +219,20 @@ class NodeComponent extends CommonComponent {
 
   void onRightClick(MouseEvent event) {
     event.preventDefault();
+
+    if (event.shiftKey) {
+      if (node.skills.length > 1 &&
+          ChronomancerComponent
+                  .character
+                  .skills[SkillTreeComponent.currentTree]
+                      [Vector2(node.x, node.y)]
+                  ?.rank ==
+              0) {
+        ChronomancerComponent.character.skills[SkillTreeComponent.currentTree]
+            .remove(Vector2(node.x, node.y));
+      }
+      return;
+    }
 
     if (node.skills.length > 1) {
       SkillDialogComponent.INSTANCE.rank = ChronomancerComponent

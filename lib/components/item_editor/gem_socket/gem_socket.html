@@ -1,4 +1,4 @@
-<div class="gem-socket" (click)="onClick()" (mouseenter)="onHoverIconBegin()" (mouseleave)="onHoverIconEnd()">
+<div class="gem-socket" (click)="onClick()" (mouseenter)="onHoverIconBegin()" (mouseleave)="onHoverIconEnd()" (contextmenu)="onRightClick($event)">
     <div class="gem-socket-back" [style.background-position]="socketBackgroundPos"></div>
     <div class="gem-socket-gem" [style.background]="gemBackground"></div>
     <div class="gem-socket-prongs" [style.background-position]="socketBackgroundPos" [style.display]="prongDisplay"></div>

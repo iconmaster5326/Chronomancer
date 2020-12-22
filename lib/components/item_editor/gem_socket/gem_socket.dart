@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:angular/angular.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
@@ -30,11 +32,24 @@ class GemSocketComponent extends CommonComponent {
   String get prongDisplay => socket.gem == null ? 'none' : 'inline-block';
 
   void onClick() {
-    GemDialogComponent.INSTANCE.socket = socket;
-    GemDialogComponent.INSTANCE.show();
+    if (socket.gem == null) {
+      GemDialogComponent.INSTANCE.socket = socket;
+      GemDialogComponent.INSTANCE.show();
+    }
   }
 
-    void onHoverIconBegin() {
+  void onRightClick(MouseEvent event) {
+    event.preventDefault();
+
+    if (event.shiftKey) {
+      socket.gem = null;
+    } else {
+      GemDialogComponent.INSTANCE.socket = socket;
+      GemDialogComponent.INSTANCE.show();
+    }
+  }
+
+  void onHoverIconBegin() {
     GemTooltipComponent.INSTANCE.item = ItemEditorComponent.editing;
     GemTooltipComponent.INSTANCE.gem = socket.gem;
   }
