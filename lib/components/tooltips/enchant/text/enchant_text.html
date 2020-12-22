@@ -1,4 +1,4 @@
 <span>
     <span class="bullet-icon" [style.visibility]="showBullet ? 'visible' : 'hidden'"></span>
-    <span *ngFor="let coloredText of text" [style.color]="coloredText.color">{{coloredText.text}}</span>
+    <span *ngFor="let coloredText of text; trackBy: trackByEquality" [style.color]="coloredText.color">{{coloredText.text}}</span>
 </span>

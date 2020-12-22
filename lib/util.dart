@@ -118,3 +118,39 @@ class Range extends Iterable<int> {
 
   Range(this.start, this.end, [this.step = 1]);
 }
+
+abstract class Parser<T> {
+  Iterable<MapEntry<Pattern, T Function(Match)>> get rules;
+  T defaultRule(String s);
+
+  Iterable<T> parse(String s) sync* {
+    var fragment = '';
+
+    while (s.isNotEmpty) {
+      var foundMatch = false;
+
+      for (var rule in rules) {
+        var match = rule.key.matchAsPrefix(s);
+        if (match != null) {
+          foundMatch = true;
+          if (fragment.isNotEmpty) {
+            yield defaultRule(fragment);
+            fragment = '';
+          }
+          yield rule.value(match);
+          s = s.substring(match.end);
+        }
+      }
+
+      if (!foundMatch) {
+        fragment += s[0];
+        s = s.substring(1);
+      }
+    }
+
+    if (fragment.isNotEmpty) {
+      yield defaultRule(fragment);
+      fragment = '';
+    }
+  }
+}

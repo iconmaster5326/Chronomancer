@@ -1,8 +1,52 @@
 import 'package:angular/angular.dart';
+import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/enchant.dart';
 import 'package:chronomancer/item.dart';
 import 'package:chronomancer/util.dart';
+
+class EnchantTextParser extends Parser<ColoredText> {
+  EnchantData enchant;
+  ItemData item;
+
+  EnchantTextParser(this.enchant, this.item);
+
+  EnchantRange get _range => enchant.ranges[item?.rarity];
+
+  @override
+  ColoredText defaultRule(String s) {
+    return ColoredText(
+        enchant.type == EnchantType.LEGENDARY
+            ? EnchantTextComponent.COLOR_RED
+            : EnchantTextComponent.SOURCE_TO_COLOR[enchant.source],
+        s);
+  }
+
+  @override
+  Iterable<MapEntry<Pattern, ColoredText Function(Match)>> get rules => [
+        MapEntry(
+            'AMOUNT%',
+            (match) => ColoredText(
+                EnchantTextComponent.COLOR_BLUE,
+                enchant.value == null && _range != null
+                    ? '(${_range.min},${_range.max}) [${_range.maxAugmented}] [[${_range.maxGreaterAugmented}]]%'
+                    : enchant.value.toString())),
+        MapEntry(
+            'AMOUNT',
+            (match) => ColoredText(
+                EnchantTextComponent.COLOR_BLUE,
+                enchant.value == null && _range != null
+                    ? '(${_range.min},${_range.max}) [${_range.maxAugmented}] [[${_range.maxGreaterAugmented}]]'
+                    : enchant.value.toString())),
+        MapEntry(
+            RegExp(r'<SKILL_(\d+)>'),
+            (match) => ColoredText(
+                EnchantTextComponent.COLOR_WHITE,
+                ChronomancerComponent.version.skills
+                    .firstWhere((s) => s.id == int.parse(match.group(1)))
+                    .name)),
+      ];
+}
 
 @Component(
   selector: 'enchant-text',
@@ -29,17 +73,9 @@ class EnchantTextComponent extends CommonComponent {
   @Input()
   bool bulleted = true;
 
-  EnchantRange get range => enchant.ranges[item?.rarity];
-  String get _defaultColor => enchant.type == EnchantType.LEGENDARY
-      ? COLOR_RED
-      : SOURCE_TO_COLOR[enchant.source];
-  Iterable<ColoredText> get text => enchant.desc
-      .split('AMOUNT')
-      .map((t) => ColoredText(_defaultColor, t))
-      .intersperse(ColoredText(
-          COLOR_BLUE,
-          enchant.value == null && range != null
-              ? '(${range.min},${range.max}) [${range.maxAugmented}] [[${range.maxGreaterAugmented}]]'
-              : enchant.value.toString()));
+  Iterable<ColoredText> get text =>
+      EnchantTextParser(enchant, item).parse(enchant.desc);
   bool get showBullet => bulleted && enchant.source != EnchantStackSource.BASE;
+
+  Object trackByEquality(dynamic n, dynamic o) => n == o;
 }

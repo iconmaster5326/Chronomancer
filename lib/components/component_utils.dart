@@ -5,6 +5,8 @@ import 'dart:js' as js;
 import 'dart:async' as streams;
 import 'dart:html' as html;
 
+import 'package:chronomancer/util.dart';
+
 class CommonComponent {
   void _enableTooltips(html.Element e) {
     js.context.callMethod(r'$', ['[data-toggle="tooltip"]', e]).callMethod(
@@ -78,8 +80,11 @@ class ModalComponent extends CommonComponent {
   }
 }
 
-class ColoredText {
-  String color, text;
+class ColoredText extends Pair<String,String> {
+  ColoredText(String c, String t) : super(c, t);
 
-  ColoredText(this.color, this.text);
+  String get color => first;
+  set color(String v) => first = v;
+  String get text => second;
+  set text(String v) => second = v;
 }
