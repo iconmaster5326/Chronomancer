@@ -11,8 +11,8 @@
         <div class="skill-tooltip-type">{{skill.typeName}}</div>
         <div class="skill-tooltip-rank">Rank {{rank}}<span *ngIf="skill.maxRank != null">/{{skill.maxRank}}</span></div>
         <div class="hr"></div>
-        <div class="skill-tooltip-desc">{{skill.desc}}</div>
+        <skill-text class="skill-tooltip-desc" [skill]="skill" [rank]="rank" [desc]="skill.desc"></skill-text>
         <div *ngIf="showNextRank" class="skill-tooltip-next-rank">{{nextRankHeader}}</div>
-        <div *ngIf="showNextRank" class="skill-tooltip-next-rank-desc">{{skill.rankUpDesc}}</div>
+        <skill-text *ngIf="showNextRank" class="skill-tooltip-next-rank-desc" [skill]="skill" [rank]="nextOrMax ? rank+1 : skill.maxRank" [desc]="skill.rankUpDesc"></skill-text>
     </div>
 </div>

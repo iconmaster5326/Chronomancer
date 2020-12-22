@@ -2,15 +2,15 @@ import 'package:angular/angular.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/components/skill_tree/node/node.dart';
 import 'package:chronomancer/components/skill_tree/skill_tree.dart';
-import 'package:chronomancer/components/slot/slot.dart';
 import 'package:chronomancer/components/tooltips/skill/skill_tooltip.dart';
+import 'package:chronomancer/components/tooltips/skill/text/skill_text.dart';
 import 'package:chronomancer/skill.dart';
 
 @Component(
   selector: 'skill',
   styleUrls: ['skill.css'],
   templateUrl: 'skill.html',
-  directives: [coreDirectives, InitDirective, SlotComponent],
+  directives: [coreDirectives, InitDirective, SkillTextComponent],
 )
 class SkillComponent extends CommonComponent {
   @Input()
@@ -25,10 +25,12 @@ class SkillComponent extends CommonComponent {
   String get iconClipPath => SkillTreeComponent.skillTypeToClipPath(skill.type);
 
   void onHoverBegin() {
+    SkillTooltipComponent.INSTANCE.rankOverride = 0;
     SkillTooltipComponent.INSTANCE.skill = skill;
   }
 
   void onHoverEnd() {
+    SkillTooltipComponent.INSTANCE.rankOverride = null;
     SkillTooltipComponent.INSTANCE.skill = null;
   }
 }

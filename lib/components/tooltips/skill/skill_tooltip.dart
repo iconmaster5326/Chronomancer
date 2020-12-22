@@ -3,12 +3,12 @@ import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:chronomancer/character.dart';
-import 'package:chronomancer/class.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/components/skill_tree/node/node.dart';
 import 'package:chronomancer/components/skill_tree/skill_tree.dart';
 import 'package:chronomancer/components/tooltips/enchant/text/enchant_text.dart';
+import 'package:chronomancer/components/tooltips/skill/text/skill_text.dart';
 import 'package:chronomancer/skill.dart';
 import 'package:chronomancer/util.dart';
 
@@ -16,10 +16,16 @@ import 'package:chronomancer/util.dart';
   selector: 'skill-tooltip',
   styleUrls: ['skill_tooltip.css'],
   templateUrl: 'skill_tooltip.html',
-  directives: [coreDirectives, InitDirective, EnchantTextComponent],
+  directives: [
+    coreDirectives,
+    InitDirective,
+    EnchantTextComponent,
+    SkillTextComponent
+  ],
 )
 class SkillTooltipComponent extends CommonComponent {
   static SkillTooltipComponent INSTANCE;
+  int rankOverride;
   Skill _skill;
   StreamSubscription<MouseEvent> _conn;
   int _left = 0, _top = 0;
@@ -49,16 +55,18 @@ class SkillTooltipComponent extends CommonComponent {
       ChronomancerComponent.character.findSpentSkill(skill);
   String get left => '${_left + 8}px';
   String get top => '${_top + 8}px';
-  bool get showNextRank =>
-      !skill.tallySkill && spentSkill?.rank != skill.maxRank;
+  bool get showNextRank => !skill.tallySkill && rank != skill.maxRank;
   bool get nextOrMax =>
-      (skill.maxRank == null || (spentSkill != null && spentSkill.rank != 0));
+      (skill.maxRank == null || (spentSkill != null && rank != 0));
   String get nextRankHeader => nextOrMax ? 'At Next Rank:' : 'At Max Rank:';
   bool get unlockable => ChronomancerComponent.character.skillUnlocked(skill);
   String get color => EnchantTextComponent.ELEMENT_TO_COLOR[skill.element];
-  int get rank => skill.tallySkill
-      ? ChronomancerComponent.character.pointsSpentIn(skill.tree)
-      : spentSkill?.rank ?? 0;
+  int get rank =>
+      rankOverride ??
+      (skill.tallySkill
+          ? ChronomancerComponent.character.pointsSpentIn(skill.tree)
+          : spentSkill?.rank) ??
+      0;
 
   // begin copy-pasted from node.dart TODO: do not copy paste
   String get iconClipPath => SkillTreeComponent.skillTypeToClipPath(skill.type);

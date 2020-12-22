@@ -3,5 +3,5 @@
         <div class="skill-card-icon" [style.background]="iconBackground" [style.clip-path]="iconClipPath" (mouseenter)="onHoverBegin()" (mouseleave)="onHoverEnd()"></div>
         <div class="skill-card-name">{{skill.name}}</div>
     </div>
-    <div class="skill-card-desc">{{skill.desc}}</div>
+    <skill-text class="skill-card-desc" [skill]="skill" [rank]="0" [desc]="skill.desc"></skill-text>
 </div>
