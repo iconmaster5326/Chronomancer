@@ -30,14 +30,14 @@ class SkillTextParser extends Parser<ColoredText> {
                       : skill.descVariableValues[v][rank == 0 ? 0 : rank - 1])))
           .followedBy([
         MapEntry(
-            RegExp(r'_E([^_]*)_([^Â]*)Â¥'),
+            RegExp(r'_E([^_]*)_([^Â¥]*)Â?¥'),
             (match) => ColoredText(
                 EnchantTextComponent.ELEMENT_TO_COLOR[
                     SkillTextComponent.ELEMENT_CODES[match.group(1)]],
                 match.group(2))),
         MapEntry(RegExp(r'XDAM\s*'), (match) => ColoredText(null, '')),
         MapEntry(
-            RegExp(r'\|([^Â]*)Â¥'),
+            RegExp(r'\|([^Â¥]*)Â?¥'),
             (match) => ColoredText(SkillTextComponent.COLOR_GREEN,
                 match.group(1).replaceAll('|', ''))),
         MapEntry(
