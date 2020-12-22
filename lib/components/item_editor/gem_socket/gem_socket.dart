@@ -2,7 +2,9 @@ import 'package:angular/angular.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/components/item_editor/gem_dialog/gem_dialog.dart';
+import 'package:chronomancer/components/item_editor/item_editor.dart';
 import 'package:chronomancer/components/slot/slot.dart';
+import 'package:chronomancer/components/tooltips/gem/gem_tooltip.dart';
 import 'package:chronomancer/item.dart';
 
 @Component(
@@ -30,5 +32,15 @@ class GemSocketComponent extends CommonComponent {
   void onClick() {
     GemDialogComponent.INSTANCE.socket = socket;
     GemDialogComponent.INSTANCE.show();
+  }
+
+    void onHoverIconBegin() {
+    GemTooltipComponent.INSTANCE.item = ItemEditorComponent.editing;
+    GemTooltipComponent.INSTANCE.gem = socket.gem;
+  }
+
+  void onHoverIconEnd() {
+    GemTooltipComponent.INSTANCE.item = null;
+    GemTooltipComponent.INSTANCE.gem = null;
   }
 }

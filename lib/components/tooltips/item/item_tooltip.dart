@@ -4,16 +4,23 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
+import 'package:chronomancer/components/item_editor/gem_socket/gem_socket.dart';
 import 'package:chronomancer/components/slot/slot.dart';
 import 'package:chronomancer/components/tooltips/enchant/text/enchant_text.dart';
 import 'package:chronomancer/enchant.dart';
+import 'package:chronomancer/gem.dart';
 import 'package:chronomancer/item.dart';
 
 @Component(
   selector: 'item-tooltip',
   styleUrls: ['item_tooltip.css'],
   templateUrl: 'item_tooltip.html',
-  directives: [coreDirectives, InitDirective, EnchantTextComponent],
+  directives: [
+    coreDirectives,
+    InitDirective,
+    EnchantTextComponent,
+    GemSocketComponent
+  ],
 )
 class ItemTooltipComponent extends CommonComponent {
   static ItemTooltipComponent INSTANCE;
@@ -22,7 +29,7 @@ class ItemTooltipComponent extends CommonComponent {
   int _left = 0, _top = 0;
 
   static const Map<ItemRarity, String> RAIRTY_TO_COLOR = {
-    ItemRarity.ORDINARY: '#9132dc',
+    ItemRarity.ORDINARY: '#d2d2ff',
     ItemRarity.ENCHANTED: '#3c82d2',
     ItemRarity.RARE: '#9132dc',
     ItemRarity.UNIQUE: '#fa14b4',
@@ -70,4 +77,5 @@ class ItemTooltipComponent extends CommonComponent {
           ? ['(${ITEM_TYPE_TO_STRING[item.type]})']
           : [])
       .join(' ');
+      String shapeName(GemShape shape) => SHAPE_TO_STRING[shape];
 }

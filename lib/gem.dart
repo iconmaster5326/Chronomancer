@@ -12,6 +12,12 @@ enum GemShape {
   STAR,
 }
 
+const SHAPE_TO_STRING = {
+  GemShape.CUBE: 'Cube',
+  GemShape.SPHERE: 'Sphere',
+  GemShape.STAR: 'Star',
+};
+
 enum GemQuality {
   ROUGH,
   CUT,

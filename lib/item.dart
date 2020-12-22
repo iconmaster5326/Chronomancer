@@ -59,6 +59,7 @@ abstract class ItemData {
   bool get empowerable;
   bool get empowered;
   bool get augmented;
+  Iterable<GemSocket> get gems;
 }
 
 class _BaseEnchant extends EnchantStack {
@@ -133,6 +134,15 @@ class Item implements ItemData {
   bool get empowered => false;
   @override
   bool get augmented => false;
+
+  @override
+  Iterable<GemSocket> get gems => id == ItemStack.WEYRICKS_FINERY_ID
+      ? [
+          GemSocket(null, GemSource.ENCHANT, GemShape.SPHERE),
+          GemSocket(null, GemSource.ENCHANT, GemShape.CUBE),
+          GemSocket(null, GemSource.ENCHANT, GemShape.STAR)
+        ]
+      : [];
 }
 
 enum GemSource {
@@ -148,6 +158,10 @@ class GemSocket {
   Gem gem;
 
   GemSocket(this.item, this.source, this.shape, [this.gem]);
+  EnchantStack get enchant => EnchantStack(
+      EnchantStackSource.FLOATING,
+      gem.enchants[item.type],
+      gem.enchants[item.type].ranges[ItemRarity.values[gem.quality.index]].max);
 }
 
 class ItemStack implements ItemData {
@@ -155,6 +169,7 @@ class ItemStack implements ItemData {
   @override
   ItemRarity rarity;
   List<EnchantStack> enchants = [];
+  @override
   List<GemSocket> gems = [];
   @override
   bool empowered = true;

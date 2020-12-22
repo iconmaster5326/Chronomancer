@@ -1,4 +1,4 @@
-<div (init)="onInit()" class="chronicon-tooltip" [style.display]="item == null ? 'none': 'block'" [style.left]="left" [style.top]="top">
+<div (init)="onInit()" class="chronicon-tooltip" [style.display]="item == null ? 'none': 'block'" [style.left]="left" [style.top]="top" [style.border-color]="RAIRTY_TO_COLOR[item?.rarity]">
     <div *ngIf="item != null" class="item-tooltip-body">
         <div class="item-tooltip-header">
             <div class="item-tooltip-icon" [style.background]="iconBackground"></div>
@@ -11,5 +11,10 @@
         <div *ngIf="item.requiresClass != null" class="item-tooltip-class">{{item.requiresClass.name}} Item</div>
         <enchant-text *ngFor="let enchant of item.fixedEnchantData" class="item-tooltip-fixed-enchant" [enchant]="enchant" [item]="item"></enchant-text>
         <div *ngFor="let types of item.floatingEnchantData" class="item-tooltip-floating-enchant"><div class="bullet-icon"></div> (random {{floatingEnchantDesc(types)}} enchantment)</div>
+        <div *ngFor="let socket of item.gems" class="item-tooltip-socket">
+            <gem-socket [socket]="socket"></gem-socket>
+            <div *ngIf="socket.gem == null">Empty {{shapeName(socket.shape)}} Socket</div>
+            <enchant-text *ngIf="socket.gem != null" [enchant]="socket.enchant" [item]="item" [bulleted]="false"></enchant-text>
+        </div>
     </div>
 </div>

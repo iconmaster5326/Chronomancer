@@ -30,3 +30,9 @@
     width: 8px;
     background: url("assets/images/modifier_bullets.png");
 }
+
+.item-tooltip-socket {
+    height: 24px;
+    display: flex;
+    align-items: center;
+}

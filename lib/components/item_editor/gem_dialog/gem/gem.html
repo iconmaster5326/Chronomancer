@@ -1,7 +1,7 @@
 <div class="gem-card">
-    <div class="gem-card-icon" [style.background]="gemIconBackground"></div>
+    <div class="gem-card-icon" [style.background]="gemIconBackground" (mouseenter)="onHoverIconBegin()" (mouseleave)="onHoverIconEnd()"></div>
     <div class="gem-card-body">
         <div class="gem-card-name">{{gem.name}}</div>
-        <div class="gem-card-desc">{{desc}}</div>
+        <enchant-text class="gem-card-desc" [enchant]="enchant"></enchant-text>
     </div>
 </div>

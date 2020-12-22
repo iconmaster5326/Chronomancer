@@ -1,0 +1,7 @@
+<div (init)="onInit()" class="chronicon-tooltip" [style.display]="gem == null ? 'none': 'block'" [style.left]="left" [style.top]="top">
+    <div *ngIf="gem != null" class="gem-tooltip-body">
+        <div class="gem-tooltip-name">{{gem.name}}</div>
+        <div class="gem-tooltip-type" [style.color]="rarityColor">{{rarityName}} {{shapeName}} Gem</div>
+        <enchant-text class="gem-tooltip-desc" [enchant]="enchant" [item]="item" [bulleted]="false"></enchant-text>
+    </div>
+</div>
