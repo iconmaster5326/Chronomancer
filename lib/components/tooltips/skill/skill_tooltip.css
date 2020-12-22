@@ -1,0 +1,39 @@
+.skill-tooltip-body {
+    display: flex;
+    flex-direction: column;
+    font-size: 10px;
+    margin: 4px;
+}
+
+.skill-tooltip-header {
+    display: flex;
+    align-items: center;
+}
+
+.skill-tooltip-name-element {
+    display: flex;
+    flex-direction: column;
+}
+
+.skill-tooltip-type, .skill-tooltip-next-rank {
+    color: #d2823c;
+}
+
+.skill-tooltip-icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.skill-tooltip-body .hr {
+    height: 3px;
+    width: 100%;
+    border: none;
+    border-top: 1px solid #404040;
+    margin-bottom: 3px;
+}
+
+.skill-tooltip-requires {
+    color: red;
+}

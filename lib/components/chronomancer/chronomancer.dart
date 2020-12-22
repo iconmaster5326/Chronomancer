@@ -14,6 +14,7 @@ import 'package:chronomancer/components/skill_tree/skill_tree.dart';
 import 'package:chronomancer/components/skill_tree_tab/skill_tree_tab.dart';
 import 'package:chronomancer/components/tooltips/enchant/enchant_tooltip.dart';
 import 'package:chronomancer/components/tooltips/item/item_tooltip.dart';
+import 'package:chronomancer/components/tooltips/skill/skill_tooltip.dart';
 import 'package:chronomancer/item.dart';
 import 'package:chronomancer/skill.dart';
 import 'package:chronomancer/version.dart';
@@ -39,6 +40,7 @@ import 'package:http/http.dart';
     EnchantEditDialogComponent,
     ItemTooltipComponent,
     EnchantTooltipComponent,
+    SkillTooltipComponent,
   ],
 )
 class ChronomancerComponent extends CommonComponent {

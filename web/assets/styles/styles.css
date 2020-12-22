@@ -174,8 +174,15 @@
 }
 
 html, body {
+  image-rendering: pixelated;
+  font-family: Chronicon_GMS4_EF;
+  font-smooth: never;
+  -webkit-font-smoothing: none;
   height: 100%;
   background: black;
+  overflow: -moz-scrollbars-vertical; 
+  overflow-y: scroll;
+  color: white;
 }
 
 @font-face {
@@ -184,12 +191,4 @@ html, body {
   font-weight: normal;
   font-style: normal;
   font-display: swap;
-}
-
-* {
-  image-rendering: pixelated;
-  font-family: Chronicon_GMS4_EF;
-  font-smooth: never;
-  -webkit-font-smoothing: none;
-  color: white;
 }

@@ -7,6 +7,7 @@ import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/components/skill_tree/skill_dialog/skill_dialog.dart';
 import 'package:chronomancer/components/skill_tree/skill_tree.dart';
+import 'package:chronomancer/components/tooltips/skill/skill_tooltip.dart';
 import 'package:chronomancer/skill.dart';
 import 'package:chronomancer/util.dart';
 
@@ -74,6 +75,21 @@ class NodeComponent extends CommonComponent {
   SkillTreeNode node;
 
   bool hovering = false;
+
+  void onHoverBegin() {
+    hovering = true;
+    SkillTooltipComponent.INSTANCE.skill = (node.skills.length == 1
+        ? node.skills.first
+        : ChronomancerComponent
+            .character
+            .skills[SkillTreeComponent.currentTree][Vector2(node.x, node.y)]
+            ?.skill);
+  }
+
+  void onHoverEnd() {
+    hovering = false;
+    SkillTooltipComponent.INSTANCE.skill = null;
+  }
 
   Skill get filledWith => node.skills.length == 1
       ? node.skills.first

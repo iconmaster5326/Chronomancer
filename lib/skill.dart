@@ -61,7 +61,7 @@ class Skill {
 
   Version version;
   int id, tree, maxRank, minLevel;
-  String name, typeName, desc;
+  String name, typeName, desc, rankUpDesc;
   CharClass charClass;
   SkillType type;
   List<Skill> requires;
@@ -79,6 +79,7 @@ class Skill {
         typeName = j['type'] ?? 'Perk',
         type = STRING_TO_SKILL_TYPE[j['type'] ?? 'Perk'],
         desc = j['description'],
+        rankUpDesc = j['description_next'],
         tallySkill = (j['x'] == 0),
         minLevel = j['minLevel'],
         maxRank = j['maxRank'],

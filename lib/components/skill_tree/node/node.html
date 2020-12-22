@@ -1,4 +1,4 @@
-<div class="skill-tree-node" [style.left]="posLeft" [style.top]="posTop" (mouseenter)="hovering = true" (mouseleave)="hovering = false" (click)="onClick()" (contextmenu)="onRightClick($event)">
+<div class="skill-tree-node" [style.left]="posLeft" [style.top]="posTop" (mouseenter)="onHoverBegin()" (mouseleave)="onHoverEnd()" (click)="onClick()" (contextmenu)="onRightClick($event)">
     <div class="skill-tree-node-level" [style.background]="levelBoxBackground">{{rank}}</div>
     <div class="skill-tree-node-image" [style.background]="background" [style.clip-path]="clipPath"></div>
 </div>

@@ -1,0 +1,18 @@
+<div (init)="onInit()" class="chronicon-tooltip" [style.display]="skill == null ? 'none': 'block'" [style.left]="left" [style.top]="top">
+    <div *ngIf="skill != null" class="skill-tooltip-body">
+        <div class="skill-tooltip-header">
+            <div class="skill-tooltip-icon" [style.clip-path]="iconClipPath" [style.background]="iconBackground"></div>
+            <div class="skill-tooltip-name-element">
+                <div class="skill-tooltip-name">{{skill.name}}</div>
+                <div *ngIf="!unlockable" class="skill-tooltip-requires">Requires {{skill.minLevel}} points spent to unlock</div>
+                <div class="skill-tooltip-element" [style.color]="color">{{skill.elementName}}</div>
+            </div>
+        </div>
+        <div class="skill-tooltip-type">{{skill.typeName}}</div>
+        <div class="skill-tooltip-rank">Rank {{rank}}<span *ngIf="skill.maxRank != null">/{{skill.maxRank}}</span></div>
+        <div class="hr"></div>
+        <div class="skill-tooltip-desc">{{skill.desc}}</div>
+        <div *ngIf="showNextRank" class="skill-tooltip-next-rank">{{nextRankHeader}}</div>
+        <div *ngIf="showNextRank" class="skill-tooltip-next-rank-desc">{{skill.rankUpDesc}}</div>
+    </div>
+</div>
