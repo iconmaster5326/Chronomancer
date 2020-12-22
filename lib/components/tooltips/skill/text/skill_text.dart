@@ -17,10 +17,24 @@ class SkillTextParser extends Parser<ColoredText> {
 
   @override
   Iterable<MapEntry<Pattern, ColoredText Function(Match)>> get rules =>
-      Skill.DESC_VARIABLES.map((v) => MapEntry(
-          RegExp('${v.toUpperCase()}%?'),
-          (match) => ColoredText(EnchantTextComponent.COLOR_BLUE,
-              skill.descVariableValues[v][rank == 0 ? 0 : rank - 1])));
+      Skill.DESC_VARIABLES
+          .map((v) => MapEntry(
+              RegExp('${v.toUpperCase()}%?'),
+              (match) => ColoredText(SkillTextComponent.COLOR_GREEN,
+                  skill.descVariableValues[v][rank == 0 ? 0 : rank - 1])))
+          .followedBy([
+        MapEntry(
+            RegExp(r'_E([^_]*)_([^Â]*)Â¥'),
+            (match) => ColoredText(
+                EnchantTextComponent.ELEMENT_TO_COLOR[
+                    SkillTextComponent.ELEMENT_CODES[match.group(1)]],
+                match.group(2))),
+        MapEntry(RegExp(r'XDAM\s*'), (match) => ColoredText(null, '')),
+        MapEntry(
+            RegExp(r'\|([^Â]*)Â¥'),
+            (match) => ColoredText(SkillTextComponent.COLOR_GREEN,
+                match.group(1).replaceAll('|', ''))),
+      ]);
 }
 
 @Component(
@@ -30,6 +44,18 @@ class SkillTextParser extends Parser<ColoredText> {
   directives: [coreDirectives, InitDirective],
 )
 class SkillTextComponent extends CommonComponent {
+  static const String COLOR_GREEN = '#24c824';
+  static const ELEMENT_CODES = {
+    'ET': SkillElement.ETHEREAL,
+    'PH': SkillElement.PHYSICAL,
+    'FI': SkillElement.FIRE,
+    'LI': SkillElement.LIGHTNING,
+    'FR': SkillElement.FROST,
+    'PO': SkillElement.POISON,
+    'HO': SkillElement.HOLY,
+    'SH': SkillElement.SHADOW,
+  };
+
   @Input()
   Skill skill;
   @Input()
