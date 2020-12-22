@@ -170,4 +170,8 @@ class Character {
         (spentSkill) => spentSkill != null && spentSkill.skill == skill,
         orElse: () => null);
   }
+
+  Skill modifierOf(Skill skill) => skill.modifierOf.firstWhere(
+      (s) => skills[skill.tree].values.any((ss) => ss.skill == s),
+      orElse: () => null);
 }

@@ -124,6 +124,7 @@ abstract class Parser<T> {
   T defaultRule(String s);
 
   Iterable<T> parse(String s) sync* {
+    if (s == null) return;
     var fragment = '';
 
     while (s.isNotEmpty) {

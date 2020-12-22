@@ -55,7 +55,12 @@ class SkillTooltipComponent extends CommonComponent {
       ChronomancerComponent.character.findSpentSkill(skill);
   String get left => '${_left + 8}px';
   String get top => '${_top + 8}px';
-  bool get showNextRank => !skill.tallySkill && rank != skill.maxRank;
+  bool get showNextRank =>
+      !skill.tallySkill &&
+      skill.rankUpDesc != null &&
+      skill.maxRank != null &&
+      skill.maxRank != 1 &&
+      rank != skill.maxRank;
   bool get nextOrMax =>
       (skill.maxRank == null || (spentSkill != null && rank != 0));
   String get nextRankHeader => nextOrMax ? 'At Next Rank:' : 'At Max Rank:';

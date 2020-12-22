@@ -7,6 +7,7 @@ import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/components/skill_tree/skill_dialog/skill_dialog.dart';
 import 'package:chronomancer/components/skill_tree/skill_tree.dart';
+import 'package:chronomancer/components/tooltips/enchant/text/enchant_text.dart';
 import 'package:chronomancer/components/tooltips/skill/skill_tooltip.dart';
 import 'package:chronomancer/skill.dart';
 import 'package:chronomancer/util.dart';
@@ -214,4 +215,12 @@ class NodeComponent extends CommonComponent {
       SkillDialogComponent.INSTANCE.show();
     }
   }
+
+  String get rankColor => ChronomancerComponent
+              .character
+              .skills[SkillTreeComponent.currentTree][Vector2(node.x, node.y)]
+              ?.rank ==
+          filledWith?.maxRank
+      ? EnchantTextComponent.COLOR_ORANGE
+      : EnchantTextComponent.COLOR_WHITE;
 }

@@ -190,4 +190,12 @@ class Skill {
   Iterable<Skill> get recursivelyUnlocks =>
       unlocks.followedBy(unlocks.map((s) => s.recursivelyUnlocks).flatten);
   String get elementName => ELEMENT_TO_STRING[element];
+
+  List<Skill> _modifierOf;
+  List<Skill> get modifierOf => _modifierOf ??= version.skills
+      .where((s) =>
+          s.tree == tree &&
+          s.requires.isEmpty &&
+          s.recursivelyUnlocks.contains(this))
+      .toList();
 }
