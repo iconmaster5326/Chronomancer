@@ -6,8 +6,6 @@
   background-image: url("../images/background.png");
   background-origin: border-box;
   background-clip: border-box;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .short-button {
@@ -158,6 +156,21 @@
 
 .checkbox[checked=true]:hover {
   background: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.5)), url("../images/checkbox_selected.png");
+}
+
+.chronicon-tooltip {
+  position: absolute;
+  z-index: 10000;
+  border: 1px solid white;
+  border-radius: 6px;
+  background: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75));
+}
+
+.bullet-icon {
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+  background: url("../images/modifier_bullets.png");
 }
 
 html, body {
