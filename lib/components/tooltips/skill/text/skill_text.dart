@@ -16,7 +16,11 @@ class SkillTextParser extends Parser<ColoredText> {
   }
 
   @override
-  Iterable<MapEntry<Pattern, ColoredText Function(Match)>> get rules => [];
+  Iterable<MapEntry<Pattern, ColoredText Function(Match)>> get rules =>
+      Skill.DESC_VARIABLES.map((v) => MapEntry(
+          RegExp('${v.toUpperCase()}%?'),
+          (match) => ColoredText(EnchantTextComponent.COLOR_BLUE,
+              skill.descVariableValues[v][rank == 0 ? 0 : rank - 1])));
 }
 
 @Component(

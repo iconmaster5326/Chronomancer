@@ -68,10 +68,21 @@ class Skill {
   List<Vector2> positions;
   bool tallySkill;
   SkillElement element;
+  Map<String, List<String>> descVariableValues;
 
   int _x, _y;
   String _rawClass, _rawTree;
   List<int> _rawRequires;
+
+  static const DESC_VARIABLES = [
+    'effect',
+    'damage',
+    'range2',
+    'range',
+    'value',
+    'proc',
+    'duration',
+  ];
 
   Skill.fromJSON(this.version, Map<String, dynamic> j)
       : id = j['uuid'],
@@ -84,6 +95,11 @@ class Skill {
         minLevel = j['minLevel'],
         maxRank = j['maxRank'],
         element = ELEMENT_TO_STRING.inverted[j['element']],
+        descVariableValues = Map.fromEntries(DESC_VARIABLES
+            .map((k) => MapEntry(k, j[k] as List))
+            .where((e) => e.value != null)
+            .map((e) =>
+                MapEntry(e.key, e.value.map((v) => v.toString()).toList()))),
         _x = j['x'],
         _y = j['y'],
         _rawClass = j['class'],
