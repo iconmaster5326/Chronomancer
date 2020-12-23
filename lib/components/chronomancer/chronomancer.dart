@@ -60,6 +60,7 @@ import 'dart:html' as html;
 class ChronomancerComponent extends CommonComponent {
   static const AUTOSAVE_INTERVAL = 30;
   static const AUTOSAVE_STORAGE_KEY = 'chronomancerAutosave';
+  static const BUILD_QUERY_PARAMETER = 'build';
 
   static const ITEM_TYPE_HEAD = ItemType.HEAD;
   static const ITEM_TYPE_ACCESSORY = ItemType.ACCCESSORY;
@@ -78,9 +79,23 @@ class ChronomancerComponent extends CommonComponent {
   static void init() async {
     versions = await Version.getVersions(Client());
     version = versions.last;
-    if (html.window.localStorage.containsKey(AUTOSAVE_STORAGE_KEY)) {
+
+    if (Uri.base.queryParameters.containsKey(BUILD_QUERY_PARAMETER)) {
+      try {
+      character = Character.fromJSON(
+          versions,
+          json.decode(utf8.decode(
+              base64.decode(Uri.base.queryParameters[BUILD_QUERY_PARAMETER]))));
+      version = character.charClass.version;
+      } on dynamic {
+        html.window.alert('Bad build specified in the build link!');
+        character = null;
+        version = versions.last;
+      }
+    } else if (html.window.localStorage.containsKey(AUTOSAVE_STORAGE_KEY)) {
       character = Character.fromJSON(versions,
           json.decode(html.window.localStorage[AUTOSAVE_STORAGE_KEY]));
+      version = character.charClass.version;
     }
   }
 
@@ -124,10 +139,8 @@ class ChronomancerComponent extends CommonComponent {
 
   void importBuild() async {
     try {
-      character = Character.fromJSON(
-          versions,
-          json.decode(utf8.decode(base64
-              .decode(await readClipboard()))));
+      character = Character.fromJSON(versions,
+          json.decode(utf8.decode(base64.decode(await readClipboard()))));
       html.window.alert('Build imported from clipbaord.');
     } on dynamic {
       ImportDialogComponent.INSTANCE.show();
@@ -142,8 +155,31 @@ class ChronomancerComponent extends CommonComponent {
     } on dynamic {
       // do nothing
     }
-    
-    ExportDialogComponent.INSTANCE.exportedJSON = b64;
+
+    ExportDialogComponent.INSTANCE.title = 'Export Build';
+    ExportDialogComponent.INSTANCE.desc =
+        'Your build has been copied to the clipboard!';
+    ExportDialogComponent.INSTANCE.exportedText = b64;
+    ExportDialogComponent.INSTANCE.show();
+  }
+
+  void linkBuild() async {
+    var charJSON = character.asJSON;
+    var b64 = base64.encode(utf8.encode(json.encode(charJSON)));
+    print(Uri.base.toString());
+    var uri = Uri.base.replace(queryParameters: {
+      BUILD_QUERY_PARAMETER: b64,
+    });
+    try {
+      await writeClipboard(uri.toString());
+    } on dynamic {
+      // do nothing
+    }
+
+    ExportDialogComponent.INSTANCE.title = 'Get Link to Build';
+    ExportDialogComponent.INSTANCE.desc =
+        'A link to your build has been copied to the clipboard!';
+    ExportDialogComponent.INSTANCE.exportedText = uri.toString();
     ExportDialogComponent.INSTANCE.show();
   }
 }

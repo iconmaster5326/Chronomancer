@@ -2,12 +2,12 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content bordered">
         <div class="modal-header">
-            <h1 class="modal-title">Export Build</h1>
+            <h1 class="modal-title">{{title}}</h1>
         </div>
         <div class="modal-body" style="white-space: pre-line;">
-            <div>Your build has been copied to the clipboard! In addition, it is available for copying or saving here:</div>
+            <div>{{desc}} In addition, it is available for copying or saving here:</div>
             <textarea class="text-input" readonly="true" spellcheck="false">
-                {{exportedJSON}}
+                {{exportedText}}
             </textarea>
         </div>
         <div class="modal-footer">

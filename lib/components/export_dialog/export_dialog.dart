@@ -11,7 +11,7 @@ import 'package:chronomancer/components/component_utils.dart';
 )
 class ExportDialogComponent extends ModalComponent {
   static ExportDialogComponent INSTANCE;
-  String exportedJSON;
+  String title, desc, exportedText;
 
   @override
   void init(Element e) {
