@@ -1,5 +1,6 @@
 import 'package:angular/angular.dart';
 import 'package:chronomancer/components/about_dialog/about_dialog.dart';
+import 'package:chronomancer/components/changelog_dialog/changelog_dialog.dart';
 import 'package:chronomancer/components/char_sel/char_sel.dart';
 import 'package:chronomancer/character.dart';
 import 'package:chronomancer/components/component_utils.dart';
@@ -45,6 +46,7 @@ import 'package:http/http.dart';
     SkillTooltipComponent,
     GemTooltipComponent,
     AboutDialogComponent,
+    ChangelogDialogComponent,
   ],
 )
 class ChronomancerComponent extends CommonComponent {
@@ -82,5 +84,9 @@ class ChronomancerComponent extends CommonComponent {
 
   void showAboutDialog() {
     AboutDialogComponent.INSTANCE.show();
+  }
+
+  void showChangelogDialog() {
+    ChangelogDialogComponent.INSTANCE.show();
   }
 }
