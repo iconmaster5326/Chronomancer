@@ -187,7 +187,7 @@ html, body {
 
 @font-face {
   font-family: Chronicon_GMS4_EF;
-  src: url('../fonts/Chronicon_GMS4_EF.ttf') format('ttf');
+  src: url('../fonts/Chronicon_GMS4_EF.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
