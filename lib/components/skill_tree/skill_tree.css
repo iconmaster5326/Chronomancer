@@ -1,7 +1,7 @@
 .skill-tree {
   position: relative;
-  width: calc(13 * (24px + 8px));
-  height: calc(8 * (24px + 8px));
+  width: calc(10 * (24px + 8px));
+  height: calc(6 * (24px + 8px));
   background-image: linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5));
   background-repeat: no-repeat;
   background-position: right;
