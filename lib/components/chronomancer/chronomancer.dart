@@ -129,7 +129,7 @@ class ChronomancerComponent extends CommonComponent {
           json.decode(utf8.decode(base64
               .decode(await readClipboard()))));
       html.window.alert('Build imported from clipbaord.');
-    } on Exception {
+    } on dynamic {
       ImportDialogComponent.INSTANCE.show();
     }
   }
@@ -137,7 +137,12 @@ class ChronomancerComponent extends CommonComponent {
   void exportBuild() async {
     var charJSON = character.asJSON;
     var b64 = base64.encode(utf8.encode(json.encode(charJSON)));
-    await writeClipboard(b64);
+    try {
+      await writeClipboard(b64);
+    } on dynamic {
+      // do nothing
+    }
+    
     ExportDialogComponent.INSTANCE.exportedJSON = b64;
     ExportDialogComponent.INSTANCE.show();
   }

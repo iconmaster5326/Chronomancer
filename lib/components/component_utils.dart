@@ -90,7 +90,7 @@ class ColoredText extends Pair<String, String> {
 void writeClipboard(String text) async {
   try {
     await html.window.navigator.clipboard.writeText(text);
-  } on Exception {
+  } on dynamic {
     html.TextAreaElement textArea = html.document.createElement('textarea');
     textArea.value = text;
     html.document.body.append(textArea);
@@ -104,7 +104,7 @@ void writeClipboard(String text) async {
 streams.Future<String> readClipboard() async {
   try {
     return await html.window.navigator.clipboard.readText();
-  } on Exception {
+  } on dynamic {
     html.TextAreaElement textArea = html.document.createElement('textarea');
     html.document.body.append(textArea);
     textArea.focus();
