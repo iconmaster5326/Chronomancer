@@ -60,7 +60,7 @@ class EquipSlotComponent extends SlotComponent {
   void onRightClick(MouseEvent event) {
     event.preventDefault();
 
-    if (event.shiftKey) {
+    if (event.shiftKey || event.ctrlKey) {
       character.equipment.remove(slot);
       ItemEditorComponent.editing = null;
     } else {

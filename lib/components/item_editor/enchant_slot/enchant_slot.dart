@@ -68,7 +68,7 @@ class EnchantSlotComponent extends CommonComponent {
     event.preventDefault();
 
     if (item.mutableEnchant(slot)) {
-      if (event.shiftKey) {
+      if (event.shiftKey || event.ctrlKey) {
         item.enchants[slot] = null;
       } else {
         EnchantSelectDialogComponent.INSTANCE.item = item;

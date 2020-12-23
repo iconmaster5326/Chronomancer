@@ -41,7 +41,7 @@ class GemSocketComponent extends CommonComponent {
   void onRightClick(MouseEvent event) {
     event.preventDefault();
 
-    if (event.shiftKey) {
+    if (event.shiftKey || event.ctrlKey) {
       socket.gem = null;
     } else {
       GemDialogComponent.INSTANCE.socket = socket;

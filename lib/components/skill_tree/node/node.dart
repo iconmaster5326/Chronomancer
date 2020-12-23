@@ -191,7 +191,7 @@ class NodeComponent extends CommonComponent {
               () => SpentSkill(ChronomancerComponent.character,
                   SkillTreeComponent.currentTree, pos, node.skills.first));
 
-      if (event.shiftKey) {
+      if (event.shiftKey || event.ctrlKey) {
         if (ChronomancerComponent.respeccing) {
           while (spentSkill.canRankDown) {
             spentSkill.rank--;
@@ -220,7 +220,7 @@ class NodeComponent extends CommonComponent {
   void onRightClick(MouseEvent event) {
     event.preventDefault();
 
-    if (event.shiftKey) {
+    if (event.shiftKey || event.ctrlKey) {
       if (node.skills.length > 1 &&
           ChronomancerComponent
                   .character
