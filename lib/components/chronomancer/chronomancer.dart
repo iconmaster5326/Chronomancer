@@ -129,7 +129,7 @@ class ChronomancerComponent extends CommonComponent {
           json.decode(utf8.decode(base64
               .decode(await readClipboard()))));
       html.window.alert('Build imported from clipbaord.');
-    } on FormatException {
+    } on Exception {
       ImportDialogComponent.INSTANCE.show();
     }
   }
