@@ -1,6 +1,6 @@
 .dart_tool/package_config.json
 .packages
-assets/fonts/Chronicon_GMS4_EF.ttf
+assets/fonts/Chronicon_GMS4_EF.woff
 assets/images/arrow.png
 assets/images/background.png
 assets/images/border/berserker.png
@@ -20,6 +20,7 @@ assets/images/items/1.10.4.png
 assets/images/items/1.10.6.png
 assets/images/items/1.10.7.png
 assets/images/items/1.10.8.png
+assets/images/loading_bobber.png
 assets/images/logo.png
 assets/images/long_button_down.png
 assets/images/long_button_up.png
