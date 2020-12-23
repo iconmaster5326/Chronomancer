@@ -101,13 +101,6 @@ class ChronomancerComponent extends CommonComponent {
     });
   }
 
-  void onClose() {
-    if (character != null) {
-      html.window.localStorage[AUTOSAVE_STORAGE_KEY] =
-          json.encode(character.asJSON);
-    }
-  }
-
   String get borderName => character?.charClass?.id ?? 'default';
   String get skillPointsDisplay =>
       SkillTreeComponent.currentTree == Skill.TREE_MASTERY
@@ -134,7 +127,7 @@ class ChronomancerComponent extends CommonComponent {
       character = Character.fromJSON(
           versions,
           json.decode(utf8.decode(base64
-              .decode(await html.window.navigator.clipboard.readText()))));
+              .decode(await readClipboard()))));
       html.window.alert('Build imported from clipbaord.');
     } on FormatException {
       ImportDialogComponent.INSTANCE.show();
@@ -144,7 +137,7 @@ class ChronomancerComponent extends CommonComponent {
   void exportBuild() async {
     var charJSON = character.asJSON;
     var b64 = base64.encode(utf8.encode(json.encode(charJSON)));
-    await html.window.navigator.clipboard.writeText(b64);
+    await writeClipboard(b64);
     ExportDialogComponent.INSTANCE.exportedJSON = b64;
     ExportDialogComponent.INSTANCE.show();
   }

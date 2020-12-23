@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:angular/angular.dart' as angular;
 import 'dart:js' as js;
 import 'dart:async' as streams;
@@ -57,7 +55,7 @@ class InitDirective implements angular.AfterContentInit {
 }
 
 class ModalComponent extends CommonComponent {
-  Element element;
+  html.Element element;
   bool open = false;
 
   void show() {
@@ -69,7 +67,7 @@ class ModalComponent extends CommonComponent {
     js.context.callMethod(r'$', [element]).callMethod('modal', ['hide']);
   }
 
-  void init(Element e) {
+  void init(html.Element e) {
     element = e;
     js.context.callMethod(r'$', [element]).callMethod('on', [
       'hidden.bs.modal',
@@ -80,11 +78,40 @@ class ModalComponent extends CommonComponent {
   }
 }
 
-class ColoredText extends Pair<String,String> {
+class ColoredText extends Pair<String, String> {
   ColoredText(String c, String t) : super(c, t);
 
   String get color => first;
   set color(String v) => first = v;
   String get text => second;
   set text(String v) => second = v;
+}
+
+void writeClipboard(String text) async {
+  try {
+    await html.window.navigator.clipboard.writeText(text);
+  } on Exception {
+    html.TextAreaElement textArea = html.document.createElement('textarea');
+    textArea.value = text;
+    html.document.body.append(textArea);
+    textArea.focus();
+    textArea.select();
+    html.document.execCommand('copy');
+    textArea.remove();
+  }
+}
+
+streams.Future<String> readClipboard() async {
+  try {
+    return await html.window.navigator.clipboard.readText();
+  } on Exception {
+    html.TextAreaElement textArea = html.document.createElement('textarea');
+    html.document.body.append(textArea);
+    textArea.focus();
+    textArea.select();
+    html.document.execCommand('paste');
+    var result = textArea.value;
+    textArea.remove();
+    return result;
+  }
 }
