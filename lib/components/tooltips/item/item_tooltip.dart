@@ -28,6 +28,7 @@ class ItemTooltipComponent extends CommonComponent {
   StreamSubscription<MouseEvent> _conn;
   int _left = 0, _top = 0;
 
+  static const COLOR_YELLOW = '#ffc800', COLOR_GREY = '#808080';
   static const Map<ItemRarity, String> RAIRTY_TO_COLOR = {
     ItemRarity.ORDINARY: '#d2d2ff',
     ItemRarity.ENCHANTED: '#3c82d2',
@@ -77,5 +78,14 @@ class ItemTooltipComponent extends CommonComponent {
           ? ['(${ITEM_TYPE_TO_STRING[item.type]})']
           : [])
       .join(' ');
-      String shapeName(GemShape shape) => SHAPE_TO_STRING[shape];
+  String shapeName(GemShape shape) => SHAPE_TO_STRING[shape];
+  String get itemSetTypeText =>
+      item.partOfSet.items.map((i) => i.typeName).join(', ');
+  String itemSetBonusColor(int n) =>
+      ChronomancerComponent.character.itemSetMembersEquipped(item.partOfSet) >=
+              n
+          ? COLOR_YELLOW
+          : COLOR_GREY;
+  Iterable<MapEntry<int, String>> get itemSetBonuses =>
+      (item.partOfSet?.desc?.entries ?? []);
 }

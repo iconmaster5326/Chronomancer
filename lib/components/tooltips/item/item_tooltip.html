@@ -9,6 +9,12 @@
         </div>
         <div class="item-tooltip-level">Level: 100</div>
         <div *ngIf="item.requiresClass != null" class="item-tooltip-class">{{item.requiresClass.name}} Item</div>
+        <div *ngIf="item.partOfSet != null" class="item-tooltip-set">Set: {{item.partOfSet.name}}</div>
+        <div *ngIf="item.partOfSet != null" class="item-tooltip-type">{{itemSetTypeText}}</div>
+        <div *ngFor="let bonus of itemSetBonuses">
+            <span class="item-tooltip-type">{{bonus.key}}) </span>
+            <span [style.color]="itemSetBonusColor(bonus.key)">{{bonus.value}}</span>
+        </div>
         <enchant-text *ngFor="let enchant of item.fixedEnchantData" class="item-tooltip-fixed-enchant" [enchant]="enchant" [item]="item"></enchant-text>
         <div *ngFor="let types of item.floatingEnchantData" class="item-tooltip-floating-enchant"><div class="bullet-icon"></div> (random {{floatingEnchantDesc(types)}} enchantment)</div>
         <div *ngFor="let socket of item.gems" class="item-tooltip-socket">

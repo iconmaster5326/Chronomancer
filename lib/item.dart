@@ -5,6 +5,7 @@ import 'enchant.dart';
 import 'gem.dart';
 import 'version.dart';
 import 'class.dart';
+import 'set.dart';
 import 'util.dart';
 
 enum ItemType {
@@ -60,6 +61,7 @@ abstract class ItemData {
   bool get empowered;
   bool get augmented;
   Iterable<GemSocket> get gems;
+  ItemSet get partOfSet;
 }
 
 class _BaseEnchant extends EnchantStack {
@@ -82,6 +84,8 @@ class Item implements ItemData {
   ItemRarity rarity;
   @override
   CharClass requiresClass;
+  @override
+  ItemSet partOfSet;
   List<Enchant> baseEnchants, fixedEnchants;
   List<int> _rawBaseEnchants, _rawFixedEnchants;
 
@@ -550,6 +554,8 @@ class ItemStack implements ItemData {
   @override
   bool get augmented =>
       enchants.any((e) => e != null && e.value > e.enchant.ranges[rarity].max);
+  @override
+  ItemSet get partOfSet => item.partOfSet;
 
   @Deprecated('use type instead.')
   ItemType get slot => item.type;

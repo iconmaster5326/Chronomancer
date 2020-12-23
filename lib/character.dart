@@ -4,6 +4,7 @@ import 'enchant.dart';
 import 'item.dart';
 import 'skill.dart';
 import 'util.dart';
+import 'set.dart';
 
 class SpentSkill {
   Character character;
@@ -174,4 +175,7 @@ class Character {
   Skill modifierOf(Skill skill) => skill.modifierOf.firstWhere(
       (s) => skills[skill.tree].values.any((ss) => ss.skill == s),
       orElse: () => null);
+
+  int itemSetMembersEquipped(ItemSet itemSet) =>
+      equipment.values.where((i) => i != null && i.partOfSet == itemSet).length;
 }

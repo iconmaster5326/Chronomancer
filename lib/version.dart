@@ -6,6 +6,7 @@ import 'enchant.dart';
 import 'gem.dart';
 import 'item.dart';
 import 'skill.dart';
+import 'set.dart';
 
 class Version {
   String name;
@@ -16,6 +17,7 @@ class Version {
   List<Gem> gems;
   Map<CharClass, Map<ItemType, Map<EnchantType, List<Enchant>>>> enchantPool;
   List rawDroppedRuneData;
+  List<ItemSet> sets;
 
   Version(this.name);
 
@@ -28,6 +30,7 @@ class Version {
     version.enchants = await Enchant.getEnchantList(version, http);
     version.skills = await Skill.getSkillList(version, http);
     version.gems = await Gem.getGemList(version, http);
+    version.sets = await ItemSet.getSetList(version, http);
 
     for (var item in version.items) {
       item.finalize(version);
@@ -40,6 +43,9 @@ class Version {
     }
     for (var gem in version.gems) {
       gem.finalize(version);
+    }
+    for (var itemSet in version.sets) {
+      itemSet.finalize(version);
     }
 
     version.enchantPool = await Enchant.getEnchantPool(version, http);

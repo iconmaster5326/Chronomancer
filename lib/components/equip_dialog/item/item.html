@@ -4,7 +4,7 @@
         <div>{{item.name}}</div>
     </div>
     <div class="item-card-enchant-list">
-        <enchant-text *ngFor="let enchant of item.fixedEnchantData" [enchant]="enchant" [item]="item"></enchant-text>
-        <div *ngFor="let types of item.floatingEnchantData"><div class="bullet-icon"></div> (random {{floatingEnchantDesc(types)}} enchantment)</div>
+        <div *ngIf="item.partOfSet != null" class="item-card-set">Set: {{item.partOfSet.name}}</div>
+        <enchant-text *ngFor="let enchant of summaryEnchantData" [enchant]="enchant" [item]="item" [bulleted]="false"></enchant-text>
     </div>
 </div>

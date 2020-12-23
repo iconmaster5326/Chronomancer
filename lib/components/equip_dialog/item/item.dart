@@ -22,4 +22,6 @@ class ItemComponent extends CommonComponent {
 
   String floatingEnchantDesc(List<EnchantType> types) =>
       types.map((t) => ENCHANT_TYPE_TO_STRING[t]).join(' or ');
+  Iterable<EnchantData> get summaryEnchantData =>
+      item.fixedEnchantData.where((e) => e.source != EnchantStackSource.BASE);
 }
