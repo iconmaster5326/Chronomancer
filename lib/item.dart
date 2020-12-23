@@ -173,6 +173,19 @@ class GemSocket {
       EnchantStackSource.FLOATING,
       gem.enchants[item.type],
       gem.enchants[item.type].ranges[ItemRarity.values[gem.quality.index]].max);
+
+  dynamic get asJSON => {
+        'source': source.index,
+        'shape': shape.index,
+        'gem': gem?.id,
+      };
+
+  GemSocket.fromJSON(this.item, Version version, dynamic j)
+      : source = GemSource.values[j['source']],
+        shape = GemShape.values[j['shape']],
+        gem = (j['gem'] == null
+            ? null
+            : version.gems.firstWhere((x) => x.id == j['gem']));
 }
 
 class ItemStack implements ItemData {
@@ -559,4 +572,24 @@ class ItemStack implements ItemData {
 
   @Deprecated('use type instead.')
   ItemType get slot => item.type;
+
+  dynamic get asJSON => {
+        'id': id,
+        'rarity': rarity.index,
+        'enchants': enchants.map((x) => x?.asJSON).toList(),
+        'gems': gems.map((x) => x.asJSON).toList(),
+        'empowered': empowered,
+      };
+
+  ItemStack.fromJSON(Version version, dynamic j)
+      : item = version.items.firstWhere((x) => x.id == j['id']),
+        rarity = ItemRarity.values[j['rarity']],
+        enchants = j['enchants']
+            .map<EnchantStack>(
+                (x) => x == null ? null : EnchantStack.fromJSON(version, x))
+            .toList() {
+    gems = j['gems']
+        .map<GemSocket>((x) => GemSocket.fromJSON(this, version, x))
+        .toList();
+  }
 }

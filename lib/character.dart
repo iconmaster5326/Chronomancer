@@ -5,6 +5,7 @@ import 'item.dart';
 import 'skill.dart';
 import 'util.dart';
 import 'set.dart';
+import 'version.dart';
 
 class SpentSkill {
   Character character;
@@ -81,6 +82,20 @@ class SpentSkill {
     }
 
     return true;
+  }
+
+  dynamic get asJSON => {
+        'x': pos.x,
+        'y': pos.y,
+        'id': skill.id,
+        'rank': rank,
+      };
+
+  SpentSkill.fromJSON(Version version, dynamic j)
+      : skill = version.skills.firstWhere((x) => x.id == j['id']),
+        pos = Vector2(j['x'], j['y']),
+        rank = j['rank'] {
+    tree = skill.tree;
   }
 }
 
@@ -178,4 +193,32 @@ class Character {
 
   int itemSetMembersEquipped(ItemSet itemSet) =>
       equipment.values.where((i) => i != null && i.partOfSet == itemSet).length;
+
+  dynamic get asJSON => {
+        'version': charClass.version.name,
+        'class': charClass.id,
+        'level': level,
+        'skills': skills
+            .map((spentSkills) => spentSkills.values.map((x) => x?.asJSON))
+            .flatten,
+        'items':
+            equipment.map((k, v) => MapEntry(k.index.toString(), v?.asJSON)),
+      };
+
+  Character.fromJSON(Iterable<Version> versions, dynamic j) {
+    var version = versions.firstWhere((x) => x.name == j['version']);
+    charClass = version.classes.firstWhere((x) => x.id == j['class']);
+    level = j['level'];
+
+    skills = List.generate(charClass.skillTrees.length, (_) => {});
+    for (var spentSkillJSON in j['skills']) {
+      var spentSkill = SpentSkill.fromJSON(version, spentSkillJSON);
+      skills[spentSkill.tree][spentSkill.pos] = spentSkill;
+    }
+
+    for (var itemJSON in j['items'].entries) {
+      equipment[ItemType.values[int.parse(itemJSON.key)]] =
+          ItemStack.fromJSON(version, itemJSON.value);
+    }
+  }
 }

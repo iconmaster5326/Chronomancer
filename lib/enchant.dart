@@ -186,4 +186,13 @@ class EnchantStack implements EnchantData {
   EnchantType get type => enchant.type;
   @override
   Map<ItemRarity, EnchantRange> get ranges => enchant.ranges;
+
+  dynamic get asJSON => {
+        'id': id,
+        'value': value,
+      };
+
+  EnchantStack.fromJSON(Version version, dynamic j)
+      : enchant = version.enchants.firstWhere((x) => x.id == j['id']),
+        value = j['value'];
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:angular/angular.dart';
 import 'package:chronomancer/components/about_dialog/about_dialog.dart';
 import 'package:chronomancer/components/changelog_dialog/changelog_dialog.dart';
@@ -22,6 +24,7 @@ import 'package:chronomancer/item.dart';
 import 'package:chronomancer/skill.dart';
 import 'package:chronomancer/version.dart';
 import 'package:http/http.dart';
+import 'dart:html' as html;
 
 @Component(
   selector: 'chronomancer',
@@ -88,5 +91,24 @@ class ChronomancerComponent extends CommonComponent {
 
   void showChangelogDialog() {
     ChangelogDialogComponent.INSTANCE.show();
+  }
+
+  void importBuild() async {
+    try {
+      character = Character.fromJSON(
+          versions,
+          json.decode(utf8.decode(base64
+              .decode(await html.window.navigator.clipboard.readText()))));
+    } on FormatException {
+      html.window.alert(
+          'Could not read build. Please ensure you have the exported build copied to your clipboard.');
+    }
+  }
+
+  void exportBuild() async {
+    var charJSON = character.asJSON;
+    await html.window.navigator.clipboard
+        .writeText(base64.encode(utf8.encode(json.encode(charJSON))));
+    html.window.alert('Build copied to the clipboard!');
   }
 }
