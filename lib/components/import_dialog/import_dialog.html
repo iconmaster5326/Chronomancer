@@ -1,0 +1,19 @@
+<div class="modal fade" id="import-dialog" tabindex="-1" role="dialog" #equipDialogElement (init)="init(equipDialogElement)">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bordered">
+        <div class="modal-header">
+            <h1 class="modal-title">Import Build</h1>
+        </div>
+        <div class="modal-body" style="white-space: pre-line;">
+            <div>Paste your exported build here and press "Import":</div>
+            <textarea class="text-input" spellcheck="false" #textarea (keypress)="onKeyPress(textarea, $event)">
+                
+            </textarea>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn long-button" (click)="onImport(textarea.value)">Import</button>
+            <button type="button" class="btn short-button" data-dismiss="modal">Cancel</button>
+        </div>
+        </div>
+    </div>
+</div>

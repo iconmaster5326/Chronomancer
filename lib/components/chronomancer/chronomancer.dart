@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:angular/angular.dart';
@@ -8,6 +9,8 @@ import 'package:chronomancer/character.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/components/equip_dialog/equip_dialog.dart';
 import 'package:chronomancer/components/equip_slot/equip_slot.dart';
+import 'package:chronomancer/components/export_dialog/export_dialog.dart';
+import 'package:chronomancer/components/import_dialog/import_dialog.dart';
 import 'package:chronomancer/components/item_editor/enchant_edit_dialog/enchant_edit_dialog.dart';
 import 'package:chronomancer/components/item_editor/enchant_select_dialog/enchant_select_dialog.dart';
 import 'package:chronomancer/components/item_editor/gem_dialog/gem_dialog.dart';
@@ -50,17 +53,22 @@ import 'dart:html' as html;
     GemTooltipComponent,
     AboutDialogComponent,
     ChangelogDialogComponent,
+    ExportDialogComponent,
+    ImportDialogComponent,
   ],
 )
 class ChronomancerComponent extends CommonComponent {
-  static const ItemType ITEM_TYPE_HEAD = ItemType.HEAD;
-  static const ItemType ITEM_TYPE_ACCESSORY = ItemType.ACCCESSORY;
-  static const ItemType ITEM_TYPE_AMULET = ItemType.AMULET;
-  static const ItemType ITEM_TYPE_OFFHAND = ItemType.OFF_HAND;
-  static const ItemType ITEM_TYPE_BODY = ItemType.BODY;
-  static const ItemType ITEM_TYPE_WEAPON = ItemType.WEAPON;
-  static const ItemType ITEM_TYPE_FEET = ItemType.FEET;
-  static const ItemType ITEM_TYPE_RING = ItemType.RING;
+  static const AUTOSAVE_INTERVAL = 30;
+  static const AUTOSAVE_STORAGE_KEY = 'chronomancerAutosave';
+
+  static const ITEM_TYPE_HEAD = ItemType.HEAD;
+  static const ITEM_TYPE_ACCESSORY = ItemType.ACCCESSORY;
+  static const ITEM_TYPE_AMULET = ItemType.AMULET;
+  static const ITEM_TYPE_OFFHAND = ItemType.OFF_HAND;
+  static const ITEM_TYPE_BODY = ItemType.BODY;
+  static const ITEM_TYPE_WEAPON = ItemType.WEAPON;
+  static const ITEM_TYPE_FEET = ItemType.FEET;
+  static const ITEM_TYPE_RING = ItemType.RING;
 
   static List<Version> versions;
   static Version version;
@@ -70,6 +78,34 @@ class ChronomancerComponent extends CommonComponent {
   static void init() async {
     versions = await Version.getVersions(Client());
     version = versions.last;
+    if (html.window.localStorage.containsKey(AUTOSAVE_STORAGE_KEY)) {
+      character = Character.fromJSON(versions,
+          json.decode(html.window.localStorage[AUTOSAVE_STORAGE_KEY]));
+    }
+  }
+
+  final NgZone _zone;
+  ChronomancerComponent(this._zone) {
+    _zone.runOutsideAngular(() {
+      html.window.onBeforeUnload.listen((event) {
+        html.window.localStorage[AUTOSAVE_STORAGE_KEY] =
+            json.encode(character.asJSON);
+      });
+
+      Timer.periodic(Duration(seconds: AUTOSAVE_INTERVAL), (timer) {
+        if (character != null) {
+          html.window.localStorage[AUTOSAVE_STORAGE_KEY] =
+              json.encode(character.asJSON);
+        }
+      });
+    });
+  }
+
+  void onClose() {
+    if (character != null) {
+      html.window.localStorage[AUTOSAVE_STORAGE_KEY] =
+          json.encode(character.asJSON);
+    }
   }
 
   String get borderName => character?.charClass?.id ?? 'default';
@@ -99,16 +135,17 @@ class ChronomancerComponent extends CommonComponent {
           versions,
           json.decode(utf8.decode(base64
               .decode(await html.window.navigator.clipboard.readText()))));
+      html.window.alert('Build imported from clipbaord.');
     } on FormatException {
-      html.window.alert(
-          'Could not read build. Please ensure you have the exported build copied to your clipboard.');
+      ImportDialogComponent.INSTANCE.show();
     }
   }
 
   void exportBuild() async {
     var charJSON = character.asJSON;
-    await html.window.navigator.clipboard
-        .writeText(base64.encode(utf8.encode(json.encode(charJSON))));
-    html.window.alert('Build copied to the clipboard!');
+    var b64 = base64.encode(utf8.encode(json.encode(charJSON)));
+    await html.window.navigator.clipboard.writeText(b64);
+    ExportDialogComponent.INSTANCE.exportedJSON = b64;
+    ExportDialogComponent.INSTANCE.show();
   }
 }

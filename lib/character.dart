@@ -91,8 +91,8 @@ class SpentSkill {
         'rank': rank,
       };
 
-  SpentSkill.fromJSON(Version version, dynamic j)
-      : skill = version.skills.firstWhere((x) => x.id == j['id']),
+  SpentSkill.fromJSON(this.character, dynamic j)
+      : skill = character.charClass.version.skills.firstWhere((x) => x.id == j['id']),
         pos = Vector2(j['x'], j['y']),
         rank = j['rank'] {
     tree = skill.tree;
@@ -212,7 +212,7 @@ class Character {
 
     skills = List.generate(charClass.skillTrees.length, (_) => {});
     for (var spentSkillJSON in j['skills']) {
-      var spentSkill = SpentSkill.fromJSON(version, spentSkillJSON);
+      var spentSkill = SpentSkill.fromJSON(this, spentSkillJSON);
       skills[spentSkill.tree][spentSkill.pos] = spentSkill;
     }
 

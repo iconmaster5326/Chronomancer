@@ -1,0 +1,18 @@
+<div class="modal fade" id="export-dialog" tabindex="-1" role="dialog" #equipDialogElement (init)="init(equipDialogElement)">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bordered">
+        <div class="modal-header">
+            <h1 class="modal-title">Export Build</h1>
+        </div>
+        <div class="modal-body" style="white-space: pre-line;">
+            <div>Your build has been copied to the clipboard! In addition, it is available for copying or saving here:</div>
+            <textarea class="text-input" readonly="true" spellcheck="false">
+                {{exportedJSON}}
+            </textarea>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn short-button" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>
