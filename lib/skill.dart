@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:chronomancer/character.dart';
 import 'package:http/http.dart';
 
 import 'class.dart';
@@ -60,7 +61,7 @@ class Skill {
   };
 
   Version version;
-  int id, tree, maxRank, minLevel;
+  int id, tree, maxRank, minLevel, manaCostMinLevel, manaCostMaxLevel, cooldown;
   String name, typeName, desc, rankUpDesc;
   CharClass charClass;
   SkillType type;
@@ -69,6 +70,7 @@ class Skill {
   bool tallySkill;
   SkillElement element;
   Map<String, List<String>> descVariableValues;
+  List<String> tags;
 
   int _x, _y;
   String _rawClass, _rawTree;
@@ -100,6 +102,9 @@ class Skill {
             .where((e) => e.value != null)
             .map((e) =>
                 MapEntry(e.key, e.value.map((v) => v.toString()).toList()))),
+        tags = j.containsKey('family') ? [j['family']] : [],
+        manaCostMinLevel = j['cost'],
+        manaCostMaxLevel = j['cost100'],
         _x = j['x'],
         _y = j['y'],
         _rawClass = j['class'],
@@ -198,4 +203,12 @@ class Skill {
           s.requires.isEmpty &&
           s.recursivelyUnlocks.contains(this))
       .toList();
+
+  int manaCost(int atLevel) {
+    if (manaCostMinLevel == null || manaCostMaxLevel == null) return null;
+    return manaCostMinLevel +
+        (((manaCostMaxLevel - manaCostMinLevel) / Character.MAX_LEVEL) *
+                atLevel)
+            .round();
+  }
 }

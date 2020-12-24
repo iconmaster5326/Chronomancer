@@ -72,6 +72,8 @@ class SkillTooltipComponent extends CommonComponent {
           ? ChronomancerComponent.character.pointsSpentIn(skill.tree)
           : spentSkill?.rank) ??
       0;
+  String get tags => skill.tags.isEmpty ? '' : ' (${skill.tags.join(', ')})';
+  int get level => ChronomancerComponent.character.level;
 
   // begin copy-pasted from node.dart TODO: do not copy paste
   String get iconClipPath => SkillTreeComponent.skillTypeToClipPath(skill.type);

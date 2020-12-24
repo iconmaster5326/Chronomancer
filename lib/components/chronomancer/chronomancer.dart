@@ -166,7 +166,6 @@ class ChronomancerComponent extends CommonComponent {
   void linkBuild() async {
     var charJSON = character.asJSON;
     var b64 = base64.encode(utf8.encode(json.encode(charJSON)));
-    print(Uri.base.toString());
     var uri = Uri.base.replace(queryParameters: {
       BUILD_QUERY_PARAMETER: b64,
     });

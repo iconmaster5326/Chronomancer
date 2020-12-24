@@ -15,7 +15,7 @@
     flex-direction: column;
 }
 
-.skill-tooltip-type, .skill-tooltip-next-rank {
+.skill-tooltip-type {
     color: #d2823c;
 }
 
@@ -36,4 +36,12 @@
 
 .skill-tooltip-requires {
     color: red;
+}
+
+.skill-tooltip-mana {
+    color: #325abf;
+}
+
+.skill-tooltip-base {
+    color: #24c824;
 }
