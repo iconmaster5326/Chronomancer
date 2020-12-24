@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:angular/angular.dart';
 import 'package:chronomancer/components/about_dialog/about_dialog.dart';
@@ -26,6 +27,7 @@ import 'package:chronomancer/components/tooltips/skill/skill_tooltip.dart';
 import 'package:chronomancer/item.dart';
 import 'package:chronomancer/skill.dart';
 import 'package:chronomancer/version.dart';
+import 'package:chronomancer/util.dart';
 import 'package:http/http.dart';
 import 'dart:html' as html;
 
@@ -82,11 +84,11 @@ class ChronomancerComponent extends CommonComponent {
 
     if (Uri.base.queryParameters.containsKey(BUILD_QUERY_PARAMETER)) {
       try {
-      character = Character.fromJSON(
-          versions,
-          json.decode(utf8.decode(
-              base64.decode(Uri.base.queryParameters[BUILD_QUERY_PARAMETER]))));
-      version = character.charClass.version;
+        character = Character.fromJSON(
+            versions,
+            json.decode(utf8.decode(base64
+                .decode(Uri.base.queryParameters[BUILD_QUERY_PARAMETER]))));
+        version = character.charClass.version;
       } on dynamic {
         html.window.alert('Bad build specified in the build link!');
         character = null;
@@ -180,5 +182,18 @@ class ChronomancerComponent extends CommonComponent {
         'A link to your build has been copied to the clipboard!';
     ExportDialogComponent.INSTANCE.exportedText = uri.toString();
     ExportDialogComponent.INSTANCE.show();
+  }
+
+  int get minLevel => character.equipment.values
+      .map((item) => item.item.minLevel)
+      .followedBy([character.pointsSpent]).max;
+  void onSetLevel(html.InputElement levelSpinner) {
+    if (levelSpinner.valueAsNumber.isNaN) return;
+    character.level =
+        levelSpinner.valueAsNumber.toInt().clamp(minLevel, Character.MAX_LEVEL);
+    for (var item in character.equipment.values) {
+      item.level = min(item.level, character.level);
+    }
+    levelSpinner.valueAsNumber = character.level;
   }
 }

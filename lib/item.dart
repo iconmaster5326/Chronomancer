@@ -150,7 +150,7 @@ class Item implements ItemData {
   @override
   bool get augmented => false;
   @override
-  int get level => Character.MAX_LEVEL;
+  int get level => minLevel;
   @override
   Iterable<GemSocket> get gems => id == ItemStack.WEYRICKS_FINERY_ID
       ? [
@@ -203,7 +203,7 @@ class ItemStack implements ItemData {
   @override
   bool empowered = true;
   @override
-  int level = Character.MAX_LEVEL;
+  int level;
 
   static int WEYRICKS_FINERY_ID = 713;
 
@@ -485,8 +485,9 @@ class ItemStack implements ItemData {
     },
   };
 
-  ItemStack(this.item, [this.rarity]) {
-    rarity = rarity ?? item.rarity;
+  ItemStack(this.item, {this.rarity, this.level}) {
+    rarity ??= item.rarity;
+    level ??= item.minLevel;
     enchants.addAll(item.baseEnchants.map((e) => EnchantStack(
         EnchantStackSource.BASE,
         e,

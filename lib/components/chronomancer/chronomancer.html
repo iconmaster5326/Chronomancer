@@ -50,7 +50,13 @@
             </span>
             <item-editor></item-editor>
         </div>
-        <img id="character-model" src="assets/images/model/{{character.charClass.id}}.png">
+        <div class="character-model-pane">
+            <img id="character-model" src="assets/images/model/{{character.charClass.id}}.png">
+            <div>{{character.charClass.name}}</div>
+            <div>
+                Level <input type="number" class="text-input" min="{{minLevel}}" max="100" [value]="character.level" #levelSpinner (change)="onSetLevel(levelSpinner)" (focusout)="onSetLevel(levelSpinner)">
+            </div>
+        </div>
         <div id="skills-pane" class="bordered" [style.border-image]="'url(\'assets/images/border/' + borderName + '.png\') 22 round'">
             <div class="skills-pane-top-bar">
                 <span class="skill-points-display">{{skillPointsDisplay}}</span>

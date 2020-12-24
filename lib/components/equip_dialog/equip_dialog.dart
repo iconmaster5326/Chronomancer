@@ -30,12 +30,15 @@ class EquipDialogComponent extends ModalComponent {
       return ChronomancerComponent.version.items.where((item) =>
           item.type == slot &&
           (item.requiresClass == null ||
-              item.requiresClass == ChronomancerComponent.character.charClass));
+              item.requiresClass ==
+                  ChronomancerComponent.character.charClass) &&
+          item.minLevel <= ChronomancerComponent.character.level);
     }
   }
 
   void onItemSelected(Item item) {
-    ChronomancerComponent.character.equipment[slot] = ItemStack(item);
+    ChronomancerComponent.character.equipment[slot] =
+        ItemStack(item, level: ChronomancerComponent.character.level);
     ItemEditorComponent.editing =
         ChronomancerComponent.character.equipment[slot];
     hide();

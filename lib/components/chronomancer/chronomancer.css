@@ -110,3 +110,9 @@
 #tooltip {
     position: absolute;
 }
+
+.character-model-pane {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
