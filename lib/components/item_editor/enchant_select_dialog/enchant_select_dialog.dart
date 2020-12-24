@@ -27,19 +27,24 @@ class EnchantSelectDialogComponent extends ModalComponent {
 
   Iterable<Enchant> get enchants => (item == null || !open)
       ? []
-      : item.runeEnchant(slot)
-          ? ChronomancerComponent.version.enchants.where((e) =>
-              e.rune != null &&
-              (e.rune.classRequires == null ||
-                  e.rune.classRequires ==
-                      ChronomancerComponent.character.charClass) &&
-              e.rune.usableOn.contains(item.slot))
-          : item
-              .enchantTypesForSlot(slot)
-              .map((e) => ChronomancerComponent.version
-                      .enchantPool[ChronomancerComponent.character.charClass]
-                  [item.slot][e])
-              .flatten;
+      : (item.runeEnchant(slot)
+              ? ChronomancerComponent.version.enchants.where((e) =>
+                  e.rune != null &&
+                  (e.rune.classRequires == null ||
+                      e.rune.classRequires ==
+                          ChronomancerComponent.character.charClass) &&
+                  e.rune.usableOn.contains(item.slot))
+              : item
+                  .enchantTypesForSlot(slot)
+                  .map((e) => ChronomancerComponent.version
+                          .enchantPool[ChronomancerComponent.character.charClass]
+                      [item.slot][e])
+                  .flatten)
+          .where((e) => !item.enchants
+              .where(
+                  (es) => es != null && item.enchants[slot] != es && es.source != EnchantStackSource.BASE)
+              .map((es) => es.enchant)
+              .contains(e));
 
   void onSelect(Enchant enchant) {
     item.enchants[slot] = EnchantStack(item.sourceOf(slot), enchant,
