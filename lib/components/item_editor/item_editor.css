@@ -53,3 +53,8 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.item-editor-footer-2 > * {
+    margin-left: 2px;
+    margin-right: 2px;
+}

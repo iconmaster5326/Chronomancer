@@ -27,5 +27,8 @@
               <button *ngFor="let rarity of editing.item.possibleRarities" class="dropdown-item btn short-button item-editor-label" type="button" (click)="setRarity(rarity)">{{rarityName(rarity)}}</button>
             </div>
         </div>
+        <div *ngIf="editing.item.minLevel != character.level">
+            Level: <input type="number" class="text-input" min="{{editing.item.minLevel}}" max="{{character.level}}" [value]="editing.level" #levelSpinner (change)="onSetLevel(levelSpinner)" (focusout)="onSetLevel(levelSpinner)">
+        </div>
     </div>
 </div>

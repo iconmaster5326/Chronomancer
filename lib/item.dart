@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart';
 
+import 'character.dart';
 import 'enchant.dart';
 import 'gem.dart';
 import 'version.dart';
@@ -62,6 +63,7 @@ abstract class ItemData {
   bool get augmented;
   Iterable<GemSocket> get gems;
   ItemSet get partOfSet;
+  int get level;
 }
 
 class _BaseEnchant extends EnchantStack {
@@ -86,6 +88,7 @@ class Item implements ItemData {
   CharClass requiresClass;
   @override
   ItemSet partOfSet;
+  int minLevel;
   List<Enchant> baseEnchants, fixedEnchants;
   List<int> _rawBaseEnchants, _rawFixedEnchants;
 
@@ -98,6 +101,7 @@ class Item implements ItemData {
         rarity = ITEM_RARITY_TO_STRING.inverted[j['rarity']],
         requiresClass = version.classWithName(j['classRestriction']),
         typeName = j['type'],
+        minLevel = j['minLevel'],
         _rawBaseEnchants = List<int>.from(j['baseEnchants']),
         _rawFixedEnchants = List<int>.from(j['fixedEnchants']);
 
@@ -145,7 +149,8 @@ class Item implements ItemData {
   bool get empowered => false;
   @override
   bool get augmented => false;
-
+  @override
+  int get level => Character.MAX_LEVEL;
   @override
   Iterable<GemSocket> get gems => id == ItemStack.WEYRICKS_FINERY_ID
       ? [
@@ -197,6 +202,8 @@ class ItemStack implements ItemData {
   List<GemSocket> gems = [];
   @override
   bool empowered = true;
+  @override
+  int level = Character.MAX_LEVEL;
 
   static int WEYRICKS_FINERY_ID = 713;
 
@@ -579,6 +586,7 @@ class ItemStack implements ItemData {
         'enchants': enchants.map((x) => x?.asJSON).toList(),
         'gems': gems.map((x) => x.asJSON).toList(),
         'empowered': empowered,
+        'level': level,
       };
 
   ItemStack.fromJSON(Version version, dynamic j)
@@ -587,9 +595,13 @@ class ItemStack implements ItemData {
         enchants = j['enchants']
             .map<EnchantStack>(
                 (x) => x == null ? null : EnchantStack.fromJSON(version, x))
-            .toList() {
+            .toList(),
+        level = j['level'] ?? Character.MAX_LEVEL {
     gems = j['gems']
         .map<GemSocket>((x) => GemSocket.fromJSON(this, version, x))
         .toList();
+    for (var i = 0; i < enchants.length; i++) {
+      enchants[i]?.source = sourceOf(i);
+    }
   }
 }

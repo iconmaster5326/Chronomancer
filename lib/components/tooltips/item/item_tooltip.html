@@ -7,7 +7,7 @@
                 <div class="item-tooltip-type">{{itemType}}</div>
             </div>
         </div>
-        <div class="item-tooltip-level">Level: 100</div>
+        <div class="item-tooltip-level">Level: {{item.level}}</div>
         <div *ngIf="item.requiresClass != null" class="item-tooltip-class">{{item.requiresClass.name}} Item</div>
         <div *ngIf="item.partOfSet != null" class="item-tooltip-set">Set: {{item.partOfSet.name}}</div>
         <div *ngIf="item.partOfSet != null" class="item-tooltip-type">{{itemSetTypeText}}</div>
