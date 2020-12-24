@@ -110,6 +110,15 @@
   background: none;
 }
 
+.short-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: url("../images/short_slider.png");
+  width: 76px;
+  height: 16px;
+  outline: none;
+}
+
 .long-slider {
   -webkit-appearance: none;
   appearance: none;
@@ -119,7 +128,7 @@
   outline: none;
 }
 
-.long-slider::-webkit-slider-thumb {
+.long-slider::-webkit-slider-thumb, .short-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 14px;
@@ -127,7 +136,7 @@
   background: url("../images/slider_knob.png");
 }
 
-.long-slider::-moz-range-thumb {
+.long-slider::-moz-range-thumb, .short-slider::-moz-range-thumb {
   width: 14px;
   height: 14px;
   background: url("../images/slider_knob.png");
