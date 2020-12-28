@@ -11,8 +11,7 @@
         <div class="skill-tooltip-type">{{skill.typeName}}{{tags}}</div>
         <div *ngIf="skill.tags.contains('Base')" class="skill-tooltip-base">Restores 4% mana</div>
         <div *ngIf="(skill.manaCostMinLevel != null && skill.manaCostMaxLevel != null) || skill.cooldown != null">
-            <span *ngIf="skill.manaCostMinLevel != null && skill.manaCostMaxLevel != null"><span class="skill-tooltip-mana">{{skill.manaCost(level)}}</span> mana</span>
-            <span *ngIf="skill.manaCostMinLevel != null && skill.manaCostMaxLevel != null && skill.cooldown != null">, </span>
+            <span *ngIf="skill.manaCostMinLevel != null && skill.manaCostMaxLevel != null"><span class="skill-tooltip-mana">{{skill.manaCost(level)}}</span> mana</span><span *ngIf="skill.manaCostMinLevel != null && skill.manaCostMaxLevel != null && skill.cooldown != null">, </span>
             <span *ngIf="skill.cooldown != null"><span class="skill-tooltip-type">{{skill.cooldown}}</span> seconds cooldown</span>
         </div>
         <div class="skill-tooltip-rank">Rank {{rank}}<span *ngIf="skill.maxRank != null">/{{skill.maxRank}}</span></div>

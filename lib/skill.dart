@@ -96,6 +96,7 @@ class Skill {
         tallySkill = (j['x'] == 0),
         minLevel = j['minLevel'],
         maxRank = j['maxRank'],
+        cooldown = j['cooldown'],
         element = ELEMENT_TO_STRING.inverted[j['element']],
         descVariableValues = Map.fromEntries(DESC_VARIABLES
             .map((k) => MapEntry(k, j[k] as List))
