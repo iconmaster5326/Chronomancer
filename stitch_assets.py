@@ -42,20 +42,23 @@ for version in versions_json:
     )
 
     for item in sorted(items_json, key=lambda item: item["uuid"]):
-        x = item["uuid"] % SHEET_WIDTH
-        y = item["uuid"] // SHEET_WIDTH
+        if "icon" in item and item["icon"]:
+            x = item["uuid"] % SHEET_WIDTH
+            y = item["uuid"] // SHEET_WIDTH
 
-        item_image = PIL.Image.open(
-            os.path.join(item_images_path, item["icon"] + ".png")
-        )
-        xdiff = ITEM_ICON_SIZE - item_image.size[0]
-        ydiff = ITEM_ICON_SIZE - item_image.size[1]
-        assert xdiff >= 0 and ydiff >= 0
-        stitched_items.paste(
-            item_image,
-            (x * ITEM_ICON_SIZE + xdiff // 2, y * ITEM_ICON_SIZE + ydiff // 2),
-        )
-        item_image.close()
+            item_image = PIL.Image.open(
+                os.path.join(item_images_path, item["icon"] + ".png")
+            )
+            xdiff = ITEM_ICON_SIZE - item_image.size[0]
+            ydiff = ITEM_ICON_SIZE - item_image.size[1]
+            assert xdiff >= 0 and ydiff >= 0
+            stitched_items.paste(
+                item_image,
+                (x * ITEM_ICON_SIZE + xdiff // 2, y * ITEM_ICON_SIZE + ydiff // 2),
+            )
+            item_image.close()
+        else:
+            print("warning: item %s has no icon!" % item["uuid"])
 
     stitched_items.save(
         os.path.join("web", "assets", "images", "items", version + ".png")
@@ -83,27 +86,26 @@ for version in versions_json:
     )
 
     for skill in sorted(skills_json, key=lambda item: item["uuid"]):
-        effective_id = skill["uuid"] if skill["uuid"] < MASTERY_UUID_OFFSET else skill["uuid"] - MASTERY_UUID_OFFSET + n_non_mastery_uuids
-        x = effective_id % SHEET_WIDTH
-        y = effective_id // SHEET_WIDTH
-        skill_image = None
+        if "icon" in skill and skill["icon"]:
+            effective_id = skill["uuid"] if skill["uuid"] < MASTERY_UUID_OFFSET else skill["uuid"] - MASTERY_UUID_OFFSET + n_non_mastery_uuids
+            x = effective_id % SHEET_WIDTH
+            y = effective_id // SHEET_WIDTH
+            skill_image = None
 
-        for path in skill_images_paths:
-            skill_image_path = os.path.join(path, skill["icon"] + ".png")
-            if os.path.exists(skill_image_path):
-                skill_image = PIL.Image.open(skill_image_path)
-                break
+            for path in skill_images_paths:
+                skill_image_path = os.path.join(path, skill["icon"] + ".png")
+                if os.path.exists(skill_image_path):
+                    skill_image = PIL.Image.open(skill_image_path)
+                    break
 
-        assert skill_image is not None
-        # assert skill_image.size == (
-        #     SKILL_ICON_SIZE,
-        #     SKILL_ICON_SIZE,
-        # )
-        stitched_skills.paste(
-            skill_image,
-            (x * SKILL_ICON_SIZE, y * SKILL_ICON_SIZE),
-        )
-        skill_image.close()
+            assert skill_image is not None
+            stitched_skills.paste(
+                skill_image,
+                (x * SKILL_ICON_SIZE, y * SKILL_ICON_SIZE),
+            )
+            skill_image.close()
+        else:
+            print("warning: skill %s has no icon!" % skill["uuid"])
 
     stitched_skills.save(
         os.path.join("web", "assets", "images", "skills", version + ".png")
