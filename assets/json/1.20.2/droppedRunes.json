@@ -812,31 +812,52 @@
   {
     "uuid": 1299,
     "class": "Templar",
-    "categories": []
+    "categories": [
+      "Weapon",
+      "Offhand"
+    ]
   },
   {
     "uuid": 1298,
     "class": "Templar",
-    "categories": []
+    "categories": [
+      "Weapon",
+      "Offhand"
+    ]
   },
   {
     "uuid": 1297,
     "class": "Warden",
-    "categories": []
+    "categories": [
+      "Armor",
+      "Boots",
+      "Helmet"
+    ]
   },
   {
     "uuid": 1303,
     "class": "Warlock",
-    "categories": []
+    "categories": [
+      "Accessory",
+      "Amulet",
+      "Ring"
+    ]
   },
   {
     "uuid": 1302,
     "class": "Warlock",
-    "categories": []
+    "categories": [
+      "Weapon",
+      "Offhand"
+    ]
   },
   {
     "uuid": 1301,
     "class": "Warlock",
-    "categories": []
+    "categories": [
+      "Armor",
+      "Boots",
+      "Helmet"
+    ]
   }
 ]
