@@ -159,6 +159,8 @@ class Enchant implements EnchantData {
     }
     return result;
   }
+
+  String get searchText => [name, desc].join('\n').toLowerCase();
 }
 
 enum EnchantStackSource {

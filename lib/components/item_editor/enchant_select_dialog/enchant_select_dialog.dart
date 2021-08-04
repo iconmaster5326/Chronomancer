@@ -18,6 +18,7 @@ class EnchantSelectDialogComponent extends ModalComponent {
   static EnchantSelectDialogComponent INSTANCE;
   ItemStack item;
   int slot;
+  String searchFilter = '';
 
   @override
   void init(Element e) {
@@ -36,15 +37,14 @@ class EnchantSelectDialogComponent extends ModalComponent {
                   e.rune.usableOn.contains(item.slot))
               : item
                   .enchantTypesForSlot(slot)
-                  .map((e) => ChronomancerComponent.version
-                          .enchantPool[ChronomancerComponent.character.charClass]
-                      [item.slot][e])
+                  .map((e) => ChronomancerComponent.version.enchantPool[
+                      ChronomancerComponent.character.charClass][item.slot][e])
                   .flatten)
           .where((e) => !item.enchants
-              .where(
-                  (es) => es != null && item.enchants[slot] != es && es.source != EnchantStackSource.BASE)
+              .where((es) => es != null && item.enchants[slot] != es && es.source != EnchantStackSource.BASE)
               .map((es) => es.enchant)
-              .contains(e));
+              .contains(e))
+          .where((e) => searchFilter.isEmpty || e.searchText.contains(searchFilter.toLowerCase()));
 
   void onSelect(Enchant enchant) {
     item.enchants[slot] = EnchantStack(item.sourceOf(slot), enchant,

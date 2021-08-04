@@ -3,7 +3,7 @@
         <div class="modal-content bordered">
         <div class="modal-header">
             <div class="modal-title">Select Enchantment</div>
-            <input type="text" class="text-input" placeholder="search...">
+            <input type="text" class="text-input" placeholder="search..." (keyup)="searchFilter = $event.target.value">
         </div>
         <div class="modal-body" style="white-space: pre-line;">
             <enchant *ngFor="let enchant of enchants" [enchant]="enchant" [item]="item" (click)="onSelect(enchant)"></enchant>
