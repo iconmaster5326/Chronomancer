@@ -1,0 +1,16 @@
+<div class="modal fade" id="reset-dialog" tabindex="-1" role="dialog" #resetDialogElement (init)="init(resetDialogElement)">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bordered">
+        <div class="modal-header">
+            <h1 class="modal-title">Really reset?</h1>
+        </div>
+        <div class="modal-body" style="white-space: pre-line;">
+            This action will reset your character. If you have not exported your build, it will be lost forever! Are you sure you want to reset?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn short-button" data-dismiss="modal" (click)="onConfirm()">Reset</button>
+            <button type="button" class="btn short-button" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+        </div>
+        </div>
+    </div>
+</div>

@@ -17,6 +17,7 @@ import 'package:chronomancer/components/item_editor/enchant_select_dialog/enchan
 import 'package:chronomancer/components/item_editor/gem_dialog/gem_dialog.dart';
 import 'package:chronomancer/components/item_editor/item_editor.dart';
 import 'package:chronomancer/components/item_editor/socket_config_dialog/socket_config_dialog.dart';
+import 'package:chronomancer/components/reset_dialog/reset_dialog.dart';
 import 'package:chronomancer/components/skill_tree/skill_dialog/skill_dialog.dart';
 import 'package:chronomancer/components/skill_tree/skill_tree.dart';
 import 'package:chronomancer/components/skill_tree_tab/skill_tree_tab.dart';
@@ -57,6 +58,7 @@ import 'dart:html' as html;
     ChangelogDialogComponent,
     ExportDialogComponent,
     ImportDialogComponent,
+    ResetDialogComponent,
   ],
 )
 class ChronomancerComponent extends CommonComponent {
@@ -126,8 +128,12 @@ class ChronomancerComponent extends CommonComponent {
 
   void setVersion(Version v) {
     if (v != version) {
-      version = v;
-      character = null;
+      if (character == null) {
+        version = v;
+      } else {
+        ResetDialogComponent.INSTANCE.newVersion = v;
+        ResetDialogComponent.INSTANCE.show();
+      }
     }
   }
 
@@ -195,5 +201,11 @@ class ChronomancerComponent extends CommonComponent {
       item.level = min(item.level, character.level);
     }
     levelSpinner.valueAsNumber = character.level;
+  }
+
+  void resetCharacter() {
+    if (character != null) {
+      ResetDialogComponent.INSTANCE.show();
+    }
   }
 }
