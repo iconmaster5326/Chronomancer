@@ -34,7 +34,8 @@ class EquipDialogComponent extends ModalComponent {
               item.requiresClass ==
                   ChronomancerComponent.character.charClass) &&
           item.minLevel <= ChronomancerComponent.character.level &&
-          item.searchText.contains(searchFilter.toLowerCase()));
+          (searchFilter.isEmpty ||
+              item.searchText.contains(searchFilter.toLowerCase())));
     }
   }
 
