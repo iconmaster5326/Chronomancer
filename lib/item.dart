@@ -159,6 +159,13 @@ class Item implements ItemData {
           GemSocket(null, GemSource.ENCHANT, GemShape.STAR)
         ]
       : [];
+
+  String get searchText => [
+        name,
+        typeName,
+        partOfSet?.name ?? '',
+        fixedEnchantData.skip(3).map((e) => e.desc).join('\n')
+      ].join('\n').toLowerCase();
 }
 
 enum GemSource {

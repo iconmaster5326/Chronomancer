@@ -16,6 +16,7 @@ import 'package:chronomancer/item.dart';
 class EquipDialogComponent extends ModalComponent {
   static EquipDialogComponent INSTANCE;
   ItemType slot;
+  String searchFilter = '';
 
   @override
   void init(Element e) {
@@ -32,7 +33,8 @@ class EquipDialogComponent extends ModalComponent {
           (item.requiresClass == null ||
               item.requiresClass ==
                   ChronomancerComponent.character.charClass) &&
-          item.minLevel <= ChronomancerComponent.character.level);
+          item.minLevel <= ChronomancerComponent.character.level &&
+          item.searchText.contains(searchFilter.toLowerCase()));
     }
   }
 
