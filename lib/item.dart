@@ -206,6 +206,7 @@ class ItemStack implements ItemData {
   int level;
 
   static int WEYRICKS_FINERY_ID = 713;
+  static int RING_OF_MARVELLOUS_GEMS_ID = 712;
 
   static const INNATE_GEM_SOCKET_CONFIGURATIONS = {
     ItemType.ACCCESSORY: [
@@ -504,6 +505,11 @@ class ItemStack implements ItemData {
         GemSocket(this, GemSource.ENCHANT, GemShape.SPHERE),
         GemSocket(this, GemSource.ENCHANT, GemShape.CUBE),
         GemSocket(this, GemSource.ENCHANT, GemShape.STAR)
+      ]);
+    } else if (item.id == RING_OF_MARVELLOUS_GEMS_ID) {
+      gems.addAll([
+        GemSocket(this, GemSource.ENCHANT, GemShape.STAR),
+        GemSocket(this, GemSource.ENCHANT, GemShape.STAR),
       ]);
     }
   }

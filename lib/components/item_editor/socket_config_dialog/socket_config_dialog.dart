@@ -14,6 +14,7 @@ import 'package:chronomancer/item.dart';
 )
 class SocketConfigDialogComponent extends ModalComponent {
   static GemSource SRC_INNATE = GemSource.INNATE;
+  static GemSource SRC_ENCHANT = GemSource.ENCHANT;
   static GemSource SRC_PRISMATIC = GemSource.PRISMATIC;
   static SocketConfigDialogComponent INSTANCE;
   ItemStack item;
@@ -35,6 +36,12 @@ class SocketConfigDialogComponent extends ModalComponent {
     }
   }
 
+  void onMarvellousGemSocketConfigSelected(List<GemShape> shapes, int slot) {
+    var gems = item.gems.where((i) => i.source == SRC_ENCHANT).toList()[slot];
+    var gems_index = item.gems.indexOf(gems);
+    item.gems[gems_index] = GemSocket(item, SRC_ENCHANT, shapes.first);
+  }
+
   List<List<GemShape>> get innateConfigs => item == null
       ? <List<GemShape>>[]
       : [<GemShape>[]]
@@ -48,4 +55,12 @@ class SocketConfigDialogComponent extends ModalComponent {
           [GemShape.CUBE],
           [GemShape.SPHERE],
         ];
+  List<List<GemShape>> marvellousGemsConfigs = [
+    [GemShape.STAR],
+    [GemShape.CUBE],
+    [GemShape.SPHERE],
+  ];
+
+  bool get isRingOfMarvellousGems =>
+      item?.id == ItemStack.RING_OF_MARVELLOUS_GEMS_ID;
 }

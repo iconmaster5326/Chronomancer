@@ -12,6 +12,11 @@
     flex-direction: column;
 }
 
+.enchant-sockets {
+    display: flex;
+    flex-direction: column;
+}
+
 .prismatic-sockets {
     display: flex;
     flex-direction: column;

@@ -1,8 +1,7 @@
 <div class="socket-config-card-base">
-    <div class="socket-config-card-left-arrow" [style.visibility]="displayLeftArrow ? 'visible' : 'hidden'"></div>
+    <div class="socket-config-card-left-arrow" [style.visibility]="selected ? 'visible' : 'hidden'"></div>
     <div class="socket-config-card">
         <div *ngFor="let shape of shapes" class="socket-config-card-icon" [style.background-position]="iconBackgroundPos(shape)">
         </div>
     </div>
-    <div class="socket-config-card-right-arrow" [style.visibility]="displayRightArrow ? 'visible' : 'hidden'"></div>
 </div>

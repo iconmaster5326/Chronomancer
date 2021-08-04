@@ -8,6 +8,12 @@
             <div class="innate-sockets">
                 <socket-config *ngFor="let config of innateConfigs" [shapes]="config" [source]="SRC_INNATE" (click)="onSocketConfigSelected(SRC_INNATE, config)"></socket-config>
             </div>
+            <div *ngIf="isRingOfMarvellousGems" class="enchant-sockets">
+                <socket-config *ngFor="let config of marvellousGemsConfigs" [shapes]="config" [source]="SRC_ENCHANT" [slot]="0" (click)="onMarvellousGemSocketConfigSelected(config, 0)"></socket-config>
+            </div>
+            <div *ngIf="isRingOfMarvellousGems" class="enchant-sockets">
+                <socket-config *ngFor="let config of marvellousGemsConfigs" [shapes]="config" [source]="SRC_ENCHANT" [slot]="1" (click)="onMarvellousGemSocketConfigSelected(config, 1)"></socket-config>
+            </div>
             <div class="prismatic-sockets">
                 <socket-config *ngFor="let config of prismaticConfigs" [shapes]="config" [source]="SRC_PRISMATIC" (click)="onSocketConfigSelected(SRC_PRISMATIC, config)"></socket-config>
             </div>
