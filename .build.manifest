@@ -22,6 +22,7 @@ assets/images/items/1.10.7.png
 assets/images/items/1.10.8.png
 assets/images/items/1.11.3.png
 assets/images/items/1.20.2.png
+assets/images/items/1.30.0.png
 assets/images/loading_bobber.png
 assets/images/logo.png
 assets/images/long_button_down.png
@@ -61,6 +62,7 @@ assets/images/skills/1.10.7.png
 assets/images/skills/1.10.8.png
 assets/images/skills/1.11.3.png
 assets/images/skills/1.20.2.png
+assets/images/skills/1.30.0.png
 assets/images/slider_knob.png
 assets/images/unfilled_sockets.png
 assets/json/1.10.2/classes.json
@@ -113,6 +115,13 @@ assets/json/1.20.2/enchantsPool.json
 assets/json/1.20.2/items.json
 assets/json/1.20.2/sets.json
 assets/json/1.20.2/skills.json
+assets/json/1.30.0/classes.json
+assets/json/1.30.0/droppedRunes.json
+assets/json/1.30.0/enchants.json
+assets/json/1.30.0/enchantsPool.json
+assets/json/1.30.0/items.json
+assets/json/1.30.0/sets.json
+assets/json/1.30.0/skills.json
 assets/json/patches.json
 assets/styles/styles.css
 favicon.png
