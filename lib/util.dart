@@ -1,4 +1,6 @@
 import 'dart:math' as math;
+import 'package:angular_components/utils/strings/string_utils.dart'
+    as string_utils;
 
 extension InvertMap<K, V> on Map<K, V> {
   Map<V, K> get inverted {
@@ -61,6 +63,10 @@ extension IterableOps<T> on Iterable<T> {
       yield element;
     }
   }
+}
+
+extension TitleCase on String {
+  String get titleCase => split(RegExp('\\s+')).map((e) => string_utils.titleCase(e)).join(' ');
 }
 
 class Pair<A, B> {

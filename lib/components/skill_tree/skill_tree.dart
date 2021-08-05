@@ -33,8 +33,11 @@ class SkillTreeComponent extends CommonComponent {
   CharClass get charClass => ChronomancerComponent.character.charClass;
   List<int> get rowIndices => List<int>.generate(ROWS, (i) => i);
   List<int> get colIndices => List<int>.generate(COLS, (i) => i);
-  Iterable<Skill> get skills => ChronomancerComponent.version.skills
-      .where((s) => s.charClass == charClass && s.tree == currentTree);
+  Iterable<Skill> get skills =>
+      ChronomancerComponent.version.skills.where((s) =>
+          s.charClass == charClass &&
+          s.tree == currentTree &&
+          s.positions.every((p) => p.x >= 0 && p.y >= 0));
 
   List<SkillTreeNode> get nodes => skills
       .fold<Map<int, Map<int, SkillTreeNode>>>({}, (map, skill) {

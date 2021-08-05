@@ -70,6 +70,7 @@ class Skill {
   bool tallySkill;
   SkillElement element;
   Map<String, List<String>> descVariableValues;
+  String family;
   List<String> tags;
 
   int _x, _y;
@@ -103,7 +104,8 @@ class Skill {
             .where((e) => e.value != null)
             .map((e) =>
                 MapEntry(e.key, e.value.map((v) => v.toString()).toList()))),
-        tags = j.containsKey('family') ? [j['family']] : [],
+        family = j['family'],
+        tags = j['tags'] == null ? [] : List<String>.from(j['tags']),
         manaCostMinLevel = j['cost'],
         manaCostMaxLevel = j['cost100'],
         _x = j['x'],
@@ -212,4 +214,6 @@ class Skill {
                 atLevel)
             .round();
   }
+
+  bool get masteryTallySkill => tree == Character.MASTERY_TREE_ID && tallySkill;
 }

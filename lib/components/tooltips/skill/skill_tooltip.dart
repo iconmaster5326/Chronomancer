@@ -66,13 +66,20 @@ class SkillTooltipComponent extends CommonComponent {
   String get nextRankHeader => nextOrMax ? 'At Next Rank:' : 'At Max Rank:';
   bool get unlockable => ChronomancerComponent.character.skillUnlocked(skill);
   String get color => EnchantTextComponent.ELEMENT_TO_COLOR[skill.element];
-  int get rank =>
-      rankOverride ??
-      (skill.tallySkill
-          ? ChronomancerComponent.character.pointsSpentIn(skill.tree)
-          : spentSkill?.rank) ??
-      0;
-  String get tags => skill.tags.isEmpty ? '' : ' (${skill.tags.join(', ')})';
+  int get rank {
+    if (rankOverride != null) {
+      return rankOverride;
+    } else if (skill.masteryTallySkill) {
+      return ChronomancerComponent.character
+          .pointsSpentInRow(skill.tree, skill.positions.first.y);
+    } else if (skill.tallySkill) {
+      return ChronomancerComponent.character.pointsSpentIn(skill.tree);
+    } else {
+      return spentSkill?.rank ?? 0;
+    }
+  }
+
+  String get family => skill.family == null ? '' : ', ${skill.family}';
   int get level => ChronomancerComponent.character.level;
 
   // begin copy-pasted from node.dart TODO: do not copy paste

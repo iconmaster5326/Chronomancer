@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:angular/angular.dart';
+import 'package:chronomancer/character.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/components/tooltips/enchant/text/enchant_text.dart';
@@ -18,16 +19,30 @@ class SkillTextParser extends Parser<ColoredText> {
     return ColoredText(EnchantTextComponent.COLOR_WHITE, s);
   }
 
+  static const Map<int, double> MASTERY_TALLY_MULTIPLIERS_BY_ROW =
+      <int, double>{0: 0.3, 1: 0.3, 2: 0.1, 3: 0.1, 4: 0.1, 5: 0.3, 6: 0.3};
+  num get masteryTallyPercent =>
+      MASTERY_TALLY_MULTIPLIERS_BY_ROW[skill.positions.first.y] * rank;
+  num get masteryUnlimitedValue => rank * 10;
+  String valueText(String key) {
+    if (skill.descVariableValues[key].isEmpty) {
+      if (skill.masteryTallySkill) {
+        return masteryTallyPercent.toString() + '%';
+      } else {
+        return masteryUnlimitedValue.toString();
+      }
+    } else {
+      return skill.descVariableValues[key][rank == 0 ? 0 : rank - 1];
+    }
+  }
+
   @override
   Iterable<MapEntry<Pattern, ColoredText Function(Match)>> get rules =>
       Skill.DESC_VARIABLES
           .map<MapEntry<Pattern, ColoredText Function(Match)>>((v) => MapEntry(
               RegExp('${v.toUpperCase()}%?'),
-              (match) => ColoredText(
-                  SkillTextComponent.COLOR_GREEN,
-                  skill.descVariableValues[v].isEmpty
-                      ? max(10, rank * 10).toString()
-                      : skill.descVariableValues[v][rank == 0 ? 0 : rank - 1])))
+              (match) =>
+                  ColoredText(SkillTextComponent.COLOR_GREEN, valueText(v))))
           .followedBy([
         MapEntry(
             RegExp(r'_E([^_]*)_([^Â¥]*)Â?¥'),

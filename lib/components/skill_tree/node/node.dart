@@ -108,13 +108,19 @@ class NodeComponent extends CommonComponent {
   }
 
   int get rank {
-    var r = node.skills.first.tallySkill
-        ? ChronomancerComponent.character
-            .pointsSpentIn(SkillTreeComponent.currentTree)
-        : ChronomancerComponent
-            .character
-            .skills[SkillTreeComponent.currentTree][Vector2(node.x, node.y)]
-            ?.rank;
+    var r = 0;
+    if (node.skills.first.masteryTallySkill) {
+      r = ChronomancerComponent.character
+          .pointsSpentInRow(SkillTreeComponent.currentTree, node.y);
+    } else if (node.skills.first.tallySkill) {
+      r = ChronomancerComponent.character
+          .pointsSpentIn(SkillTreeComponent.currentTree);
+    } else {
+      r = ChronomancerComponent
+          .character
+          .skills[SkillTreeComponent.currentTree][Vector2(node.x, node.y)]
+          ?.rank;
+    }
     return r == 0 ? null : r;
   }
 
@@ -246,11 +252,17 @@ class NodeComponent extends CommonComponent {
     }
   }
 
-  String get rankColor => ChronomancerComponent
-              .character
-              .skills[SkillTreeComponent.currentTree][Vector2(node.x, node.y)]
-              ?.rank ==
-          filledWith?.maxRank
-      ? EnchantTextComponent.COLOR_ORANGE
-      : EnchantTextComponent.COLOR_WHITE;
+  String get rankColor {
+    if (node.skills.first.masteryTallySkill) {
+      return EnchantTextComponent.COLOR_WHITE;
+    } else if (ChronomancerComponent
+            .character
+            .skills[SkillTreeComponent.currentTree][Vector2(node.x, node.y)]
+            ?.rank ==
+        filledWith?.maxRank) {
+      return EnchantTextComponent.COLOR_ORANGE;
+    } else {
+      return EnchantTextComponent.COLOR_WHITE;
+    }
+  }
 }

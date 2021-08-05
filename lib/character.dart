@@ -92,7 +92,8 @@ class SpentSkill {
       };
 
   SpentSkill.fromJSON(this.character, dynamic j)
-      : skill = character.charClass.version.skills.firstWhere((x) => x.id == j['id']),
+      : skill = character.charClass.version.skills
+            .firstWhere((x) => x.id == j['id']),
         pos = Vector2(j['x'], j['y']),
         rank = j['rank'] {
     tree = skill.tree;
@@ -100,7 +101,7 @@ class SpentSkill {
 }
 
 class Character {
-  static const int MAX_LEVEL = 100;
+  static const int MAX_LEVEL = 100, MASTERY_TREE_ID = 4;
 
   CharClass charClass;
   Map<ItemType, ItemStack> equipment = <ItemType, ItemStack>{};
@@ -135,7 +136,11 @@ class Character {
       .fold(0, (sum, spentSkill) => sum + spentSkill.rank);
   int pointsSpentInRow(int tree, int row) => skills[tree]
       .values
-      .where((spentSkill) => spentSkill.pos.y == row)
+      .where((spentSkill) =>
+          spentSkill.pos.y == row &&
+          ((tree == MASTERY_TREE_ID && row == 3)
+              ? spentSkill.pos.x != 10
+              : true))
       .fold(0, (sum, spentSkill) => sum + spentSkill.rank);
 
   bool skillUnlocked(Skill skill) {

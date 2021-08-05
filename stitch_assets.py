@@ -58,7 +58,7 @@ for version in versions_json:
             )
             item_image.close()
         else:
-            print("warning: item %s has no icon!" % item["uuid"])
+            print("warning: item %s (%s) in version %s has no icon!" % (item["uuid"], item["name"], version))
 
     stitched_items.save(
         os.path.join("web", "assets", "images", "items", version + ".png")
@@ -105,7 +105,7 @@ for version in versions_json:
             )
             skill_image.close()
         else:
-            print("warning: skill %s has no icon!" % skill["uuid"])
+            print("warning: skill %s (%s) in version %s has no icon!" % (skill["uuid"], skill["name"], version))
 
     stitched_skills.save(
         os.path.join("web", "assets", "images", "skills", version + ".png")
