@@ -21,15 +21,21 @@ class SaveFile {
     0x00000000: _parseDouble,
     0x01000000: _parseString,
     0x02000000: _parseList,
+    0x0A000000: _parseInt,
     0x2F010000: _parseList,
-    0x93010000: _parseMap,
     0x5B020000: _parseGrid,
+    0x93010000: _parseMap,
   };
 
   static GMSParseResult _parseDouble(ByteData hexValues,
           [int offsetInBytes = 0]) =>
       GMSParseResult(
           hexValues.getFloat64(offsetInBytes + 4, Endian.little), 12);
+
+  // FIXME: this should be 64-bit, but 64-bit int accessing not supported by dart2js
+  static GMSParseResult _parseInt(ByteData hexValues,
+          [int offsetInBytes = 0]) =>
+      GMSParseResult(hexValues.getInt32(offsetInBytes + 4, Endian.little), 12);
 
   static GMSParseResult _parseString(ByteData hexValues,
       [int offsetInBytes = 0]) {
@@ -126,11 +132,10 @@ class SaveFile {
   ];
 
   static Character fromJSON(Version version, dynamic j) {
-    var parsedMap = (j as Map)
-        .map((key, value) => MapEntry(key, parseSerializedGMS(value)));
-    var classIndex = parsedMap['c'][0];
-    var level = parsedMap['c'][1];
-    var equipment = (parsedMap['e'] as Map)
+    var generalInfo = (parseSerializedGMS(j['c']) as List);
+    var classIndex = generalInfo[0];
+    var level = generalInfo[1];
+    var equipment = (parseSerializedGMS(j['e']) as Map)
         .map((key, value) => MapEntry(
             key,
             value is String && value.isNotEmpty
@@ -140,9 +145,10 @@ class SaveFile {
         .where((kv) => kv.key.y == 0)
         .map((kv) => kv.value)
         .toList();
-    var skills = Map.fromEntries(
-        (parsedMap['sk'] as Map).entries.where((kv) => kv.value > 0));
-    var masteryChoices = (parsedMap['ms'] as Map);
+    var skills = Map.fromEntries((parseSerializedGMS(j['sk']) as Map)
+        .entries
+        .where((kv) => kv.value > 0));
+    var masteryChoices = (parseSerializedGMS(j['ms']) as Map);
 
     var result = Character(version.classWithIndex(classIndex));
     result.level = level;
