@@ -222,8 +222,13 @@ class ChronomancerComponent extends CommonComponent {
   void importFromSaveUploadFinished(html.FileUploadInputElement fileUpload) {
     if (fileUpload.files.isEmpty) return;
     var reader = html.FileReader();
-    reader.onLoadEnd
-        .listen((event) => character = SaveFile.fromJSON(version, jsonDecode(reader.result)));
+    StreamSubscription conn;
+    conn = reader.onLoadEnd
+        .listen((event) {
+          character = SaveFile.fromJSON(version, jsonDecode(reader.result));
+          fileUpload.value = null;
+          conn.cancel();
+        });
     reader.readAsText(fileUpload.files.first);
   }
 }

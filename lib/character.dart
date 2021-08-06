@@ -119,6 +119,7 @@ class Character {
   int get greaterRunes => equipment.values
       .where((item) =>
           item.enchants[item.runeEnchantSlot] != null &&
+          item.enchants[item.runeEnchantSlot].enchant.rune != null &&
           item.enchants[item.runeEnchantSlot].enchant.rune.greater)
       .length;
   int get maxGreaterRunes => equipment.values.any((item) =>

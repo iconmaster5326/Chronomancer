@@ -221,11 +221,15 @@ class SaveFile {
           var enchantment = version.enchants
               .firstWhere((e) => e.id == enchantID, orElse: () => null);
           if (enchantment == null) {
-            print('warning: unknown enchantment ${enchantID}');
+            print('warning: unknown enchantment ${enchantID} on item ${item.name}');
             continue;
           }
           var enchantmentStack = EnchantStack(
               source, enchantment, itemJSON['enchant_value${enchantIndex}']);
+          if (enchantIndex + item.baseEnchants.length >= itemStack.enchants.length) {
+            print('warning: item ${item.name} has too many enchants');
+            continue;
+          }
           itemStack.enchants[enchantIndex + item.baseEnchants.length] =
               enchantmentStack;
         }
