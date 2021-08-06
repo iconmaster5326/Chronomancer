@@ -14,8 +14,9 @@
             Options...
             </button>
             <div class="dropdown-menu">
-                <button class="dropdown-item btn long-button" type="button" (click)="importBuild()">Import Build</button>
-                <button class="dropdown-item btn long-button" type="button" (click)="exportBuild()">Export Build</button>
+                <button class="dropdown-item btn long-button" type="button" (click)="importFromSave(fileInput)">Import From Save File</button>
+                <button class="dropdown-item btn long-button" type="button" (click)="importBuild()">Import Build Code</button>
+                <button class="dropdown-item btn long-button" type="button" (click)="exportBuild()">Export Build Code</button>
                 <button class="dropdown-item btn long-button" type="button" (click)="linkBuild()">Get Link to Build</button>
                 <button class="dropdown-item btn long-button" type="button" (click)="resetCharacter()">Reset Character</button>
                 <button class="dropdown-item btn long-button" type="button" (click)="showChangelogDialog()">Changelog...</button>
@@ -86,3 +87,5 @@
 <enchant-tooltip></enchant-tooltip>
 <skill-tooltip></skill-tooltip>
 <gem-tooltip></gem-tooltip>
+
+<input #fileInput type="file" class="file-uploader" (change)="importFromSaveUploadFinished(fileInput)">

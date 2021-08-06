@@ -26,6 +26,7 @@ import 'package:chronomancer/components/tooltips/gem/gem_tooltip.dart';
 import 'package:chronomancer/components/tooltips/item/item_tooltip.dart';
 import 'package:chronomancer/components/tooltips/skill/skill_tooltip.dart';
 import 'package:chronomancer/item.dart';
+import 'package:chronomancer/save_file.dart';
 import 'package:chronomancer/skill.dart';
 import 'package:chronomancer/version.dart';
 import 'package:chronomancer/util.dart';
@@ -131,7 +132,7 @@ class ChronomancerComponent extends CommonComponent {
       if (character == null) {
         version = v;
       } else {
-        ResetDialogComponent.INSTANCE.newVersion = v;
+        ResetDialogComponent.INSTANCE.confirmHandler = () => version = v;
         ResetDialogComponent.INSTANCE.show();
       }
     }
@@ -207,5 +208,22 @@ class ChronomancerComponent extends CommonComponent {
     if (character != null) {
       ResetDialogComponent.INSTANCE.show();
     }
+  }
+
+  void importFromSave(html.FileUploadInputElement fileUpload) {
+    if (character == null) {
+      fileUpload.click();
+    } else {
+      ResetDialogComponent.INSTANCE.confirmHandler = () => fileUpload.click();
+      ResetDialogComponent.INSTANCE.show();
+    }
+  }
+
+  void importFromSaveUploadFinished(html.FileUploadInputElement fileUpload) {
+    if (fileUpload.files.isEmpty) return;
+    var reader = html.FileReader();
+    reader.onLoadEnd
+        .listen((event) => character = SaveFile.fromJSON(version, jsonDecode(reader.result)));
+    reader.readAsText(fileUpload.files.first);
   }
 }

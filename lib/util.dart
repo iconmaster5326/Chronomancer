@@ -66,7 +66,8 @@ extension IterableOps<T> on Iterable<T> {
 }
 
 extension TitleCase on String {
-  String get titleCase => split(RegExp('\\s+')).map((e) => string_utils.titleCase(e)).join(' ');
+  String get titleCase =>
+      split(RegExp('\\s+')).map((e) => string_utils.titleCase(e)).join(' ');
 }
 
 class Pair<A, B> {
@@ -99,6 +100,11 @@ class Vector2 extends Pair<int, int> {
   set x(int v) => first = v;
   int get y => second;
   set y(int v) => second = v;
+
+  @override
+  String toString() {
+    return '(${x}, ${y})';
+  }
 }
 
 class _RangeIterator extends Iterator<int> {

@@ -8,9 +8,10 @@ class CharClass {
   String id, name;
   List<String> skillTrees, weaponNames, offhandNames;
   List<int> masteryCol2FloatIDs;
+  int index;
 
   CharClass(this.version, this.id, this.name, this.skillTrees, this.weaponNames,
-      this.offhandNames, this.masteryCol2FloatIDs);
+      this.offhandNames, this.masteryCol2FloatIDs, this.index);
 
   CharClass.fromJSON(Version version, Map<String, dynamic> j)
       : this(
@@ -20,7 +21,8 @@ class CharClass {
             List<String>.from(j['skillTrees']),
             List<String>.from(j['weaponNames']),
             List<String>.from(j['offhandNames']),
-            List<int>.from(j['masteryCol2Floats']));
+            List<int>.from(j['masteryCol2Floats']),
+            j['index']);
 
   static Future<List<CharClass>> getClassList(
       Version version, Client http) async {

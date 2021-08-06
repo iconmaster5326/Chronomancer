@@ -5,6 +5,8 @@ import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
 import 'package:chronomancer/version.dart';
 
+typedef ResetDialogHandler = void Function();
+
 @Component(
   selector: 'reset-dialog',
   styleUrls: ['reset_dialog.css'],
@@ -13,7 +15,7 @@ import 'package:chronomancer/version.dart';
 )
 class ResetDialogComponent extends ModalComponent {
   static ResetDialogComponent INSTANCE;
-  Version newVersion;
+  ResetDialogHandler confirmHandler;
 
   @override
   void init(Element e) {
@@ -23,13 +25,11 @@ class ResetDialogComponent extends ModalComponent {
 
   void onConfirm() {
     ChronomancerComponent.character = null;
-    if (newVersion != null) {
-      ChronomancerComponent.version = newVersion;
-      newVersion = null;
-    }
+    if (confirmHandler != null) confirmHandler();
+    confirmHandler = null;
   }
 
   void onCancel() {
-    newVersion = null;
+    confirmHandler = null;
   }
 }

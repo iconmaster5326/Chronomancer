@@ -69,4 +69,13 @@ class Version {
     }
     return null;
   }
+
+  CharClass classWithIndex(int index) {
+    for (var charClass in classes) {
+      if (charClass.index == index) {
+        return charClass;
+      }
+    }
+    return null;
+  }
 }
