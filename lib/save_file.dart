@@ -1,5 +1,6 @@
 import 'package:chronomancer/character.dart';
 import 'package:chronomancer/enchant.dart';
+import 'package:chronomancer/gem.dart';
 import 'package:chronomancer/item.dart';
 import 'package:chronomancer/util.dart';
 import 'package:chronomancer/version.dart';
@@ -122,13 +123,27 @@ class SaveFile {
 
   static const EQUIPMENT_SLOTS = [
     ItemType.HEAD,
-    ItemType.ACCCESSORY,
-    ItemType.AMULET,
-    ItemType.OFF_HAND,
     ItemType.BODY,
     ItemType.WEAPON,
-    ItemType.FEET,
+    ItemType.ACCCESSORY,
+    ItemType.AMULET,
     ItemType.RING,
+    ItemType.FEET,
+    ItemType.OFF_HAND,
+  ];
+
+  static const BASE_ENCHANT_KEYS = [
+    'hp',
+    'mp',
+    'dmg',
+    'attackspeed',
+    'crit',
+  ];
+
+  static const GEM_SHAPES = [
+    GemShape.SPHERE,
+    GemShape.CUBE,
+    GemShape.STAR,
   ];
 
   static Character fromJSON(Version version, dynamic j) {
@@ -153,6 +168,7 @@ class SaveFile {
     var result = Character(version.classWithIndex(classIndex));
     result.level = level;
 
+    // skills
     for (var skillEntry in skills.entries) {
       var skillWithID = version.skills
           .firstWhere((s) => s.id == skillEntry.key, orElse: () => null);
@@ -190,6 +206,7 @@ class SaveFile {
       result.skills[skillWithID.tree][position] = spentSkill;
     }
 
+    // equipment
     for (var i = 0; i < EQUIPMENT_SLOTS.length; i++) {
       var itemJSON = equipment[i];
       if (itemJSON == null) continue;
@@ -199,49 +216,100 @@ class SaveFile {
         print('warning: unknown skill ${itemJSON['id']}');
         continue;
       }
+
       var itemStack = ItemStack(item,
           rarity: ItemRarity.values[itemJSON['quality']],
           level: itemJSON['level']);
       if (itemJSON.containsKey('empowered')) {
         itemStack.empowered = itemJSON['empowered'] == 0 ? false : true;
       }
-      int runeEnchantSlot;
+
+      // base enchants
+      for (var i = 0; i < item.baseEnchants.length; i++) {
+        var value = itemJSON[BASE_ENCHANT_KEYS[i]];
+        if (i == 3) {
+          // specific fixup for attack speed
+          value *= 100;
+        }
+        itemStack.enchants[i].value = value as int;
+      }
+
+      // non-base enchants
+      var enchantStacks = <EnchantStack>[];
       for (var enchantIndex = 0; enchantIndex <= 9; enchantIndex++) {
+        var enchantID = itemJSON['enchant${enchantIndex}'];
+        if (enchantID <= 0) continue;
+
+        var enchantment = version.enchants
+            .firstWhere((e) => e.id == enchantID, orElse: () => null);
+        if (enchantment == null) {
+          print(
+              'warning: unknown enchantment ${enchantID} at index ${enchantIndex} on item ${item.name}');
+          continue;
+        }
+
         var source = EnchantStackSource.FLOATING;
         if (itemJSON['enchant_solid${enchantIndex}'] > 0) {
           source = EnchantStackSource.FIXED;
         }
         if (itemJSON['enchant_rune${enchantIndex}'] > 0) {
           source = EnchantStackSource.RUNE;
-          runeEnchantSlot = enchantIndex;
         }
 
-        var enchantID = itemJSON['enchant${enchantIndex}'];
-        if (enchantID > 0) {
-          var enchantment = version.enchants
-              .firstWhere((e) => e.id == enchantID, orElse: () => null);
-          if (enchantment == null) {
-            print('warning: unknown enchantment ${enchantID} on item ${item.name}');
-            continue;
+        enchantStacks.add(EnchantStack(
+            source, enchantment, itemJSON['enchant_value${enchantIndex}']));
+      }
+      var enchantSlotsFilled = <int>{};
+      for (var enchant in enchantStacks) {
+        var found = false;
+        for (var i = 0; i < itemStack.enchants.length; i++) {
+          if (!enchantSlotsFilled.contains(i) &&
+              itemStack.sourceOf(i) == enchant.source &&
+              itemStack.enchantTypesForSlot(i).contains(enchant.type)) {
+            enchantSlotsFilled.add(i);
+            itemStack.enchants[i] = enchant;
+            found = true;
+            break;
           }
-          var enchantmentStack = EnchantStack(
-              source, enchantment, itemJSON['enchant_value${enchantIndex}']);
-          if (enchantIndex + item.baseEnchants.length >= itemStack.enchants.length) {
-            print('warning: item ${item.name} has too many enchants');
-            continue;
-          }
-          itemStack.enchants[enchantIndex + item.baseEnchants.length] =
-              enchantmentStack;
+        }
+        if (!found) {
+          print(
+              'warning: enchant ${enchant.name} (of type ${enchant.type} and source ${enchant.source}) could not be placed in item ${item.name}');
         }
       }
 
-      if (runeEnchantSlot == null) {
-        itemStack.enchants.removeLast();
-        itemStack.enchants.insert(itemStack.runeEnchantSlot, null);
-      } else {
-        var runeEnchant = itemStack.enchants[runeEnchantSlot];
-        itemStack.enchants.removeAt(runeEnchantSlot);
-        itemStack.enchants.insert(itemStack.runeEnchantSlot, runeEnchant);
+      // gems
+      itemStack.gems.clear();
+      var lastNonprisGemIndex;
+      for (var gemIndex = 0; gemIndex <= 5; gemIndex++) {
+        if (itemJSON['socket_type${gemIndex}'] < 0) break;
+        if (itemJSON['socket_prismatic${gemIndex}'] != 0) break;
+        lastNonprisGemIndex= gemIndex;
+      }
+      for (var gemIndex = 0; gemIndex <= 5; gemIndex++) {
+        var gemTypeIndex = itemJSON['socket_type${gemIndex}'];
+        if (gemTypeIndex < 0) continue;
+        print(
+            "item ${item.name} socket ${gemIndex} has type ${itemJSON['socket_type${gemIndex}']} gem ${itemJSON['socket_gem${gemIndex}']} val ${itemJSON['socket_val${gemIndex}']} prismatic ${itemJSON['socket_prismatic${gemIndex}']}");
+        var source = GemSource.INNATE;
+        if (itemJSON['socket_prismatic${gemIndex}'] != 0) {
+          source = GemSource.PRISMATIC;
+        } else if (item.id == ItemStack.WEYRICKS_FINERY_ID && lastNonprisGemIndex - gemIndex < 3) {
+          source = GemSource.ENCHANT;
+        } else if (item.id == ItemStack.RING_OF_MARVELLOUS_GEMS_ID && lastNonprisGemIndex - gemIndex < 2) {
+          source = GemSource.ENCHANT;
+        }
+        var socket = GemSocket(itemStack, source, GEM_SHAPES[gemTypeIndex]);
+        var gemID = itemJSON['socket_gem${gemIndex}'];
+        if (gemID > 0) {
+          socket.gem =
+              version.gems.firstWhere((g) => g.id == gemID, orElse: () => null);
+          if (socket.gem == null) {
+            print(
+                'warning: unknown gem ID ${gemID} in socket ${gemIndex} in item ${item.name}');
+          }
+        }
+        itemStack.gems.add(socket);
       }
 
       var slot = EQUIPMENT_SLOTS[i];

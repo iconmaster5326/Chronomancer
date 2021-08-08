@@ -586,8 +586,10 @@ class ItemStack implements ItemData {
   @override
   String get typeName => item.typeName;
   @override
-  bool get augmented =>
-      enchants.any((e) => e != null && e.value > e.enchant.ranges[rarity].max);
+  bool get augmented => enchants.any((e) =>
+      e != null &&
+      e.source != EnchantStackSource.BASE &&
+      e.value > e.enchant.ranges[rarity].max);
   @override
   ItemSet get partOfSet => item.partOfSet;
 
