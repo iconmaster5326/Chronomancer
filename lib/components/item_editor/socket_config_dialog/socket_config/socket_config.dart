@@ -17,25 +17,15 @@ class SocketConfigComponent extends CommonComponent {
   GemSource source;
   @Input()
   List<GemShape> shapes;
+
   /// only used with the ring of marvellous gems
   @Input()
   int slot;
 
   String iconBackgroundPos(GemShape shape) =>
       '${-source.index * GemSocketComponent.SOCKET_BACK_SIZE}px ${-shape.index * GemSocketComponent.SOCKET_BACK_SIZE}px';
-  bool get selected {
-    if (source == GemSource.ENCHANT) {
-      // ring of marvellous gems
-      return SocketConfigDialogComponent.INSTANCE.item.gems
-              .where((socket) => socket.source == source)
-              .toList()[slot]
-              .shape ==
-          shapes.first;
-    } else {
-      return SocketConfigDialogComponent.INSTANCE.item.gems
-          .where((socket) => socket.source == source)
-          .map((socket) => socket.shape)
-          .equals(shapes);
-    }
-  }
+  bool get selected => SocketConfigDialogComponent.INSTANCE.item.gems
+      .where((socket) => socket.source == source)
+      .map((socket) => socket.shape)
+      .equals(shapes);
 }

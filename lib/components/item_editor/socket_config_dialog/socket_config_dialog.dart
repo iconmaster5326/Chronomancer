@@ -27,12 +27,25 @@ class SocketConfigDialogComponent extends ModalComponent {
 
   void onSocketConfigSelected(GemSource source, List<GemShape> shapes) {
     item.gems.removeWhere((socket) => socket.source == source);
+    var newSockets = shapes.map((shape) => GemSocket(item, source, shape));
 
-    if (source == GemSource.INNATE) {
-      item.gems
-          .insertAll(0, shapes.map((shape) => GemSocket(item, source, shape)));
-    } else {
-      item.gems.addAll(shapes.map((shape) => GemSocket(item, source, shape)));
+    switch (source) {
+      case GemSource.INNATE:
+        item.gems.insertAll(0, newSockets);
+        break;
+      case GemSource.ENCHANT:
+        var socketToInsert = item.gems.firstWhere(
+            (s) => s.source == GemSource.PRISMATIC,
+            orElse: () => null);
+        if (socketToInsert == null) {
+          item.gems.addAll(newSockets);
+        } else {
+          item.gems.insertAll(item.gems.indexOf(socketToInsert), newSockets);
+        }
+        break;
+      case GemSource.PRISMATIC:
+        item.gems.addAll(newSockets);
+        break;
     }
   }
 
@@ -55,12 +68,10 @@ class SocketConfigDialogComponent extends ModalComponent {
           [GemShape.CUBE],
           [GemShape.SPHERE],
         ];
-  List<List<GemShape>> marvellousGemsConfigs = [
-    [GemShape.STAR],
-    [GemShape.CUBE],
-    [GemShape.SPHERE],
-  ];
+  List<List<GemShape>> get marvellousGemsConfigs =>
+      ItemStack.RING_OF_MARVELLOUS_GEMS_SOCKET_CONFIGURATIONS;
 
   bool get isRingOfMarvellousGems =>
       item?.id == ItemStack.RING_OF_MARVELLOUS_GEMS_ID;
+  bool get isWeyricksFinery => item?.id == ItemStack.WEYRICKS_FINERY_ID;
 }

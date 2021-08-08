@@ -280,22 +280,38 @@ class SaveFile {
 
       // gems
       itemStack.gems.clear();
-      var lastNonprisGemIndex;
-      for (var gemIndex = 0; gemIndex <= 5; gemIndex++) {
-        if (itemJSON['socket_type${gemIndex}'] < 0) break;
-        if (itemJSON['socket_prismatic${gemIndex}'] != 0) break;
-        lastNonprisGemIndex= gemIndex;
-      }
+      var totalNonprisGems = 0;
+      GemShape lastNonprisGemShape;
       for (var gemIndex = 0; gemIndex <= 5; gemIndex++) {
         var gemTypeIndex = itemJSON['socket_type${gemIndex}'];
         if (gemTypeIndex < 0) continue;
+        if (itemJSON['socket_prismatic${gemIndex}'] != 0) continue;
+        totalNonprisGems++;
+        lastNonprisGemShape = GEM_SHAPES[gemTypeIndex];
+      }
+      var totalGems = 0;
+      for (var gemIndex = 0; gemIndex <= 5; gemIndex++) {
+        print("${gemIndex}, ${itemJSON['socket_type${gemIndex}']}, ${itemJSON['socket_prismatic${gemIndex}']}");
+        var gemTypeIndex = itemJSON['socket_type${gemIndex}'];
+        if (gemTypeIndex < 0) continue;
+        totalGems++;
         var source = GemSource.INNATE;
         if (itemJSON['socket_prismatic${gemIndex}'] != 0) {
           source = GemSource.PRISMATIC;
-        } else if (item.id == ItemStack.WEYRICKS_FINERY_ID && lastNonprisGemIndex - gemIndex < 3) {
-          source = GemSource.ENCHANT;
-        } else if (item.id == ItemStack.RING_OF_MARVELLOUS_GEMS_ID && lastNonprisGemIndex - gemIndex < 2) {
-          source = GemSource.ENCHANT;
+        } else if (item.id == ItemStack.WEYRICKS_FINERY_ID) {
+          if (totalNonprisGems - totalGems < 3) {
+            source = GemSource.ENCHANT;
+          }
+        } else if (item.id == ItemStack.RING_OF_MARVELLOUS_GEMS_ID) {
+          if (lastNonprisGemShape == GemShape.STAR) {
+            if (totalGems == totalNonprisGems) {
+              source = GemSource.ENCHANT;
+            }
+          } else {
+            if (totalNonprisGems - totalGems < 2) {
+              source = GemSource.ENCHANT;
+            }
+          }
         }
         var socket = GemSocket(itemStack, source, GEM_SHAPES[gemTypeIndex]);
         var gemID = itemJSON['socket_gem${gemIndex}'];

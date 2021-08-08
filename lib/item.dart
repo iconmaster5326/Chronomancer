@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:http/http.dart';
 
 import 'character.dart';
@@ -493,6 +494,13 @@ class ItemStack implements ItemData {
     },
   };
 
+  static const RING_OF_MARVELLOUS_GEMS_SOCKET_CONFIGURATIONS = [
+    [GemShape.CUBE, GemShape.CUBE],
+    [GemShape.CUBE, GemShape.SPHERE],
+    [GemShape.SPHERE, GemShape.SPHERE],
+    [GemShape.STAR],
+  ];
+
   ItemStack(this.item, {this.rarity, this.level}) {
     rarity ??= item.rarity;
     level ??= item.minLevel;
@@ -514,10 +522,9 @@ class ItemStack implements ItemData {
         GemSocket(this, GemSource.ENCHANT, GemShape.STAR)
       ]);
     } else if (item.id == RING_OF_MARVELLOUS_GEMS_ID) {
-      gems.addAll([
-        GemSocket(this, GemSource.ENCHANT, GemShape.STAR),
-        GemSocket(this, GemSource.ENCHANT, GemShape.STAR),
-      ]);
+      gems.addAll(RING_OF_MARVELLOUS_GEMS_SOCKET_CONFIGURATIONS[Random()
+              .nextInt(RING_OF_MARVELLOUS_GEMS_SOCKET_CONFIGURATIONS.length)]
+          .map((e) => GemSocket(this, GemSource.ENCHANT, e)));
     }
   }
 
