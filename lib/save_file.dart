@@ -289,8 +289,6 @@ class SaveFile {
       for (var gemIndex = 0; gemIndex <= 5; gemIndex++) {
         var gemTypeIndex = itemJSON['socket_type${gemIndex}'];
         if (gemTypeIndex < 0) continue;
-        print(
-            "item ${item.name} socket ${gemIndex} has type ${itemJSON['socket_type${gemIndex}']} gem ${itemJSON['socket_gem${gemIndex}']} val ${itemJSON['socket_val${gemIndex}']} prismatic ${itemJSON['socket_prismatic${gemIndex}']}");
         var source = GemSource.INNATE;
         if (itemJSON['socket_prismatic${gemIndex}'] != 0) {
           source = GemSource.PRISMATIC;
