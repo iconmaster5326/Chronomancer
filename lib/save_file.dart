@@ -291,7 +291,6 @@ class SaveFile {
       }
       var totalGems = 0;
       for (var gemIndex = 0; gemIndex <= 5; gemIndex++) {
-        print("${gemIndex}, ${itemJSON['socket_type${gemIndex}']}, ${itemJSON['socket_prismatic${gemIndex}']}");
         var gemTypeIndex = itemJSON['socket_type${gemIndex}'];
         if (gemTypeIndex < 0) continue;
         totalGems++;
