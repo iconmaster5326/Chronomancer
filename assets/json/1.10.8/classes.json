@@ -15,7 +15,8 @@
             100221,
             100028,
             100027
-        ]
+        ],
+        "index": 1
     },
     {
         "uuid": "berserker",
@@ -32,7 +33,8 @@
         "masteryCol2Floats": [
             100220,
             100221
-        ]
+        ],
+        "index": 2
     },
     {
         "uuid": "warden",
@@ -49,7 +51,8 @@
         "masteryCol2Floats": [
             100028,
             100027
-        ]
+        ],
+        "index": 3
     },
     {
         "uuid": "warlock",
@@ -66,6 +69,7 @@
         "masteryCol2Floats": [
             100028,
             100027
-        ]
+        ],
+        "index": 4
     }
 ]
