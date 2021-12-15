@@ -98,9 +98,14 @@ class ChronomancerComponent extends CommonComponent {
         version = versions.last;
       }
     } else if (html.window.localStorage.containsKey(AUTOSAVE_STORAGE_KEY)) {
-      character = Character.fromJSON(versions,
-          json.decode(html.window.localStorage[AUTOSAVE_STORAGE_KEY]));
-      version = character.charClass.version;
+      try {
+        character = Character.fromJSON(versions,
+            json.decode(html.window.localStorage[AUTOSAVE_STORAGE_KEY]));
+        version = character.charClass.version;
+      } catch (error) {
+        print('warning: error occured when loading character:');
+        print(error);
+      }
     }
   }
 
