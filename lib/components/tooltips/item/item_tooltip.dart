@@ -26,7 +26,7 @@ class ItemTooltipComponent extends CommonComponent {
   static ItemTooltipComponent INSTANCE;
   ItemData _item;
   StreamSubscription<MouseEvent> _conn;
-  int _left = 0, _top = 0;
+  final TooltipPlacement _placement = TooltipPlacement();
 
   static const COLOR_YELLOW = '#ffc800', COLOR_GREY = '#808080';
   static const Map<ItemRarity, String> RAIRTY_TO_COLOR = {
@@ -46,21 +46,19 @@ class ItemTooltipComponent extends CommonComponent {
     }
 
     if (newItem != null) {
-      _conn = window.onMouseMove.listen((event) {
-        _left = event.page.x;
-        _top = event.page.y;
-      });
+      _conn = window.onMouseMove.listen(_placement.onMouseMove);
     }
 
     _item = newItem;
   }
 
-  void onInit() {
+  void onInit(Element e) {
+    _placement.element = e;
     INSTANCE = this;
   }
 
-  String get left => '${_left + 8}px';
-  String get top => '${_top + 8}px';
+  String get left => _placement.left;
+  String get top => _placement.top;
   int get _itemX => item.id % ITEM_ICONS_PER_ROW;
   int get _itemY => item.id ~/ ITEM_ICONS_PER_ROW;
   String get iconBackground =>

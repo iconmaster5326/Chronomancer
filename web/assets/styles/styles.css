@@ -169,8 +169,12 @@
 }
 
 .chronicon-tooltip {
-  position: absolute;
+  position: fixed;
   z-index: 10000;
+  /* a fixed width, so the tooltip's size doesn't depend on where it's placed */
+  width: max-content;
+  max-width: 360px;
+  pointer-events: none;
   border: 1px solid white;
   border-radius: 6px;
   background: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75));
@@ -222,6 +226,13 @@ html, body {
   overflow: -moz-scrollbars-vertical; 
   overflow-y: scroll;
   color: white;
+}
+
+/* let the character screen fill the window height */
+chronomancer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 @font-face {

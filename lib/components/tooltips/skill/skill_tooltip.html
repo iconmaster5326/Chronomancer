@@ -1,4 +1,4 @@
-<div (init)="onInit()" class="chronicon-tooltip" [style.display]="skill == null ? 'none': 'block'" [style.left]="left" [style.top]="top">
+<div #tooltipElement (init)="onInit(tooltipElement)" class="chronicon-tooltip" [style.display]="skill == null ? 'none': 'block'" [style.left]="left" [style.top]="top">
     <div *ngIf="skill != null" class="skill-tooltip-body">
         <div class="skill-tooltip-header">
             <div class="skill-tooltip-icon" [style.clip-path]="iconClipPath" [style.background]="iconBackground"></div>

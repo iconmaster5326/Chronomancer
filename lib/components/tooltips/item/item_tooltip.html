@@ -1,4 +1,4 @@
-<div (init)="onInit()" class="chronicon-tooltip" [style.display]="item == null ? 'none': 'block'" [style.left]="left" [style.top]="top" [style.border-color]="RAIRTY_TO_COLOR[item?.rarity]">
+<div #tooltipElement (init)="onInit(tooltipElement)" class="chronicon-tooltip" [style.display]="item == null ? 'none': 'block'" [style.left]="left" [style.top]="top" [style.border-color]="RAIRTY_TO_COLOR[item?.rarity]">
     <div *ngIf="item != null" class="item-tooltip-body">
         <div class="item-tooltip-header">
             <div class="item-tooltip-icon" [style.background]="iconBackground"></div>

@@ -20,7 +20,7 @@ class GemTooltipComponent extends CommonComponent {
   ItemData item;
   Gem _gem;
   StreamSubscription<MouseEvent> _conn;
-  int _left = 0, _top = 0;
+  final TooltipPlacement _placement = TooltipPlacement();
 
   Gem get gem => _gem;
   set gem(Gem newGem) {
@@ -30,21 +30,19 @@ class GemTooltipComponent extends CommonComponent {
     }
 
     if (newGem != null) {
-      _conn = window.onMouseMove.listen((event) {
-        _left = event.page.x;
-        _top = event.page.y;
-      });
+      _conn = window.onMouseMove.listen(_placement.onMouseMove);
     }
 
     _gem = newGem;
   }
 
-  void onInit() {
+  void onInit(Element e) {
+    _placement.element = e;
     INSTANCE = this;
   }
 
-  String get left => '${_left + 8}px';
-  String get top => '${_top + 8}px';
+  String get left => _placement.left;
+  String get top => _placement.top;
   EnchantData get enchant => GemSocket(item, null, gem.shape, gem).enchant;
   ItemRarity get _rarity => ItemRarity.values[gem.quality.index];
   String get rarityName => ITEM_RARITY_TO_STRING[_rarity];

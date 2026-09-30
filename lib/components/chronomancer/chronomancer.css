@@ -28,6 +28,7 @@
 }
 
 #chronomancer {
+    flex: 1;
     background-image: url("assets/images/model_background.png");
     display: flex;
     flex-direction: column;
@@ -118,6 +119,7 @@
 }
 
 .file-uploader {
+    position: absolute;
     width: 0%;
     height: 0%;
     opacity: 0;

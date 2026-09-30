@@ -28,7 +28,7 @@ class SkillTooltipComponent extends CommonComponent {
   int rankOverride;
   Skill _skill;
   StreamSubscription<MouseEvent> _conn;
-  int _left = 0, _top = 0;
+  final TooltipPlacement _placement = TooltipPlacement();
 
   Skill get skill => _skill;
   set skill(Skill newSkill) {
@@ -38,23 +38,21 @@ class SkillTooltipComponent extends CommonComponent {
     }
 
     if (newSkill != null) {
-      _conn = window.onMouseMove.listen((event) {
-        _left = event.page.x;
-        _top = event.page.y;
-      });
+      _conn = window.onMouseMove.listen(_placement.onMouseMove);
     }
 
     _skill = newSkill;
   }
 
-  void onInit() {
+  void onInit(Element e) {
+    _placement.element = e;
     INSTANCE = this;
   }
 
   SpentSkill get spentSkill =>
       ChronomancerComponent.character.findSpentSkill(skill);
-  String get left => '${_left + 8}px';
-  String get top => '${_top + 8}px';
+  String get left => _placement.left;
+  String get top => _placement.top;
   bool get showNextRank =>
       !skill.tallySkill &&
       skill.rankUpDesc != null &&
