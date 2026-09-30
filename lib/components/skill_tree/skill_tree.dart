@@ -74,8 +74,10 @@ class SkillTreeComponent extends CommonComponent {
       .flatten
       .flatten
       .flatten;
-  List<SkillTreeEdge> get edges =>
-      currentTree == Skill.TREE_MASTERY ? _masteryEdges : _nonMasteryEdges;
+  // classes without mastery data have an empty mastery tree; draw no edges
+  List<SkillTreeEdge> get edges => currentTree == Skill.TREE_MASTERY
+      ? (skills.isEmpty ? [] : _masteryEdges)
+      : _nonMasteryEdges;
 
   Object trackByEquality(dynamic n, dynamic o) => n == o;
 

@@ -13,6 +13,12 @@ MASTERY_UUID_OFFSET = 100000
 
 parser = argparse.ArgumentParser()
 parser.add_argument("cdb", type=str, help="the path to the root of ChronomancerDB")
+parser.add_argument(
+    "versions",
+    type=str,
+    nargs="*",
+    help="the versions to stitch (default: all versions in Chronomancer)",
+)
 args = parser.parse_args()
 
 item_images_path = os.path.join(
@@ -23,11 +29,18 @@ skill_images_paths = (
     os.path.join(args.cdb, "public", "assets", "images", "game", "skills", "masteries"),
 )
 
-json_path = os.path.join(args.cdb, "src", "engine", "data")
+# use Chronomancer's copies of the data, as they may differ from ChronomancerDB's
+json_path = os.path.join("web", "assets", "json")
 versions_json = json.load(open(os.path.join(json_path, "patches.json")))
 
+if args.versions:
+    for version in args.versions:
+        if version not in versions_json:
+            parser.error("version %s is not in Chronomancer" % version)
+    versions_json = [v for v in versions_json if v in args.versions]
+
 for version in versions_json:
-    version_json_path = os.path.join(json_path, version, "extracts")
+    version_json_path = os.path.join(json_path, version)
 
     # make item sheet
     items_json = json.load(open(os.path.join(version_json_path, "items.json")))
