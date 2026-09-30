@@ -17,6 +17,9 @@
         </div>
         <enchant-text *ngFor="let enchant of item.fixedEnchantData" class="item-tooltip-fixed-enchant" [enchant]="enchant" [item]="item"></enchant-text>
         <div *ngFor="let types of item.floatingEnchantData" class="item-tooltip-floating-enchant"><div class="bullet-icon"></div> (random {{floatingEnchantDesc(types)}} enchantment)</div>
+        <div *ngIf="item.blessing != null" class="item-tooltip-blessing">Blessing: {{item.blessing.name}} - {{item.blessing.desc}}</div>
+        <div *ngIf="item.curse != null" class="item-tooltip-curse">Curse: {{item.curse.name}} - {{item.curse.desc}}</div>
+        <div *ngIf="item.curse != null" class="item-tooltip-type">Purify: {{item.curse.purifyDesc}}</div>
         <div *ngFor="let socket of item.gems" class="item-tooltip-socket">
             <gem-socket [socket]="socket"></gem-socket>
             <div *ngIf="socket.gem == null">Empty {{shapeName(socket.shape)}} Socket</div>

@@ -40,3 +40,11 @@
 .item-tooltip-set {
     color: #ffc800;
 }
+
+.item-tooltip-blessing {
+    color: #ffc800;
+}
+
+.item-tooltip-curse {
+    color: #de5021;
+}

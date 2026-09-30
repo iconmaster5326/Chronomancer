@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart';
 
+import 'blessing.dart';
 import 'class.dart';
 import 'enchant.dart';
 import 'gem.dart';
@@ -18,6 +19,8 @@ class Version {
   Map<CharClass, Map<ItemType, Map<EnchantType, List<Enchant>>>> enchantPool;
   List rawDroppedRuneData;
   List<ItemSet> sets;
+  List<Blessing> blessings;
+  List<Curse> curses;
 
   Version(this.name);
 
@@ -31,6 +34,8 @@ class Version {
     version.skills = await Skill.getSkillList(version, http);
     version.gems = await Gem.getGemList(version, http);
     version.sets = await ItemSet.getSetList(version, http);
+    version.blessings = await Blessing.getBlessingList(version, http);
+    version.curses = await Curse.getCurseList(version, http);
 
     for (var item in version.items) {
       item.finalize(version);

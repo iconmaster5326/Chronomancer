@@ -31,4 +31,18 @@
             Level: <input type="number" class="text-input" min="{{editing.item.minLevel}}" max="{{character.level}}" [value]="editing.level" #levelSpinner (change)="onSetLevel(levelSpinner)" (focusout)="onSetLevel(levelSpinner)">
         </div>
     </div>
+    <div *ngIf="blessings.isNotEmpty || curses.isNotEmpty" class="item-editor-blessing">
+        <div class="dropdown">
+            <button class="btn long-dropdown item-editor-label" type="button" data-toggle="dropdown">
+              {{blessingOrCurseName}}
+            </button>
+            <div class="dropdown-menu item-editor-blessing-menu">
+              <button class="dropdown-item btn long-button item-editor-label" type="button" (click)="clearBlessingAndCurse()">None</button>
+              <button *ngFor="let blessing of blessings" class="dropdown-item btn long-button item-editor-label" type="button" [title]="blessing.desc" (click)="editing.blessing = blessing">{{blessing.name}}</button>
+              <button *ngFor="let curse of curses" class="dropdown-item btn long-button item-editor-label" type="button" [title]="curse.desc" (click)="editing.curse = curse">Curse: {{curse.name}}</button>
+            </div>
+        </div>
+        <div *ngIf="editing.blessing != null" class="item-editor-label item-editor-blessing-desc">{{editing.blessing.desc}}</div>
+        <div *ngIf="editing.curse != null" class="item-editor-label item-editor-blessing-desc item-editor-curse">{{editing.curse.desc}}</div>
+    </div>
 </div>

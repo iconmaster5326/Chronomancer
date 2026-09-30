@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart';
 
+import 'blessing.dart';
 import 'character.dart';
 import 'enchant.dart';
 import 'gem.dart';
@@ -65,6 +66,8 @@ abstract class ItemData {
   Iterable<GemSocket> get gems;
   ItemSet get partOfSet;
   int get level;
+  Blessing get blessing;
+  Curse get curse;
 }
 
 class _BaseEnchant extends EnchantStack {
@@ -153,6 +156,10 @@ class Item implements ItemData {
   @override
   int get level => minLevel;
   @override
+  Blessing get blessing => null;
+  @override
+  Curse get curse => null;
+  @override
   Iterable<GemSocket> get gems => id == ItemStack.WEYRICKS_FINERY_ID
       ? [
           GemSocket(null, GemSource.ENCHANT, GemShape.SPHERE),
@@ -212,6 +219,8 @@ class ItemStack implements ItemData {
   bool empowered = true;
   @override
   int level;
+  Blessing _blessing;
+  Curse _curse;
 
   static int WEYRICKS_FINERY_ID = 713;
   static int RING_OF_MARVELLOUS_GEMS_ID = 712;
@@ -600,6 +609,21 @@ class ItemStack implements ItemData {
   @override
   ItemSet get partOfSet => item.partOfSet;
 
+  // an item can have a blessing or a curse, but not both
+  @override
+  Blessing get blessing => _blessing;
+  set blessing(Blessing b) {
+    _blessing = b;
+    if (b != null) _curse = null;
+  }
+
+  @override
+  Curse get curse => _curse;
+  set curse(Curse c) {
+    _curse = c;
+    if (c != null) _blessing = null;
+  }
+
   @Deprecated('use type instead.')
   ItemType get slot => item.type;
 
@@ -610,6 +634,8 @@ class ItemStack implements ItemData {
         'gems': gems.map((x) => x.asJSON).toList(),
         'empowered': empowered,
         'level': level,
+        'blessing': blessing?.id,
+        'curse': curse?.id,
       };
 
   ItemStack.fromJSON(Version version, dynamic j)
@@ -619,7 +645,11 @@ class ItemStack implements ItemData {
             .map<EnchantStack>(
                 (x) => x == null ? null : EnchantStack.fromJSON(version, x))
             .toList(),
-        level = j['level'] ?? Character.MAX_LEVEL {
+        level = j['level'] ?? Character.MAX_LEVEL,
+        _blessing = version.blessings
+            .firstWhere((b) => b.id == j['blessing'], orElse: () => null),
+        _curse = version.curses
+            .firstWhere((c) => c.id == j['curse'], orElse: () => null) {
     gems = j['gems']
         .map<GemSocket>((x) => GemSocket.fromJSON(this, version, x))
         .toList();

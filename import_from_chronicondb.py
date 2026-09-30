@@ -70,6 +70,15 @@ for version in cdb_versions:
             os.path.join(chronomancer_path, version, json_filename),
         )
 
+    # only present in versions from 1.60.0 onwards
+    for filename in ["blessings", "curses"]:
+        json_filename = filename + ".json"
+        cdb_file = os.path.join(cdb_path, version, "extracts", json_filename)
+        if os.path.exists(cdb_file):
+            shutil.copy2(
+                cdb_file, os.path.join(chronomancer_path, version, json_filename)
+            )
+
     if version_is_new:
         for filename in ["classes", "droppedRunes"]:
             json_filename = filename + ".json"
