@@ -92,8 +92,9 @@ class SpentSkill {
       };
 
   SpentSkill.fromJSON(this.character, dynamic j)
-      : skill = character.charClass.version.skills
-            .firstWhere((x) => x.id == j['id']),
+      // mastery skills share IDs between classes
+      : skill = character.charClass.version.skills.firstWhere(
+            (x) => x.id == j['id'] && x.charClass == character.charClass),
         pos = Vector2(j['x'], j['y']),
         rank = j['rank'] {
     tree = skill.tree;
@@ -116,11 +117,13 @@ class Character {
       List<int>.generate(skills.length - 1, (i) => pointsSpentIn(i))
           .fold(0, (sum, n) => sum + n);
   int get masteryPointsSpent => pointsSpentIn(Skill.TREE_MASTERY);
+  // counted per rune slot, as Mythical weapons can hold two greater runes
   int get greaterRunes => equipment.values
-      .where((item) =>
-          item.enchants[item.runeEnchantSlot] != null &&
-          item.enchants[item.runeEnchantSlot].enchant.rune != null &&
-          item.enchants[item.runeEnchantSlot].enchant.rune.greater)
+      .expand((item) => item.runes)
+      .where((rune) =>
+          rune != null &&
+          rune.enchant.rune != null &&
+          rune.enchant.rune.greater)
       .length;
   int get maxGreaterRunes => equipment.values.any((item) =>
           item != null &&

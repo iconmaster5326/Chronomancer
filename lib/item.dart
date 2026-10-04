@@ -94,6 +94,8 @@ class Item implements ItemData {
   ItemSet partOfSet;
   int minLevel;
   List<Enchant> baseEnchants, fixedEnchants;
+  // most items have one rune slot; Mythical weapons list theirs as Rune Slot enchants
+  int runeSlots;
   List<int> _rawBaseEnchants, _rawFixedEnchants;
 
   Item(this.id, this.name, this.type, this.rarity, this.requiresClass);
@@ -114,8 +116,11 @@ class Item implements ItemData {
         .map((id) => version.enchants.firstWhere((e) => e.id == id))
         .toList();
     fixedEnchants = _rawFixedEnchants
+        .where((id) => id != Enchant.RUNE_SLOT_ID)
         .map((id) => version.enchants.firstWhere((e) => e.id == id))
         .toList();
+    runeSlots = max(
+        1, _rawFixedEnchants.where((id) => id == Enchant.RUNE_SLOT_ID).length);
     _rawBaseEnchants = null;
     _rawFixedEnchants = null;
   }
@@ -521,7 +526,7 @@ class ItemStack implements ItemData {
         EnchantStackSource.FIXED,
         e,
         e.ranges[effectiveRarity].maxGreaterAugmented)));
-    enchants.add(null); // rune slot
+    enchants.addAll(List<EnchantStack>.filled(item.runeSlots, null));
     regenerateMutableEnchants();
 
     if (item.id == WEYRICKS_FINERY_ID) {
@@ -539,14 +544,18 @@ class ItemStack implements ItemData {
 
   bool mutableEnchant(int slot) =>
       slot >= item.baseEnchants.length + item.fixedEnchants.length;
+  // the first rune slot; the item's other rune slots follow it
   int get runeEnchantSlot =>
       item.baseEnchants.length + item.fixedEnchants.length;
-  bool runeEnchant(int slot) => slot == runeEnchantSlot;
+  bool runeEnchant(int slot) =>
+      slot >= runeEnchantSlot && slot < runeEnchantSlot + item.runeSlots;
+  Iterable<EnchantStack> get runes =>
+      enchants.sublist(runeEnchantSlot, runeEnchantSlot + item.runeSlots);
   List<EnchantType> enchantTypesForSlot(int slot) => runeEnchant(slot)
       ? [EnchantType.LEGENDARY]
       : mutableEnchant(slot)
           ? RARITY_BASED_ENCHANT_SLOTS[item.type][rarity]
-              [slot - item.baseEnchants.length - item.fixedEnchants.length - 1]
+              [slot - runeEnchantSlot - item.runeSlots]
           : [enchants[slot].type];
   @override
   bool get empowerable =>
@@ -555,7 +564,7 @@ class ItemStack implements ItemData {
       empowered ? ItemRarity.TRUE_LEGENDARY : rarity;
 
   void regenerateMutableEnchants() {
-    enchants = enchants.sublist(0, runeEnchantSlot + 1);
+    enchants = enchants.sublist(0, runeEnchantSlot + item.runeSlots);
     enchants.addAll(List<EnchantStack>.filled(
         RARITY_BASED_ENCHANT_SLOTS[item.type][rarity].length, null));
   }
@@ -575,7 +584,7 @@ class ItemStack implements ItemData {
       return EnchantStackSource.BASE;
     } else if (slot < item.baseEnchants.length + item.fixedEnchants.length) {
       return EnchantStackSource.FIXED;
-    } else if (slot == runeEnchantSlot) {
+    } else if (runeEnchant(slot)) {
       return EnchantStackSource.RUNE;
     } else {
       return EnchantStackSource.FLOATING;
@@ -653,6 +662,7 @@ class ItemStack implements ItemData {
     gems = j['gems']
         .map<GemSocket>((x) => GemSocket.fromJSON(this, version, x))
         .toList();
+    empowered = j['empowered'] ?? true;
     for (var i = 0; i < enchants.length; i++) {
       enchants[i]?.source = sourceOf(i);
     }

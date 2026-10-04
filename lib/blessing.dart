@@ -17,8 +17,14 @@ const Map<String, ItemType> BLESSING_SLOT_TO_ITEM_TYPE = <String, ItemType>{
 };
 
 /// Only versions from 1.60.0 onwards have blessings and curses.
+bool _hasBlessings(Version version) {
+  var parts = version.name.split('.').map(int.parse).toList();
+  return parts[0] > 1 || (parts[0] == 1 && parts[1] >= 60);
+}
+
 Future<List> _getOptionalList(
     Version version, Client http, String filename) async {
+  if (!_hasBlessings(version)) return [];
   final response = await http.get('assets/json/${version.name}/$filename.json');
   if (response.statusCode != 200) return [];
   return json.decode(response.body) as List;

@@ -35,12 +35,15 @@ class TooltipPlacement {
   static const int OFFSET = 8;
 
   html.Element element;
-  // the mouse position, in window pixels
-  num _mouseX = 0, _mouseY = 0;
+  // placed on mouse move, not in the template bindings: the tooltip's size can
+  // change during change detection, which dev mode reports as an error and
+  // then stops updating the tooltip
+  String left = '0px', top = '0px';
 
   void onMouseMove(html.MouseEvent event) {
-    _mouseX = event.client.x;
-    _mouseY = event.client.y;
+    var size = _size;
+    left = '${_place(event.client.x, size.width, _window.clientWidth)}px';
+    top = '${_place(event.client.y, size.height, _window.clientHeight)}px';
   }
 
   // mouse events and bounding rects are in window pixels, but CSS pixels are
@@ -57,9 +60,6 @@ class TooltipPlacement {
   html.Rectangle get _size =>
       element?.getBoundingClientRect() ?? html.Rectangle(0, 0, 0, 0);
   html.Element get _window => html.document.documentElement;
-
-  String get left => '${_place(_mouseX, _size.width, _window.clientWidth)}px';
-  String get top => '${_place(_mouseY, _size.height, _window.clientHeight)}px';
 }
 
 class CommonComponent {

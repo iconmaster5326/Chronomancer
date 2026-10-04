@@ -3657,7 +3657,7 @@
     "uuid": 250,
     "name": "Minor Health Potion",
     "icon": "spr_itemicons_250",
-    "description": "Heals AMOUNT health instantly and over 5 seconds.",
+    "description": "Heals 75 health instantly and over 5 seconds.",
     "category": "Consumables",
     "type": "Potion",
     "rarity": "Ordinary",
@@ -3670,7 +3670,7 @@
     "uuid": 251,
     "name": "Minor Mana Potion",
     "icon": "spr_itemicons_251",
-    "description": "Restores AMOUNT mana instantly.",
+    "description": "Restores 40 mana instantly.",
     "category": "Consumables",
     "type": "Potion",
     "rarity": "Ordinary",
@@ -16380,7 +16380,7 @@
     "uuid": 981,
     "name": "Transcendent Health Potion",
     "icon": "spr_itemicons_981",
-    "description": "Heals AMOUNT% health instantly.",
+    "description": "Heals 15% health instantly.",
     "category": "Consumables",
     "type": "Potion",
     "rarity": "Rare",
@@ -16393,7 +16393,7 @@
     "uuid": 982,
     "name": "Transcendent Mana Potion",
     "icon": "spr_itemicons_982",
-    "description": "Restores AMOUNT% mana instantly.",
+    "description": "Restores 15% mana instantly.",
     "category": "Consumables",
     "type": "Potion",
     "rarity": "Rare",
@@ -16406,7 +16406,7 @@
     "uuid": 983,
     "name": "Transcendent Restoration Potion",
     "icon": "spr_itemicons_983",
-    "description": "Heals AMOUNT% health and restores AMOUNT% mana instantly.",
+    "description": "Heals 10% health and restores 10% mana instantly.",
     "category": "Consumables",
     "type": "Potion",
     "rarity": "Rare",
@@ -16419,7 +16419,7 @@
     "uuid": 984,
     "name": "Transcendent Temporal Potion",
     "icon": "spr_itemicons_984",
-    "description": "Removes AMOUNT% of Staggered Damage held.",
+    "description": "Removes 15% of Staggered Damage held.",
     "category": "Consumables",
     "type": "Potion",
     "rarity": "Rare",
@@ -16466,6 +16466,131 @@
     "minLevel": 100,
     "baseEnchants": [],
     "fixedEnchants": []
+  },
+  {
+    "uuid": 988,
+    "name": "Absolution",
+    "icon": "spr_itemicons_988",
+    "description": "The Mythical Absolution counts as being part of all equipped Templar Class Sets.",
+    "category": "Weapon",
+    "type": "Sword",
+    "rarity": "True Legendary",
+    "classRestriction": "Templar",
+    "minLevel": 30,
+    "baseEnchants": [
+      1,
+      2,
+      3,
+      5,
+      19
+    ],
+    "fixedEnchants": [
+      139,
+      138,
+      137,
+      1304,
+      1304
+    ]
+  },
+  {
+    "uuid": 989,
+    "name": "Animosity",
+    "icon": "spr_itemicons_989",
+    "description": "The Mythical Animosity counts as being part of all equipped Berserker Class Sets.",
+    "category": "Weapon",
+    "type": "Fists",
+    "rarity": "True Legendary",
+    "classRestriction": "Berserker",
+    "minLevel": 30,
+    "baseEnchants": [
+      1,
+      2,
+      3,
+      5,
+      19
+    ],
+    "fixedEnchants": [
+      105,
+      103,
+      104,
+      1304,
+      1304
+    ]
+  },
+  {
+    "uuid": 990,
+    "name": "Aeon",
+    "icon": "spr_itemicons_990",
+    "description": "The Mythical Aeon counts as being part of all equipped Warden Class Sets.",
+    "category": "Weapon",
+    "type": "Bow",
+    "rarity": "True Legendary",
+    "classRestriction": "Warden",
+    "minLevel": 30,
+    "baseEnchants": [
+      1,
+      2,
+      3,
+      5,
+      19
+    ],
+    "fixedEnchants": [
+      141,
+      140,
+      121,
+      1304,
+      1304
+    ]
+  },
+  {
+    "uuid": 991,
+    "name": "Afterlife",
+    "icon": "spr_itemicons_991",
+    "description": "The Mythical Afterlife counts as being part of all equipped Warlock Class Sets.",
+    "category": "Weapon",
+    "type": "Staff",
+    "rarity": "True Legendary",
+    "classRestriction": "Warlock",
+    "minLevel": 30,
+    "baseEnchants": [
+      1,
+      2,
+      3,
+      5,
+      19
+    ],
+    "fixedEnchants": [
+      142,
+      143,
+      144,
+      1304,
+      1304
+    ]
+  },
+  {
+    "uuid": 992,
+    "name": "Alpha",
+    "icon": "spr_itemicons_992",
+    "description": "The Mythical Alpha counts as being part of all equipped Mechanist Class Sets.",
+    "category": "Weapon",
+    "type": "Axe",
+    "rarity": "True Legendary",
+    "classRestriction": "Mechanist",
+    "minLevel": 30,
+    "baseEnchants": [
+      1,
+      2,
+      3,
+      5,
+      19
+    ],
+    "fixedEnchants": [
+      145,
+      136,
+      135,
+      1304,
+      1304
+    ]
   },
   {
     "uuid": 993,

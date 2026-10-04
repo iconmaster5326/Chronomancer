@@ -16,7 +16,7 @@ class Version {
   List<Enchant> enchants;
   List<Skill> skills;
   List<Gem> gems;
-  Map<CharClass, Map<ItemType, Map<EnchantType, List<Enchant>>>> enchantPool;
+  Map<String, Map<EnchantType, List<Enchant>>> enchantPool;
   List rawDroppedRuneData;
   List<ItemSet> sets;
   List<Blessing> blessings;
@@ -74,6 +74,10 @@ class Version {
     }
     return null;
   }
+
+  /// The enchants of a given type that can roll on items of a given type name.
+  List<Enchant> enchantsFor(String itemTypeName, EnchantType type) =>
+      (enchantPool[itemTypeName] ?? {})[type] ?? [];
 
   CharClass classWithIndex(int index) {
     for (var charClass in classes) {

@@ -23,6 +23,8 @@ class SaveFile {
     0x01000000: _parseString,
     0x02000000: _parseList,
     0x0A000000: _parseInt,
+    // bools are stored as a double, and are compared against 0 like one
+    0x0D000000: _parseDouble,
     0x2F010000: _parseList,
     0x5B020000: _parseGrid,
     0x93010000: _parseMap,
@@ -170,8 +172,10 @@ class SaveFile {
 
     // skills
     for (var skillEntry in skills.entries) {
-      var skillWithID = version.skills
-          .firstWhere((s) => s.id == skillEntry.key, orElse: () => null);
+      // mastery skills share IDs between classes
+      var skillWithID = version.skills.firstWhere(
+          (s) => s.id == skillEntry.key && s.charClass == result.charClass,
+          orElse: () => null);
       if (skillWithID == null) {
         print('warning: unknown skill ${skillEntry.key}');
         continue;
@@ -213,7 +217,7 @@ class SaveFile {
       var item = version.items
           .firstWhere((item) => item.id == itemJSON['id'], orElse: () => null);
       if (item == null) {
-        print('warning: unknown skill ${itemJSON['id']}');
+        print('warning: unknown item ${itemJSON['id']}');
         continue;
       }
 
@@ -231,14 +235,16 @@ class SaveFile {
           // specific fixup for attack speed
           value *= 100;
         }
-        itemStack.enchants[i].value = value as int;
+        // round, as the multiplication can be off by a floating-point error
+        itemStack.enchants[i].value = (value as num).round();
       }
 
       // non-base enchants
       var enchantStacks = <EnchantStack>[];
       for (var enchantIndex = 0; enchantIndex <= 9; enchantIndex++) {
         var enchantID = itemJSON['enchant${enchantIndex}'];
-        if (enchantID <= 0) continue;
+        // an empty rune slot on a Mythical weapon
+        if (enchantID <= 0 || enchantID == Enchant.RUNE_SLOT_ID) continue;
 
         var enchantment = version.enchants
             .firstWhere((e) => e.id == enchantID, orElse: () => null);
@@ -323,6 +329,25 @@ class SaveFile {
           }
         }
         itemStack.gems.add(socket);
+      }
+
+      // blessings and curses; negative IDs mean none
+      var blessingID = itemJSON['bless_id'] ?? -1;
+      if (blessingID >= 0) {
+        itemStack.blessing = version.blessings
+            .firstWhere((b) => b.id == blessingID, orElse: () => null);
+        if (itemStack.blessing == null) {
+          print(
+              'warning: unknown blessing ${blessingID} on item ${item.name}');
+        }
+      }
+      var curseID = itemJSON['curse_id'] ?? -1;
+      if (curseID >= 0) {
+        itemStack.curse = version.curses
+            .firstWhere((c) => c.id == curseID, orElse: () => null);
+        if (itemStack.curse == null) {
+          print('warning: unknown curse ${curseID} on item ${item.name}');
+        }
       }
 
       var slot = EQUIPMENT_SLOTS[i];

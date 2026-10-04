@@ -859,5 +859,178 @@
       "Boots",
       "Helmet"
     ]
+  },
+  {
+    "uuid": 1305,
+    "class": "Mechanist",
+    "categories": [
+      "Weapon",
+      "Offhand"
+    ]
+  },
+  {
+    "uuid": 1306,
+    "class": "Mechanist",
+    "categories": [
+      "Weapon",
+      "Offhand"
+    ]
+  },
+  {
+    "uuid": 1307,
+    "class": "Mechanist",
+    "categories": [
+      "Weapon",
+      "Offhand"
+    ]
+  },
+  {
+    "uuid": 1308,
+    "class": "Mechanist",
+    "categories": [
+      "Weapon",
+      "Offhand"
+    ]
+  },
+  {
+    "uuid": 1309,
+    "class": "Mechanist",
+    "categories": [
+      "Weapon",
+      "Offhand"
+    ]
+  },
+  {
+    "uuid": 1310,
+    "class": "Mechanist",
+    "categories": [
+      "Armor",
+      "Boots",
+      "Helmet"
+    ]
+  },
+  {
+    "uuid": 1311,
+    "class": "Mechanist",
+    "categories": [
+      "Armor",
+      "Boots",
+      "Helmet"
+    ]
+  },
+  {
+    "uuid": 1312,
+    "class": "Mechanist",
+    "categories": [
+      "Armor",
+      "Boots",
+      "Helmet"
+    ]
+  },
+  {
+    "uuid": 1313,
+    "class": "Mechanist",
+    "categories": [
+      "Armor",
+      "Boots",
+      "Helmet"
+    ]
+  },
+  {
+    "uuid": 1314,
+    "class": "Mechanist",
+    "categories": [
+      "Armor",
+      "Boots",
+      "Helmet"
+    ]
+  },
+  {
+    "uuid": 1315,
+    "class": "Mechanist",
+    "categories": [
+      "Accessory",
+      "Amulet",
+      "Ring"
+    ]
+  },
+  {
+    "uuid": 1316,
+    "class": "Mechanist",
+    "categories": [
+      "Accessory",
+      "Amulet",
+      "Ring"
+    ]
+  },
+  {
+    "uuid": 1317,
+    "class": "Mechanist",
+    "categories": [
+      "Accessory",
+      "Amulet",
+      "Ring"
+    ]
+  },
+  {
+    "uuid": 1318,
+    "class": "Mechanist",
+    "categories": [
+      "Accessory",
+      "Amulet",
+      "Ring"
+    ]
+  },
+  {
+    "uuid": 1319,
+    "class": "Mechanist",
+    "categories": [
+      "Accessory",
+      "Amulet",
+      "Ring"
+    ]
+  },
+  {
+    "uuid": 1320,
+    "class": "Mechanist",
+    "categories": [
+      "Weapon",
+      "Offhand"
+    ]
+  },
+  {
+    "uuid": 1321,
+    "class": "Mechanist",
+    "categories": [
+      "Weapon",
+      "Offhand"
+    ]
+  },
+  {
+    "uuid": 1322,
+    "class": "Mechanist",
+    "categories": [
+      "Accessory",
+      "Amulet",
+      "Ring"
+    ]
+  },
+  {
+    "uuid": 1323,
+    "class": "Mechanist",
+    "categories": [
+      "Accessory",
+      "Amulet",
+      "Ring"
+    ]
+  },
+  {
+    "uuid": 1324,
+    "class": "Mechanist",
+    "categories": [
+      "Armor",
+      "Boots",
+      "Helmet"
+    ]
   }
 ]

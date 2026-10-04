@@ -84,7 +84,11 @@
             "Mechpriest",
             "Mastery"
         ],
-        "masteryCol2Floats": [],
+        "masteryCol2Floats": [
+            100501,
+            100027,
+            100221
+        ],
         "index": 5
     }
 ]
