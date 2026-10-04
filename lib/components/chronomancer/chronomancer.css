@@ -71,6 +71,8 @@
 
 #equip-slots > * {
     max-height: 24px;
+    /* keep each pair on one row, so the pane can't be squeezed narrower */
+    white-space: nowrap;
 }
 
 .equip-slot {
@@ -140,6 +142,8 @@
 
 #artifacts-pane > div {
     max-height: 24px;
+    /* keep each pair on one row, so the pane can't be squeezed narrower */
+    white-space: nowrap;
 }
 
 .artifacts-title {

@@ -16,15 +16,17 @@
         </div>
     </div>
     <div class="item-editor-footer-2">
-        <div *ngIf="editing.empowerable" class="item-editor-footer item-editor-label">
-            <div class="checkbox" [attr.checked]="editing.empowered" (click)="toggleEmpowered()"></div> Empowered?
-        </div>
-        <div *ngIf="editing.item.possibleRarities.length > 1" class="dropdown">
-            <button class="btn short-dropdown item-editor-label" type="button" data-toggle="dropdown">
-              {{rarityName(editing.rarity)}}
-            </button>
-            <div class="dropdown-menu">
-              <button *ngFor="let rarity of editing.item.possibleRarities" class="dropdown-item btn short-button item-editor-label" type="button" (click)="setRarity(rarity)">{{rarityName(rarity)}}</button>
+        <div class="item-editor-rarity">
+            <div *ngIf="hasEmpowerableRarity" class="item-editor-footer item-editor-label" [style.visibility]="editing.empowerable ? 'visible' : 'hidden'">
+                <div class="checkbox" [attr.checked]="editing.empowered" (click)="toggleEmpowered()"></div> Empowered?
+            </div>
+            <div *ngIf="editing.item.possibleRarities.length > 1" class="dropdown">
+                <button class="btn short-dropdown item-editor-label" type="button" data-toggle="dropdown">
+                  {{rarityName(editing.rarity)}}
+                </button>
+                <div class="dropdown-menu">
+                  <button *ngFor="let rarity of editing.item.possibleRarities" class="dropdown-item btn short-button item-editor-label" type="button" (click)="setRarity(rarity)">{{rarityName(rarity)}}</button>
+                </div>
             </div>
         </div>
         <div *ngIf="editing.item.minLevel != character.level">

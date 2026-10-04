@@ -110,6 +110,25 @@
   background: none;
 }
 
+/* Popper doesn't know about the zoom from UiScale and places menus too far
+   from their button, so put them right next to it instead */
+/* no line box around the button, so the menu below starts right at its edge */
+.dropdown {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-menu[x-placement^="bottom"] {
+  top: 100% !important;
+  transform: none !important;
+}
+
+.dropdown-menu[x-placement^="top"] {
+  top: auto !important;
+  bottom: 100% !important;
+  transform: none !important;
+}
+
 .short-slider {
   -webkit-appearance: none;
   appearance: none;
