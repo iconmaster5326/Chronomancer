@@ -40,6 +40,7 @@ enum ItemRarity {
   UNIQUE,
   LEGENDARY,
   TRUE_LEGENDARY,
+  MYTHICAL,
 }
 
 const Map<ItemRarity, String> ITEM_RARITY_TO_STRING = <ItemRarity, String>{
@@ -49,6 +50,7 @@ const Map<ItemRarity, String> ITEM_RARITY_TO_STRING = <ItemRarity, String>{
   ItemRarity.UNIQUE: 'Unique',
   ItemRarity.LEGENDARY: 'Legendary',
   ItemRarity.TRUE_LEGENDARY: 'True Legendary',
+  ItemRarity.MYTHICAL: 'Mythical',
 };
 
 abstract class ItemData {
@@ -133,12 +135,70 @@ class Item implements ItemData {
         .toList();
   }
 
+  // the class set weapons that the Hellforge can upgrade to Mythical
+  static const MYTHICAL_UPGRADABLE_IDS = {
+    74,
+    91,
+    318,
+    319,
+    322,
+    324,
+    340,
+    342,
+    366,
+    370,
+    374,
+    378,
+    382,
+    386,
+    390,
+    394,
+    537,
+    541,
+    545,
+    549,
+    554,
+    559,
+    564,
+    569,
+    578,
+    583,
+    587,
+    592,
+    600,
+    604,
+    608,
+    612,
+    907,
+    911,
+    924,
+    928,
+    944,
+    948,
+    961,
+    965
+  };
+
+  bool get mythicalUpgradable => MYTHICAL_UPGRADABLE_IDS.contains(id);
+
+  // Mythicals that aren't set weapons count as part of every class set of their class
+  bool countsAsPartOf(ItemSet itemSet) =>
+      partOfSet == itemSet ||
+      (rarity == ItemRarity.MYTHICAL &&
+          partOfSet == null &&
+          itemSet.items.any(
+              (i) => i.mythicalUpgradable && i.requiresClass == requiresClass));
+
   List<ItemRarity> get possibleRarities {
     switch (rarity) {
       case ItemRarity.ORDINARY:
         return [ItemRarity.ORDINARY, ItemRarity.ENCHANTED, ItemRarity.RARE];
       case ItemRarity.ENCHANTED:
         return [ItemRarity.ENCHANTED, ItemRarity.RARE];
+      case ItemRarity.LEGENDARY:
+        return mythicalUpgradable
+            ? [ItemRarity.LEGENDARY, ItemRarity.MYTHICAL]
+            : [rarity];
       default:
         return [rarity];
     }
@@ -150,7 +210,7 @@ class Item implements ItemData {
       .followedBy(fixedEnchants.map<EnchantData>((e) => _FixedEnchant(e)));
   @override
   Iterable<List<EnchantType>> get floatingEnchantData =>
-      ItemStack.RARITY_BASED_ENCHANT_SLOTS[type][rarity];
+      ItemStack.floatingEnchantSlots(this, rarity);
   @override
   bool get empowerable =>
       rarity == ItemRarity.UNIQUE || rarity == ItemRarity.LEGENDARY;
@@ -451,6 +511,15 @@ class ItemStack implements ItemData {
         [EnchantType.MAJOR],
         [EnchantType.MAJOR, EnchantType.EPIC],
       ],
+      // only weapons can be Mythical
+      ItemRarity.MYTHICAL: [
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MINOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR],
+        [EnchantType.MAJOR, EnchantType.EPIC],
+      ],
     },
     ItemType.BODY: {
       ItemRarity.ORDINARY: <List<EnchantType>>[],
@@ -508,6 +577,21 @@ class ItemStack implements ItemData {
     },
   };
 
+  // 988-992 roll 6 random enchants, but only have room for 5; the game loses the rest
+  static const MYTHICAL_CLASS_WEAPON_ENCHANT_SLOTS = [
+    [EnchantType.MINOR],
+    [EnchantType.MINOR],
+    [EnchantType.MAJOR],
+    [EnchantType.MAJOR],
+    [EnchantType.MAJOR, EnchantType.EPIC],
+  ];
+
+  static List<List<EnchantType>> floatingEnchantSlots(
+          Item item, ItemRarity rarity) =>
+      item.rarity == ItemRarity.MYTHICAL
+          ? MYTHICAL_CLASS_WEAPON_ENCHANT_SLOTS
+          : RARITY_BASED_ENCHANT_SLOTS[item.type][rarity];
+
   static const RING_OF_MARVELLOUS_GEMS_SOCKET_CONFIGURATIONS = [
     [GemShape.CUBE, GemShape.CUBE],
     [GemShape.CUBE, GemShape.SPHERE],
@@ -526,7 +610,7 @@ class ItemStack implements ItemData {
         EnchantStackSource.FIXED,
         e,
         e.ranges[effectiveRarity].maxGreaterAugmented)));
-    enchants.addAll(List<EnchantStack>.filled(item.runeSlots, null));
+    enchants.addAll(List<EnchantStack>.filled(runeSlots, null));
     regenerateMutableEnchants();
 
     if (item.id == WEYRICKS_FINERY_ID) {
@@ -547,26 +631,42 @@ class ItemStack implements ItemData {
   // the first rune slot; the item's other rune slots follow it
   int get runeEnchantSlot =>
       item.baseEnchants.length + item.fixedEnchants.length;
+  // the Mythical upgrade gives set weapons a second rune slot
+  int get runeSlots =>
+      rarity == ItemRarity.MYTHICAL ? max(2, item.runeSlots) : item.runeSlots;
   bool runeEnchant(int slot) =>
-      slot >= runeEnchantSlot && slot < runeEnchantSlot + item.runeSlots;
+      slot >= runeEnchantSlot && slot < runeEnchantSlot + runeSlots;
   Iterable<EnchantStack> get runes =>
-      enchants.sublist(runeEnchantSlot, runeEnchantSlot + item.runeSlots);
+      enchants.sublist(runeEnchantSlot, runeEnchantSlot + runeSlots);
   List<EnchantType> enchantTypesForSlot(int slot) => runeEnchant(slot)
       ? [EnchantType.LEGENDARY]
       : mutableEnchant(slot)
-          ? RARITY_BASED_ENCHANT_SLOTS[item.type][rarity]
-              [slot - runeEnchantSlot - item.runeSlots]
+          ? floatingEnchantSlots(
+              item, rarity)[slot - runeEnchantSlot - runeSlots]
           : [enchants[slot].type];
   @override
   bool get empowerable =>
       rarity == ItemRarity.UNIQUE || rarity == ItemRarity.LEGENDARY;
-  ItemRarity get effectiveRarity =>
-      empowered ? ItemRarity.TRUE_LEGENDARY : rarity;
+  ItemRarity get effectiveRarity => rarity == ItemRarity.MYTHICAL
+      ? rarity
+      : empowered
+          ? ItemRarity.TRUE_LEGENDARY
+          : rarity;
 
   void regenerateMutableEnchants() {
-    enchants = enchants.sublist(0, runeEnchantSlot + item.runeSlots);
+    enchants = enchants.sublist(0, runeEnchantSlot + runeSlots);
     enchants.addAll(List<EnchantStack>.filled(
-        RARITY_BASED_ENCHANT_SLOTS[item.type][rarity].length, null));
+        floatingEnchantSlots(item, rarity).length, null));
+  }
+
+  // the number of rune slots can change with the rarity, so keep the runes apart
+  void changeRarity(ItemRarity newRarity) {
+    var oldRunes = runes.toList();
+    rarity = newRarity;
+    enchants = enchants.sublist(0, runeEnchantSlot)
+      ..addAll(List<EnchantStack>.generate(
+          runeSlots, (i) => i < oldRunes.length ? oldRunes[i] : null));
+    regenerateMutableEnchants();
   }
 
   void clampEnchantValues() {

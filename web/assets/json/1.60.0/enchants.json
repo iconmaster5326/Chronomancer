@@ -10566,7 +10566,8 @@
     "items": [
       385,
       565,
-      570
+      570,
+      989
     ],
     "itemTypes": [
       "Fists",
@@ -10627,7 +10628,9 @@
         "greaterCap": 25
       }
     },
-    "items": [],
+    "items": [
+      989
+    ],
     "itemTypes": [
       "Fists",
       "Claw"
@@ -10690,7 +10693,8 @@
     "items": [
       563,
       566,
-      820
+      820,
+      989
     ],
     "itemTypes": [
       "Fists",
@@ -11826,7 +11830,8 @@
       529,
       705,
       816,
-      824
+      824,
+      990
     ],
     "itemTypes": [
       "Armor",
@@ -12747,7 +12752,8 @@
     "items": [
       918,
       931,
-      976
+      976,
+      992
     ],
     "itemTypes": [
       "Armor",
@@ -12810,7 +12816,8 @@
     },
     "items": [
       918,
-      920
+      920,
+      992
     ],
     "itemTypes": [
       "Helm",
@@ -12869,7 +12876,9 @@
         "greaterCap": 5
       }
     },
-    "items": [],
+    "items": [
+      988
+    ],
     "itemTypes": []
   },
   {
@@ -12922,7 +12931,9 @@
         "greaterCap": 20
       }
     },
-    "items": [],
+    "items": [
+      988
+    ],
     "itemTypes": []
   },
   {
@@ -12975,7 +12986,9 @@
         "greaterCap": 1
       }
     },
-    "items": [],
+    "items": [
+      988
+    ],
     "itemTypes": []
   },
   {
@@ -13028,7 +13041,9 @@
         "greaterCap": 50
       }
     },
-    "items": [],
+    "items": [
+      990
+    ],
     "itemTypes": []
   },
   {
@@ -13081,7 +13096,9 @@
         "greaterCap": 1
       }
     },
-    "items": [],
+    "items": [
+      990
+    ],
     "itemTypes": []
   },
   {
@@ -13134,7 +13151,9 @@
         "greaterCap": 1
       }
     },
-    "items": [],
+    "items": [
+      991
+    ],
     "itemTypes": []
   },
   {
@@ -13187,7 +13206,9 @@
         "greaterCap": 1
       }
     },
-    "items": [],
+    "items": [
+      991
+    ],
     "itemTypes": []
   },
   {
@@ -13240,7 +13261,9 @@
         "greaterCap": 30
       }
     },
-    "items": [],
+    "items": [
+      991
+    ],
     "itemTypes": []
   },
   {
@@ -13293,7 +13316,9 @@
         "greaterCap": 15
       }
     },
-    "items": [],
+    "items": [
+      992
+    ],
     "itemTypes": []
   },
   {

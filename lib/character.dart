@@ -200,8 +200,9 @@ class Character {
       (s) => skills[skill.tree].values.any((ss) => ss.skill == s),
       orElse: () => null);
 
-  int itemSetMembersEquipped(ItemSet itemSet) =>
-      equipment.values.where((i) => i != null && i.partOfSet == itemSet).length;
+  int itemSetMembersEquipped(ItemSet itemSet) => equipment.values
+      .where((i) => i != null && i.item.countsAsPartOf(itemSet))
+      .length;
 
   dynamic get asJSON => {
         'version': charClass.version.name,

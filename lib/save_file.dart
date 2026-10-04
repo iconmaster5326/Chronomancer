@@ -221,8 +221,10 @@ class SaveFile {
         continue;
       }
 
+      var quality = itemJSON['quality'];
       var itemStack = ItemStack(item,
-          rarity: ItemRarity.values[itemJSON['quality']],
+          rarity:
+              quality == 5 ? ItemRarity.MYTHICAL : ItemRarity.values[quality],
           level: itemJSON['level']);
       if (itemJSON.containsKey('empowered')) {
         itemStack.empowered = itemJSON['empowered'] == 0 ? false : true;

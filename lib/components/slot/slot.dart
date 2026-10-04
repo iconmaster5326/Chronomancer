@@ -14,6 +14,7 @@ enum RarityOverlay {
   LEGENDARY,
   TRUE_LEGENDARY,
   SELECTED,
+  MYTHICAL,
 }
 const int RARITY_OVERLAY_SIZE = 24;
 
@@ -68,6 +69,9 @@ class SlotComponent extends CommonComponent {
     }
     if (item == null) {
       return RarityOverlay.NONE;
+    }
+    if (item.rarity == ItemRarity.MYTHICAL) {
+      return RarityOverlay.MYTHICAL;
     }
     return RarityOverlay.values[item.rarity.index + 1];
   }

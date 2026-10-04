@@ -50,8 +50,7 @@ class ItemEditorComponent extends CommonComponent {
   Character get character => ChronomancerComponent.character;
 
   void setRarity(ItemRarity rarity) {
-    editing.rarity = rarity;
-    editing.regenerateMutableEnchants();
+    editing.changeRarity(rarity);
     editing.clampEnchantValues();
   }
 

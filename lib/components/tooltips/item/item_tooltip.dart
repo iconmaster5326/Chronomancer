@@ -36,6 +36,7 @@ class ItemTooltipComponent extends CommonComponent {
     ItemRarity.UNIQUE: '#fa14b4',
     ItemRarity.LEGENDARY: '#aa1919',
     ItemRarity.TRUE_LEGENDARY: '#de5021',
+    ItemRarity.MYTHICAL: COLOR_YELLOW,
   };
 
   ItemData get item => _item;

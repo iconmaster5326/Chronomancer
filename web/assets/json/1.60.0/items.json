@@ -16474,7 +16474,7 @@
     "description": "The Mythical Absolution counts as being part of all equipped Templar Class Sets.",
     "category": "Weapon",
     "type": "Sword",
-    "rarity": "True Legendary",
+    "rarity": "Mythical",
     "classRestriction": "Templar",
     "minLevel": 30,
     "baseEnchants": [
@@ -16499,7 +16499,7 @@
     "description": "The Mythical Animosity counts as being part of all equipped Berserker Class Sets.",
     "category": "Weapon",
     "type": "Fists",
-    "rarity": "True Legendary",
+    "rarity": "Mythical",
     "classRestriction": "Berserker",
     "minLevel": 30,
     "baseEnchants": [
@@ -16524,7 +16524,7 @@
     "description": "The Mythical Aeon counts as being part of all equipped Warden Class Sets.",
     "category": "Weapon",
     "type": "Bow",
-    "rarity": "True Legendary",
+    "rarity": "Mythical",
     "classRestriction": "Warden",
     "minLevel": 30,
     "baseEnchants": [
@@ -16549,7 +16549,7 @@
     "description": "The Mythical Afterlife counts as being part of all equipped Warlock Class Sets.",
     "category": "Weapon",
     "type": "Staff",
-    "rarity": "True Legendary",
+    "rarity": "Mythical",
     "classRestriction": "Warlock",
     "minLevel": 30,
     "baseEnchants": [
@@ -16574,7 +16574,7 @@
     "description": "The Mythical Alpha counts as being part of all equipped Mechanist Class Sets.",
     "category": "Weapon",
     "type": "Axe",
-    "rarity": "True Legendary",
+    "rarity": "Mythical",
     "classRestriction": "Mechanist",
     "minLevel": 30,
     "baseEnchants": [
