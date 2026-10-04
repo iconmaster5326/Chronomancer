@@ -4,6 +4,8 @@ import 'dart:math';
 
 import 'package:angular/angular.dart';
 import 'package:chronomancer/components/about_dialog/about_dialog.dart';
+import 'package:chronomancer/components/artifact_dialog/artifact_dialog.dart';
+import 'package:chronomancer/components/artifact_slot/artifact_slot.dart';
 import 'package:chronomancer/components/changelog_dialog/changelog_dialog.dart';
 import 'package:chronomancer/components/char_sel/char_sel.dart';
 import 'package:chronomancer/character.dart';
@@ -21,6 +23,7 @@ import 'package:chronomancer/components/reset_dialog/reset_dialog.dart';
 import 'package:chronomancer/components/skill_tree/skill_dialog/skill_dialog.dart';
 import 'package:chronomancer/components/skill_tree/skill_tree.dart';
 import 'package:chronomancer/components/skill_tree_tab/skill_tree_tab.dart';
+import 'package:chronomancer/components/tooltips/artifact/artifact_tooltip.dart';
 import 'package:chronomancer/components/tooltips/enchant/enchant_tooltip.dart';
 import 'package:chronomancer/components/tooltips/gem/gem_tooltip.dart';
 import 'package:chronomancer/components/tooltips/item/item_tooltip.dart';
@@ -60,6 +63,9 @@ import 'dart:html' as html;
     ExportDialogComponent,
     ImportDialogComponent,
     ResetDialogComponent,
+    ArtifactSlotComponent,
+    ArtifactDialogComponent,
+    ArtifactTooltipComponent,
   ],
 )
 class ChronomancerComponent extends CommonComponent {
@@ -75,6 +81,9 @@ class ChronomancerComponent extends CommonComponent {
   static const ITEM_TYPE_WEAPON = ItemType.WEAPON;
   static const ITEM_TYPE_FEET = ItemType.FEET;
   static const ITEM_TYPE_RING = ItemType.RING;
+
+  // the first slot of each pair of same-shaped artifact slots
+  static const ARTIFACT_PAIRS = [0, 2, 4];
 
   static List<Version> versions;
   static Version version;

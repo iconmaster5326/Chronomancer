@@ -124,3 +124,24 @@
     height: 0%;
     opacity: 0;
 }
+
+.gear-panes {
+    display: flex;
+    align-items: flex-end;
+}
+
+#artifacts-pane {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    font-size: 10px;
+}
+
+#artifacts-pane > div {
+    max-height: 24px;
+}
+
+.artifacts-title {
+    margin-bottom: 4px;
+}

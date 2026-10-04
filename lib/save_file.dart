@@ -1,3 +1,4 @@
+import 'package:chronomancer/artifact.dart';
 import 'package:chronomancer/character.dart';
 import 'package:chronomancer/enchant.dart';
 import 'package:chronomancer/gem.dart';
@@ -148,6 +149,23 @@ class SaveFile {
     GemShape.STAR,
   ];
 
+  static List<Artifact> parseArtifacts(
+      Version version, num beast, String e1art) {
+    var result = List<Artifact>.filled(Character.ARTIFACT_SLOTS, null);
+    if (beast == null || beast < 100 || e1art == null || e1art.isEmpty) {
+      return result;
+    }
+    var slots = parseSerializedGMS(e1art) as Map;
+    for (var slot = 0; slot < Character.ARTIFACT_SLOTS; slot++) {
+      var id = slots['${beast.toInt()}_$slot'];
+      if (id == null || id < 0) continue;
+      result[slot] =
+          version.artifacts.firstWhere((a) => a.id == id, orElse: () => null);
+      if (result[slot] == null) print('warning: unknown artifact $id');
+    }
+    return result;
+  }
+
   static Character fromJSON(Version version, dynamic j) {
     var generalInfo = (parseSerializedGMS(j['c']) as List);
     var classIndex = generalInfo[0];
@@ -169,6 +187,9 @@ class SaveFile {
 
     var result = Character(version.classWithIndex(classIndex));
     result.level = level;
+    // the current beast; older saves don't have it
+    var beast = generalInfo.length > 30 ? generalInfo[30] : null;
+    result.artifacts = parseArtifacts(version, beast, j['e1art']);
 
     // skills
     for (var skillEntry in skills.entries) {

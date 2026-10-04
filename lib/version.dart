@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart';
 
+import 'artifact.dart';
 import 'blessing.dart';
 import 'class.dart';
 import 'enchant.dart';
@@ -21,6 +22,7 @@ class Version {
   List<ItemSet> sets;
   List<Blessing> blessings;
   List<Curse> curses;
+  List<Artifact> artifacts;
 
   Version(this.name);
 
@@ -36,6 +38,7 @@ class Version {
     version.sets = await ItemSet.getSetList(version, http);
     version.blessings = await Blessing.getBlessingList(version, http);
     version.curses = await Curse.getCurseList(version, http);
+    version.artifacts = await Artifact.getArtifactList(version, http);
 
     for (var item in version.items) {
       item.finalize(version);

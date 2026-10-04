@@ -37,6 +37,7 @@
     </div>
 
     <div *ngIf="character != null" id="chronomancer-top-pane">
+        <div class="gear-panes">
         <div id="items-pane" class="bordered" [style.border-image]="'url(\'assets/images/border/' + borderName + '.png\') 22 round'">
             <span id="items-rune-count-pane">
                 <div id="equip-slots">
@@ -50,6 +51,14 @@
                 </div>
             </span>
             <item-editor></item-editor>
+        </div>
+        <div *ngIf="character.charClass.version.artifacts.isNotEmpty" id="artifacts-pane" class="bordered" [style.border-image]="'url(\'assets/images/border/' + borderName + '.png\') 22 round'">
+            <div class="artifacts-title">Artifacts</div>
+            <div *ngFor="let first of ARTIFACT_PAIRS">
+                <artifact-slot [slot]="first"></artifact-slot>
+                <artifact-slot [slot]="first + 1"></artifact-slot>
+            </div>
+        </div>
         </div>
         <div class="character-model-pane">
             <img id="character-model" src="assets/images/model/{{character.charClass.id}}.png">
@@ -87,5 +96,7 @@
 <enchant-tooltip></enchant-tooltip>
 <skill-tooltip></skill-tooltip>
 <gem-tooltip></gem-tooltip>
+<artifact-dialog></artifact-dialog>
+<artifact-tooltip></artifact-tooltip>
 
 <input #fileInput type="file" class="file-uploader" (change)="importFromSaveUploadFinished(fileInput)">

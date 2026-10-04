@@ -1,0 +1,21 @@
+<div class="modal fade" id="artifact-dialog" tabindex="-1" role="dialog" #artifactDialogElement (init)="init(artifactDialogElement)">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bordered">
+        <div class="modal-header">
+            <div class="modal-title">Select Artifact</div>
+        </div>
+        <div class="modal-body">
+            <div *ngFor="let artifact of artifacts" class="artifact-choice" (click)="onArtifactSelected(artifact)">
+                <img [src]="icon(artifact)">
+                <div>
+                    <div class="artifact-choice-name">{{artifact.name}}</div>
+                    <div>{{artifact.desc}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn short-button" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>

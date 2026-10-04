@@ -1,0 +1,13 @@
+<div #tooltipElement (init)="onInit(tooltipElement)" class="chronicon-tooltip" [style.display]="artifact == null ? 'none': 'block'" [style.left]="left" [style.top]="top">
+    <div *ngIf="artifact != null" class="artifact-tooltip-body">
+        <div class="artifact-tooltip-header">
+            <img class="artifact-tooltip-icon" [src]="icon">
+            <div>
+                <div>{{artifact.name}}</div>
+                <div class="artifact-tooltip-type">{{shapeName}} Artifact</div>
+            </div>
+        </div>
+        <div *ngIf="artifact.requiresClass != null">{{artifact.requiresClass.name}} Artifact</div>
+        <div>{{artifact.desc}}</div>
+    </div>
+</div>
