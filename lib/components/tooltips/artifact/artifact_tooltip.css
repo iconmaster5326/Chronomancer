@@ -1,0 +1,20 @@
+.artifact-tooltip-body {
+    display: flex;
+    flex-direction: column;
+    font-size: 10px;
+    margin: 4px;
+    max-width: 240px;
+}
+
+.artifact-tooltip-header {
+    display: flex;
+    align-items: center;
+}
+
+.artifact-tooltip-icon {
+    margin-right: 4px;
+}
+
+.artifact-tooltip-type {
+    color: #d2823c;
+}

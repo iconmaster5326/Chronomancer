@@ -110,6 +110,25 @@
   background: none;
 }
 
+/* Popper doesn't know about the zoom from UiScale and places menus too far
+   from their button, so put them right next to it instead */
+/* no line box around the button, so the menu below starts right at its edge */
+.dropdown {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-menu[x-placement^="bottom"] {
+  top: 100% !important;
+  transform: none !important;
+}
+
+.dropdown-menu[x-placement^="top"] {
+  top: auto !important;
+  bottom: 100% !important;
+  transform: none !important;
+}
+
 .short-slider {
   -webkit-appearance: none;
   appearance: none;
@@ -169,8 +188,12 @@
 }
 
 .chronicon-tooltip {
-  position: absolute;
+  position: fixed;
   z-index: 10000;
+  /* a fixed width, so the tooltip's size doesn't depend on where it's placed */
+  width: max-content;
+  max-width: 360px;
+  pointer-events: none;
   border: 1px solid white;
   border-radius: 6px;
   background: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75));
@@ -222,6 +245,13 @@ html, body {
   overflow: -moz-scrollbars-vertical; 
   overflow-y: scroll;
   color: white;
+}
+
+/* let the character screen fill the window height */
+chronomancer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 @font-face {

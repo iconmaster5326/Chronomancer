@@ -1,0 +1,75 @@
+[
+    {
+        "uuid": "templar",
+        "name": "Templar",
+        "weaponNames": ["Sword"],
+        "offhandNames": ["Shield", "Tome"],
+        "skillTrees": [
+            "Vengeance",
+            "Wrath",
+            "Conviction",
+            "Redemption",
+            "Mastery"
+        ],
+        "masteryCol2Floats": [
+            100221,
+            100028,
+            100027
+        ],
+        "index": 1
+    },
+    {
+        "uuid": "berserker",
+        "name": "Berserker",
+        "weaponNames": ["Fists"],
+        "offhandNames": ["Claw"],
+        "skillTrees": [
+            "Guardian",
+            "Sky Lord",
+            "Dragonkin",
+            "Frostborn",
+            "Mastery"
+        ],
+        "masteryCol2Floats": [
+            100220,
+            100221
+        ],
+        "index": 2
+    },
+    {
+        "uuid": "warden",
+        "name": "Warden",
+        "weaponNames": ["Bow"],
+        "offhandNames": ["Arrow"],
+        "skillTrees": [
+            "Wind Ranger",
+            "Druid",
+            "Storm Caller",
+            "Winter Herald",
+            "Mastery"
+        ],
+        "masteryCol2Floats": [
+            100028,
+            100027
+        ],
+        "index": 3
+    },
+    {
+        "uuid": "warlock",
+        "name": "Warlock",
+        "weaponNames": ["Staff"],
+        "offhandNames": ["Spellbook"],
+        "skillTrees": [
+            "Corruptor",
+            "Lich",
+            "Demonologist",
+            "Reaper",
+            "Mastery"
+        ],
+        "masteryCol2Floats": [
+            100028,
+            100027
+        ],
+        "index": 4
+    }
+]

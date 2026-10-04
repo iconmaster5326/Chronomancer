@@ -37,8 +37,8 @@ class EnchantSelectDialogComponent extends ModalComponent {
                   e.rune.usableOn.contains(item.slot))
               : item
                   .enchantTypesForSlot(slot)
-                  .map((e) => ChronomancerComponent.version.enchantPool[
-                      ChronomancerComponent.character.charClass][item.slot][e])
+                  .map((e) => ChronomancerComponent.version
+                      .enchantsFor(item.typeName, e))
                   .flatten)
           .where((e) => !item.enchants
               .where((es) => es != null && item.enchants[slot] != es && es.source != EnchantStackSource.BASE)

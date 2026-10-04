@@ -1,5 +1,6 @@
 import 'package:chronomancer/class.dart';
 
+import 'artifact.dart';
 import 'enchant.dart';
 import 'item.dart';
 import 'skill.dart';
@@ -92,8 +93,9 @@ class SpentSkill {
       };
 
   SpentSkill.fromJSON(this.character, dynamic j)
-      : skill = character.charClass.version.skills
-            .firstWhere((x) => x.id == j['id']),
+      // mastery skills share IDs between classes
+      : skill = character.charClass.version.skills.firstWhere(
+            (x) => x.id == j['id'] && x.charClass == character.charClass),
         pos = Vector2(j['x'], j['y']),
         rank = j['rank'] {
     tree = skill.tree;
@@ -107,6 +109,8 @@ class Character {
   Map<ItemType, ItemStack> equipment = <ItemType, ItemStack>{};
   int level = MAX_LEVEL;
   List<Map<Vector2, SpentSkill>> skills;
+  static const int ARTIFACT_SLOTS = 6;
+  List<Artifact> artifacts = List<Artifact>.filled(ARTIFACT_SLOTS, null);
 
   Character(this.charClass) {
     skills = List.generate(charClass.skillTrees.length, (_) => {});
@@ -116,11 +120,13 @@ class Character {
       List<int>.generate(skills.length - 1, (i) => pointsSpentIn(i))
           .fold(0, (sum, n) => sum + n);
   int get masteryPointsSpent => pointsSpentIn(Skill.TREE_MASTERY);
+  // counted per rune slot, as Mythical weapons can hold two greater runes
   int get greaterRunes => equipment.values
-      .where((item) =>
-          item.enchants[item.runeEnchantSlot] != null &&
-          item.enchants[item.runeEnchantSlot].enchant.rune != null &&
-          item.enchants[item.runeEnchantSlot].enchant.rune.greater)
+      .expand((item) => item.runes)
+      .where((rune) =>
+          rune != null &&
+          rune.enchant.rune != null &&
+          rune.enchant.rune.greater)
       .length;
   int get maxGreaterRunes => equipment.values.any((item) =>
           item != null &&
@@ -197,8 +203,19 @@ class Character {
       (s) => skills[skill.tree].values.any((ss) => ss.skill == s),
       orElse: () => null);
 
-  int itemSetMembersEquipped(ItemSet itemSet) =>
-      equipment.values.where((i) => i != null && i.partOfSet == itemSet).length;
+  // the game's artifact picker only offers the slot's shape and the class's
+  // artifacts, and an artifact can only be in one slot
+  bool canHaveArtifact(int slot, Artifact artifact) =>
+      artifact.shape == Artifact.shapeOfSlot(slot) &&
+      artifact.usableBy(charClass) &&
+      !artifacts
+          .asMap()
+          .entries
+          .any((e) => e.key != slot && e.value == artifact);
+
+  int itemSetMembersEquipped(ItemSet itemSet) => equipment.values
+      .where((i) => i != null && i.item.countsAsPartOf(itemSet))
+      .length;
 
   dynamic get asJSON => {
         'version': charClass.version.name,
@@ -209,6 +226,7 @@ class Character {
             .flatten,
         'items':
             equipment.map((k, v) => MapEntry(k.index.toString(), v?.asJSON)),
+        'artifacts': artifacts.map((a) => a?.id).toList(),
       };
 
   Character.fromJSON(Iterable<Version> versions, dynamic j) {
@@ -225,6 +243,18 @@ class Character {
     for (var itemJSON in j['items'].entries) {
       equipment[ItemType.values[int.parse(itemJSON.key)]] =
           ItemStack.fromJSON(version, itemJSON.value);
+    }
+
+    // build links from before artifacts were added have none
+    var artifactIDs = (j['artifacts'] as List) ?? [];
+    for (var slot = 0;
+        slot < ARTIFACT_SLOTS && slot < artifactIDs.length;
+        slot++) {
+      var artifact = version.artifacts
+          .firstWhere((a) => a.id == artifactIDs[slot], orElse: () => null);
+      if (artifact?.shape == Artifact.shapeOfSlot(slot)) {
+        artifacts[slot] = artifact;
+      }
     }
   }
 }

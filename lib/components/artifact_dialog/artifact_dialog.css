@@ -1,0 +1,23 @@
+#artifact-dialog .modal-content > * {
+    padding: 0px;
+}
+
+.artifact-choice {
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.artifact-choice:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.artifact-choice > img {
+    margin-right: 8px;
+}
+
+.artifact-choice-name {
+    color: #ffc800;
+}

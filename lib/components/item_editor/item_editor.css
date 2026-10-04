@@ -58,3 +58,30 @@
     margin-left: 2px;
     margin-right: 2px;
 }
+
+.item-editor-blessing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item-editor-blessing-menu {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.item-editor-blessing-desc {
+    max-width: 200px;
+    color: #ffc800;
+}
+
+.item-editor-curse {
+    color: #de5021;
+}
+
+/* the Empowered checkbox goes above the rarity dropdown, so it takes no width */
+.item-editor-rarity {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}

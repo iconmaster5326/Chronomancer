@@ -28,6 +28,7 @@
 }
 
 #chronomancer {
+    flex: 1;
     background-image: url("assets/images/model_background.png");
     display: flex;
     flex-direction: column;
@@ -70,6 +71,8 @@
 
 #equip-slots > * {
     max-height: 24px;
+    /* keep each pair on one row, so the pane can't be squeezed narrower */
+    white-space: nowrap;
 }
 
 .equip-slot {
@@ -118,7 +121,31 @@
 }
 
 .file-uploader {
+    position: absolute;
     width: 0%;
     height: 0%;
     opacity: 0;
+}
+
+.gear-panes {
+    display: flex;
+    align-items: flex-end;
+}
+
+#artifacts-pane {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    font-size: 10px;
+}
+
+#artifacts-pane > div {
+    max-height: 24px;
+    /* keep each pair on one row, so the pane can't be squeezed narrower */
+    white-space: nowrap;
+}
+
+.artifacts-title {
+    margin-bottom: 4px;
 }

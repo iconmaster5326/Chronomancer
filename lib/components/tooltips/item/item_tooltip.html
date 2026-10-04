@@ -1,4 +1,4 @@
-<div (init)="onInit()" class="chronicon-tooltip" [style.display]="item == null ? 'none': 'block'" [style.left]="left" [style.top]="top" [style.border-color]="RAIRTY_TO_COLOR[item?.rarity]">
+<div #tooltipElement (init)="onInit(tooltipElement)" class="chronicon-tooltip" [style.display]="item == null ? 'none': 'block'" [style.left]="left" [style.top]="top" [style.border-color]="RAIRTY_TO_COLOR[item?.rarity]">
     <div *ngIf="item != null" class="item-tooltip-body">
         <div class="item-tooltip-header">
             <div class="item-tooltip-icon" [style.background]="iconBackground"></div>
@@ -8,6 +8,9 @@
             </div>
         </div>
         <div class="item-tooltip-level">Level: {{item.level}}</div>
+        <div *ngIf="item.blessing != null" class="item-tooltip-blessing">Blessing: {{item.blessing.name}} - {{item.blessing.desc}}</div>
+        <div *ngIf="item.curse != null" class="item-tooltip-curse">Curse: {{item.curse.name}} - {{item.curse.desc}}</div>
+        <div *ngIf="item.curse != null" class="item-tooltip-type">Purify: {{item.curse.purifyDesc}}</div>
         <div *ngIf="item.requiresClass != null" class="item-tooltip-class">{{item.requiresClass.name}} Item</div>
         <div *ngIf="item.partOfSet != null" class="item-tooltip-set">Set: {{item.partOfSet.name}}</div>
         <div *ngIf="item.partOfSet != null" class="item-tooltip-type">{{itemSetTypeText}}</div>

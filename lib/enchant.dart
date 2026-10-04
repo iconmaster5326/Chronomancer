@@ -47,6 +47,8 @@ abstract class EnchantData {
 
 class Enchant implements EnchantData {
   static const int GREATNESS_ID = 1296;
+  // an empty rune slot on a Mythical weapon
+  static const int RUNE_SLOT_ID = 1304;
 
   int id;
   @override
@@ -129,35 +131,21 @@ class Enchant implements EnchantData {
     return json.decode(response.body);
   }
 
-  static Future<Map<CharClass, Map<ItemType, Map<EnchantType, List<Enchant>>>>>
-      getEnchantPool(Version version, Client http) async {
-    var j = Map.from(json.decode(
+  // the pool is keyed by item type name (e.g. 'Helm', 'Shield', 'Axe'), as
+  // items with the same slot can have different pools
+  static Future<Map<String, Map<EnchantType, List<Enchant>>>> getEnchantPool(
+      Version version, Client http) async {
+    var j = Map<String, dynamic>.from(json.decode(
         (await http.get('assets/json/${version.name}/enchantsPool.json'))
             .body));
 
-    var result = <CharClass, Map<ItemType, Map<EnchantType, List<Enchant>>>>{};
-    for (var charClass in version.classes) {
-      var typeToString = ITEM_TYPE_TO_STRING.inverted;
-      for (var name in charClass.weaponNames) {
-        typeToString[name] = ItemType.WEAPON;
-      }
-      for (var name in charClass.offhandNames) {
-        typeToString[name] = ItemType.OFF_HAND;
-      }
-
-      result[charClass] = {};
-      for (var entry in j.entries) {
-        var slot = typeToString[entry.key];
-        result[charClass][slot] = {};
-        for (var entry2 in entry.value.entries) {
-          var type = ENCHANT_TYPE_TO_STRING.inverted[entry2.key];
-          result[charClass][slot][type] = List<int>.from(entry2.value)
-              .map((i) => version.enchants.firstWhere((e) => e.id == i))
-              .toList();
-        }
-      }
-    }
-    return result;
+    return j.map((typeName, pool) => MapEntry(
+        typeName,
+        (pool as Map).map((type, ids) => MapEntry(
+            ENCHANT_TYPE_TO_STRING.inverted[type],
+            List<int>.from(ids)
+                .map((i) => version.enchants.firstWhere((e) => e.id == i))
+                .toList()))));
   }
 
   String get searchText => [name, desc].join('\n').toLowerCase();

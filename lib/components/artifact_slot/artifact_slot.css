@@ -1,0 +1,6 @@
+.artifact-slot {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+}

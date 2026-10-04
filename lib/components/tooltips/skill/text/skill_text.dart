@@ -49,7 +49,8 @@ class SkillTextParser extends Parser<ColoredText> {
             (match) => ColoredText(
                 EnchantTextComponent.ELEMENT_TO_COLOR[
                     SkillTextComponent.ELEMENT_CODES[match.group(1)]],
-                match.group(2))),
+                // multi-word names repeat the code for each word
+                match.group(2).replaceAll(RegExp(r'_E[A-Z]{2}_'), ''))),
         MapEntry(RegExp(r'XDAM\s*'), (match) => ColoredText(null, '')),
         MapEntry(
             RegExp(r'\|([^Â¥]*)Â?¥'),

@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:angular/angular.dart';
+import 'package:chronomancer/blessing.dart';
 import 'package:chronomancer/character.dart';
 import 'package:chronomancer/components/chronomancer/chronomancer.dart';
 import 'package:chronomancer/components/component_utils.dart';
@@ -30,11 +31,30 @@ class ItemEditorComponent extends CommonComponent {
   }
 
   String rarityName(ItemRarity rarity) => ITEM_RARITY_TO_STRING[rarity];
+  // hidden rather than removed when switching to a rarity that can't be
+  // empowered, so the rest of the editor doesn't move
+  bool get hasEmpowerableRarity => editing.item.possibleRarities
+      .any((r) => r == ItemRarity.UNIQUE || r == ItemRarity.LEGENDARY);
+
+  Iterable<Blessing> get blessings => ChronomancerComponent.version.blessings
+      .where((b) => b.canBeOn(editing, character.charClass));
+  Iterable<Curse> get curses =>
+      ChronomancerComponent.version.curses.where((c) => c.canBeOn(editing));
+  String get blessingOrCurseName => editing.blessing != null
+      ? 'Blessing: ${editing.blessing.name}'
+      : editing.curse != null
+          ? 'Curse: ${editing.curse.name}'
+          : 'No Blessing or Curse';
+
+  void clearBlessingAndCurse() {
+    editing.blessing = null;
+    editing.curse = null;
+  }
+
   Character get character => ChronomancerComponent.character;
 
   void setRarity(ItemRarity rarity) {
-    editing.rarity = rarity;
-    editing.regenerateMutableEnchants();
+    editing.changeRarity(rarity);
     editing.clampEnchantValues();
   }
 

@@ -18,7 +18,7 @@ class EnchantTooltipComponent extends CommonComponent {
   ItemData item;
   EnchantData _enchant;
   StreamSubscription<MouseEvent> _conn;
-  int _left = 0, _top = 0;
+  final TooltipPlacement _placement = TooltipPlacement();
 
   EnchantData get enchant => _enchant;
   set enchant(EnchantData newEnchant) {
@@ -28,20 +28,18 @@ class EnchantTooltipComponent extends CommonComponent {
     }
 
     if (newEnchant != null) {
-      _conn = window.onMouseMove.listen((event) {
-        _left = event.page.x;
-        _top = event.page.y;
-      });
+      _conn = window.onMouseMove.listen(_placement.onMouseMove);
     }
 
     _enchant = newEnchant;
   }
 
-  void onInit() {
+  void onInit(Element e) {
+    _placement.element = e;
     INSTANCE = this;
   }
 
-  String get left => '${_left + 8}px';
-  String get top => '${_top + 8}px';
+  String get left => _placement.left;
+  String get top => _placement.top;
   EnchantRange get range => enchant.ranges[item.rarity];
 }

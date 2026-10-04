@@ -1,3 +1,4 @@
+import 'package:chronomancer/artifact.dart';
 import 'package:chronomancer/character.dart';
 import 'package:chronomancer/enchant.dart';
 import 'package:chronomancer/gem.dart';
@@ -23,6 +24,8 @@ class SaveFile {
     0x01000000: _parseString,
     0x02000000: _parseList,
     0x0A000000: _parseInt,
+    // bools are stored as a double, and are compared against 0 like one
+    0x0D000000: _parseDouble,
     0x2F010000: _parseList,
     0x5B020000: _parseGrid,
     0x93010000: _parseMap,
@@ -146,6 +149,23 @@ class SaveFile {
     GemShape.STAR,
   ];
 
+  static List<Artifact> parseArtifacts(
+      Version version, num beast, String e1art) {
+    var result = List<Artifact>.filled(Character.ARTIFACT_SLOTS, null);
+    if (beast == null || beast < 100 || e1art == null || e1art.isEmpty) {
+      return result;
+    }
+    var slots = parseSerializedGMS(e1art) as Map;
+    for (var slot = 0; slot < Character.ARTIFACT_SLOTS; slot++) {
+      var id = slots['${beast.toInt()}_$slot'];
+      if (id == null || id < 0) continue;
+      result[slot] =
+          version.artifacts.firstWhere((a) => a.id == id, orElse: () => null);
+      if (result[slot] == null) print('warning: unknown artifact $id');
+    }
+    return result;
+  }
+
   static Character fromJSON(Version version, dynamic j) {
     var generalInfo = (parseSerializedGMS(j['c']) as List);
     var classIndex = generalInfo[0];
@@ -167,11 +187,16 @@ class SaveFile {
 
     var result = Character(version.classWithIndex(classIndex));
     result.level = level;
+    // the current beast; older saves don't have it
+    var beast = generalInfo.length > 30 ? generalInfo[30] : null;
+    result.artifacts = parseArtifacts(version, beast, j['e1art']);
 
     // skills
     for (var skillEntry in skills.entries) {
-      var skillWithID = version.skills
-          .firstWhere((s) => s.id == skillEntry.key, orElse: () => null);
+      // mastery skills share IDs between classes
+      var skillWithID = version.skills.firstWhere(
+          (s) => s.id == skillEntry.key && s.charClass == result.charClass,
+          orElse: () => null);
       if (skillWithID == null) {
         print('warning: unknown skill ${skillEntry.key}');
         continue;
@@ -213,12 +238,14 @@ class SaveFile {
       var item = version.items
           .firstWhere((item) => item.id == itemJSON['id'], orElse: () => null);
       if (item == null) {
-        print('warning: unknown skill ${itemJSON['id']}');
+        print('warning: unknown item ${itemJSON['id']}');
         continue;
       }
 
+      var quality = itemJSON['quality'];
       var itemStack = ItemStack(item,
-          rarity: ItemRarity.values[itemJSON['quality']],
+          rarity:
+              quality == 5 ? ItemRarity.MYTHICAL : ItemRarity.values[quality],
           level: itemJSON['level']);
       if (itemJSON.containsKey('empowered')) {
         itemStack.empowered = itemJSON['empowered'] == 0 ? false : true;
@@ -231,14 +258,16 @@ class SaveFile {
           // specific fixup for attack speed
           value *= 100;
         }
-        itemStack.enchants[i].value = value as int;
+        // round, as the multiplication can be off by a floating-point error
+        itemStack.enchants[i].value = (value as num).round();
       }
 
       // non-base enchants
       var enchantStacks = <EnchantStack>[];
       for (var enchantIndex = 0; enchantIndex <= 9; enchantIndex++) {
         var enchantID = itemJSON['enchant${enchantIndex}'];
-        if (enchantID <= 0) continue;
+        // an empty rune slot on a Mythical weapon
+        if (enchantID <= 0 || enchantID == Enchant.RUNE_SLOT_ID) continue;
 
         var enchantment = version.enchants
             .firstWhere((e) => e.id == enchantID, orElse: () => null);
@@ -323,6 +352,25 @@ class SaveFile {
           }
         }
         itemStack.gems.add(socket);
+      }
+
+      // blessings and curses; negative IDs mean none
+      var blessingID = itemJSON['bless_id'] ?? -1;
+      if (blessingID >= 0) {
+        itemStack.blessing = version.blessings
+            .firstWhere((b) => b.id == blessingID, orElse: () => null);
+        if (itemStack.blessing == null) {
+          print(
+              'warning: unknown blessing ${blessingID} on item ${item.name}');
+        }
+      }
+      var curseID = itemJSON['curse_id'] ?? -1;
+      if (curseID >= 0) {
+        itemStack.curse = version.curses
+            .firstWhere((c) => c.id == curseID, orElse: () => null);
+        if (itemStack.curse == null) {
+          print('warning: unknown curse ${curseID} on item ${item.name}');
+        }
       }
 
       var slot = EQUIPMENT_SLOTS[i];
